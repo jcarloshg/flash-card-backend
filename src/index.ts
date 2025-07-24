@@ -1,31 +1,53 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import { config } from './config';
+import { 
+  errorHandler, 
+  errorLogger, 
+  notFoundHandler, 
+  requestLogger 
+} from './presentation/middleware/errorMiddleware';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Middleware to parse JSON bodies
+// Middleware
 app.use(express.json());
-
-// Basic route
-app.get('/', (req: Request, res: Response) => {
-  res.json({
-    message: 'Hello World! Express + TypeScript server is running!',
-    timestamp: new Date().toISOString()
-  });
-});
+app.use(express.urlencoded({ extended: true }));
+app.use(requestLogger);
 
 // Health check endpoint
-app.get('/health', (req: Request, res: Response) => {
+app.get('/health', (req, res) => {
   res.json({
     status: 'OK',
-    uptime: process.uptime(),
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    environment: config.nodeEnv,
+    version: process.env.npm_package_version || '1.0.0'
   });
 });
 
-// Start the server
+// Basic route
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Welcome to the DDD Express.js API!',
+    timestamp: new Date().toISOString(),
+    documentation: '/docs',
+    health: '/health'
+  });
+});
+
+// API routes will be mounted here
+// app.use('/api/v1', routes);
+
+// Error handling middleware (must be last)
+app.use(errorLogger);
+app.use(notFoundHandler);
+app.use(errorHandler);
+
+// Start server
+const PORT = config.port;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📖 Environment: ${config.nodeEnv}`);
+  console.log(`🏥 Health check: http://localhost:${PORT}/health`);
 });
 
 export default app;
