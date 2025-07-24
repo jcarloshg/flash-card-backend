@@ -9,12 +9,17 @@
     "clean": "rm -rf dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["express", "typescript", "nodejs"],
+  "keywords": [
+    "express",
+    "typescript",
+    "nodejs"
+  ],
   "author": "",
   "license": "ISC",
   "description": "A simple Express.js server built with TypeScript",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "zod": "^4.0.8"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
