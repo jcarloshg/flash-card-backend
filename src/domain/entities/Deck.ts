@@ -1,13 +1,15 @@
 import { Entity } from './Entity';
 import { Question } from './Question';
+import { CreateDeckSchema, UpdateDeckSchema, UpdateDeckData } from '../schemas/DeckSchema';
+import { DomainValidator } from '../validation/DomainValidator';
 import { ValidationError } from '../../shared/errors/CustomErrors';
 
 /**
  * Deck entity representing a collection of questions
  */
 export class Deck extends Entity<string> {
-  private readonly _name: string;
-  private readonly _description?: string;
+  private _name: string;
+  private _description?: string;
   private _questions: Question[];
 
   constructor(
@@ -17,10 +19,18 @@ export class Deck extends Entity<string> {
     description?: string
   ) {
     super(id);
-    this.validateName(name);
+    
+    // Validate using Zod schema
+    const validatedData = DomainValidator.validate(
+      CreateDeckSchema,
+      { id, name, description, questions: [] }, // Questions validated separately
+      'Deck'
+    );
+    
     this.validateQuestions(questions);
-    this._name = name;
-    this._description = description;
+    
+    this._name = validatedData.name;
+    this._description = validatedData.description;
     this._questions = [...questions]; // Create a copy to maintain immutability
   }
 
@@ -53,21 +63,7 @@ export class Deck extends Entity<string> {
   }
 
   /**
-   * Validates the deck name
-   * @param name - The deck name to validate
-   * @throws {ValidationError} When name is invalid
-   */
-  private validateName(name: string): void {
-    if (!name || name.trim().length === 0) {
-      throw new ValidationError('Deck name cannot be empty', 'name');
-    }
-    if (name.length > 100) {
-      throw new ValidationError('Deck name cannot exceed 100 characters', 'name');
-    }
-  }
-
-  /**
-   * Validates the questions array
+   * Validates the questions array (called separately since Zod schema doesn't include actual Question objects)
    * @param questions - The questions array to validate
    * @throws {ValidationError} When questions array is invalid
    */
@@ -78,6 +74,27 @@ export class Deck extends Entity<string> {
     if (questions.length > 1000) {
       throw new ValidationError('Deck cannot exceed 1000 questions', 'questions');
     }
+  }
+
+  /**
+   * Updates the deck with validated data
+   * @param updateData - Data to update (name and/or description)
+   */
+  public update(updateData: UpdateDeckData): void {
+    const validatedData = DomainValidator.validate(
+      UpdateDeckSchema,
+      updateData,
+      'Deck Update'
+    );
+
+    if (validatedData.name !== undefined) {
+      this._name = validatedData.name;
+    }
+    if (validatedData.description !== undefined) {
+      this._description = validatedData.description;
+    }
+
+    this.touch();
   }
 
   /**
