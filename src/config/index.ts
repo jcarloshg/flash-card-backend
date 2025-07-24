@@ -16,6 +16,14 @@ export interface DatabaseConfig {
   password: string;
   ssl?: boolean;
   maxConnections?: number;
+  sqlite: SQLiteConfig;
+}
+
+export interface SQLiteConfig {
+  path: string;
+  enableWAL?: boolean;
+  busyTimeout?: number;
+  maxConnections?: number;
 }
 
 export interface JWTConfig {
@@ -50,7 +58,13 @@ class ConfigLoader {
           username: process.env.DB_USERNAME || 'postgres',
           password: process.env.DB_PASSWORD || 'password',
           ssl: process.env.DB_SSL === 'true',
-          maxConnections: parseInt(process.env.DB_MAX_CONNECTIONS || '10')
+          maxConnections: parseInt(process.env.DB_MAX_CONNECTIONS || '10'),
+          sqlite: {
+            path: process.env.SQLITE_DB_PATH || './data/database.sqlite',
+            enableWAL: process.env.SQLITE_ENABLE_WAL === 'true',
+            busyTimeout: parseInt(process.env.SQLITE_BUSY_TIMEOUT || '5000'),
+            maxConnections: parseInt(process.env.SQLITE_MAX_CONNECTIONS || '1')
+          }
         },
         jwt: process.env.JWT_SECRET ? {
           secret: process.env.JWT_SECRET,

@@ -7,7 +7,14 @@
     "start": "node dist/index.js",
     "dev": "nodemon --exec ts-node src/index.ts",
     "clean": "rm -rf dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:init": "ts-node src/scripts/db-cli.ts init",
+    "db:init:seed": "ts-node src/scripts/db-cli.ts init --seed",
+    "db:migrate": "ts-node src/scripts/db-cli.ts migrate",
+    "db:seed": "ts-node src/scripts/db-cli.ts seed",
+    "db:status": "ts-node src/scripts/db-cli.ts status",
+    "db:rollback": "ts-node src/scripts/db-cli.ts rollback",
+    "db:clear": "ts-node src/scripts/db-cli.ts clear"
   },
   "keywords": [
     "express",
@@ -18,12 +25,16 @@
   "license": "ISC",
   "description": "A simple Express.js server built with TypeScript",
   "dependencies": {
+    "commander": "^14.0.0",
     "express": "^5.1.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "zod": "^4.0.8"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/node": "^24.1.0",
+    "@types/sqlite3": "^3.1.11",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
