@@ -1,6 +1,0 @@
-# Purpose: Aggregates
-
-Aggregates are clusters of domain objects treated as a single unit. Main goals:
-- Define aggregate roots
-- Enforce consistency boundaries
-- Manage transactional integrity
