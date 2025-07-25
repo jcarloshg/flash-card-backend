@@ -8,8 +8,8 @@
     "dev": "nodemon --exec ts-node src/index.ts",
     "clean": "rm -rf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sqlite:init": "ts-node src/infrastructure/data-base/scripts/db.scripts.ts init",
-    "sqlite:clean": "ts-node src/infrastructure/data-base/scripts/db.scripts.ts clean"
+    "db:init": "ts-node src/infrastructure/database/sqlite-02/scripts/db.scripts.ts init",
+    "db:clean": "ts-node src/infrastructure/database/sqlite-02/scripts/db.scripts.ts clean"
   },
   "keywords": [
     "express",

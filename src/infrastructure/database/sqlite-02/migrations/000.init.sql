@@ -1,0 +1,2 @@
+-- Initial migration file for SQLite database
+-- Add your SQL schema here
