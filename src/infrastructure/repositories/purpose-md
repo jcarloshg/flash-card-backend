@@ -1,6 +1,0 @@
-# Purpose: Infrastructure Repositories
-
-Implements domain repository interfaces using specific technologies. Main goals:
-- Persist aggregates
-- Integrate with databases
-- Implement data access logic

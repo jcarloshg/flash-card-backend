@@ -35,8 +35,7 @@ The architecture should include:
 │   │       └── crud.repository.ts
 │   ├── infrastructure
 │   │   ├── database
-│   │   ├── external
-│   │   └── repositories
+│   │   └── external
 │   ├── presentation
 │   │   ├── controllers
 │   │   ├── middleware
@@ -68,7 +67,6 @@ The architecture should include:
 
 - `database/`
 - `external/`
-- `repositories/`
 
 ### **Presentation**
 
