@@ -14,4 +14,9 @@ mode: agent
 - **Location**: Place the new repository in the folder `src/infrastructure/database/sqlite-02/repositories`
 
   - create file with name `[entityName].repository.ts`
-  - implement the repository methods from `src/domain/repositories/crud.repository.ts`
+  - create the implementation of the clases from `src/domain/repositories/crud.repository.ts`
+    - `CreateRepository<T>`
+    - `ReadRepository<T>`
+    - `UpdateRepository<T>`
+    - `DeleteRepository<T>`
+  - create the implementation of `CrudRepository<T>` the repository methods from `src/domain/repositories/crud.repository.ts`
