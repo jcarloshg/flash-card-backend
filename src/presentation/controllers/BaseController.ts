@@ -1,8 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 
-// Base Controller class
+/**
+ * Abstract BaseController for consistent API responses and error handling
+ */
 export abstract class BaseController {
-  protected success<T>(res: Response, data: T, statusCode: number = 200): Response {
+  /**
+   * Send a success response
+   * @param res Express Response object
+   * @param data Response data
+   * @param statusCode HTTP status code (default: 200)
+   */
+  public success<T>(res: Response, data: T, statusCode: number = 200): Response {
     return res.status(statusCode).json({
       success: true,
       data,
@@ -10,7 +18,13 @@ export abstract class BaseController {
     });
   }
 
-  protected error(res: Response, message: string, statusCode: number = 400): Response {
+  /**
+   * Send a client error response
+   * @param res Express Response object
+   * @param message Error message
+   * @param statusCode HTTP status code (default: 400)
+   */
+  public error(res: Response, message: string, statusCode: number = 400): Response {
     return res.status(statusCode).json({
       success: false,
       error: message,
@@ -18,43 +32,51 @@ export abstract class BaseController {
     });
   }
 
-  protected serverError(res: Response, error: Error): Response {
-    console.error('Server Error:', error);
+  /**
+   * Send a server error response
+   * @param res Express Response object
+   * @param error Error object
+   */
+  public serverError(res: Response, error: Error): Response {
+    // Log error with timestamp
+    console.error(`[${new Date().toISOString()}] Server Error:`, error);
     return res.status(500).json({
       success: false,
-      error: 'Internal Server Error',
+      error: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : error.message,
       timestamp: new Date().toISOString()
     });
   }
 }
 
-// Controller method decorator for error handling
+/**
+ * Decorator for controller methods to handle errors and pass to Express error middleware
+ */
 export function handleErrors(
-  target: any,
+  target: unknown,
   propertyName: string,
   descriptor: PropertyDescriptor
 ) {
   const method = descriptor.value;
-
   descriptor.value = async function (req: Request, res: Response, next: NextFunction) {
     try {
       await method.apply(this, [req, res, next]);
     } catch (error) {
-      console.error(`Error in ${target.constructor.name}.${propertyName}:`, error);
-      
+      const className = (target as { constructor: { name: string } }).constructor?.name || 'UnknownClass';
+      console.error(`Error in ${className}.${propertyName}:`, error);
       if (error instanceof Error) {
-        return res.status(500).json({
+        res.status(500).json({
           success: false,
-          error: error.message,
+          error: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : error.message,
+          timestamp: new Date().toISOString()
+        });
+      } else {
+        res.status(500).json({
+          success: false,
+          error: 'Internal Server Error',
           timestamp: new Date().toISOString()
         });
       }
-      
-      return res.status(500).json({
-        success: false,
-        error: 'Internal Server Error',
-        timestamp: new Date().toISOString()
-      });
+      next(error);
     }
   };
 }

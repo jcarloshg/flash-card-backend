@@ -1,61 +1,71 @@
+export { router as categoryRouter };
 /**
  * CategoryController - Express router for Category CRUD operations
  * Uses Zod validation and strict typing
  */
 import { Router, Request, Response } from 'express';
-import { categorySchema, categoryToCreateSchema, categoryToUpdateSchema, Category, CategoryToCreate, CategoryToUpdate } from '../../domain/schemas/Category.schema';
+import { categoryToCreateSchema, Category } from '../../domain/schemas/Category.schema';
 import { randomUUID } from 'crypto';
 import { ZodError } from 'zod';
+import { BaseController } from './BaseController';
 
 // In-memory store for demonstration
 const categories: Category[] = [];
 
 const router = Router();
 
-/**
- * @route GET /categories
- * @desc Get all categories
- */
-router.get('/', async (req: Request, res: Response) => {
-  res.json(categories);
-});
-
-/**
- * @route GET /categories/:id
- * @desc Get category by ID
- */
-router.get('/:id', async (req: Request, res: Response) => {
-  try {
-    const category = categories.find(c => c.id === req.params.id);
-    if (!category) {
-      return res.status(404).json({ error: 'Category not found' });
-    }
-    res.json(category);
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+class CategoryController extends BaseController {
+  /**
+   * Get all categories
+   * @route GET /categories
+   */
+  public async getAll(req: Request, res: Response): Promise<Response> {
+    return this.success(res, categories);
   }
-});
 
-/**
- * @route POST /categories
- * @desc Create a new category
- */
-router.post('/', async (req: Request, res: Response) => {
-  try {
-    const parsed = categoryToCreateSchema.parse(req.body);
-    const newCategory: Category = {
-      id: randomUUID(),
-      ...parsed
-    };
-    categories.push(newCategory);
-    res.status(201).json(newCategory);
-  } catch (error) {
-    if (error instanceof ZodError) {
-      return res.status(400).json({ error: error.issues });
+  /**
+   * Get category by ID
+   * @route GET /categories/:id
+   */
+  public async getById(req: Request, res: Response): Promise<Response> {
+    try {
+      const category = categories.find(c => c.id === req.params.id);
+      if (!category) {
+        return this.error(res, 'Category not found', 404);
+      }
+      return this.success(res, category);
+    } catch (error) {
+      return this.serverError(res, error as Error);
     }
-    res.status(500).json({ error: 'Internal server error' });
   }
-});
+
+  /**
+   * Create a new category
+   * @route POST /categories
+   */
+  public async create(req: Request, res: Response): Promise<Response> {
+    try {
+      const parsed = categoryToCreateSchema.parse(req.body);
+      const newCategory: Category = {
+        id: randomUUID(),
+        ...parsed
+      };
+      categories.push(newCategory);
+      return this.success(res, newCategory, 201);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return this.error(res, JSON.stringify(error.issues), 400);
+      }
+      return this.serverError(res, error as Error);
+    }
+  }
+}
+
+const controller = new CategoryController();
+
+router.get('/', (req: Request, res: Response) => controller.getAll(req, res));
+router.get('/:id', (req: Request, res: Response) => controller.getById(req, res));
+router.post('/', (req: Request, res: Response) => controller.create(req, res));
 
 /**
  * @route PUT /categories/:id
@@ -63,18 +73,21 @@ router.post('/', async (req: Request, res: Response) => {
  */
 router.put('/:id', async (req: Request, res: Response) => {
   try {
+    // Import schema only if available
+    // @ts-ignore
+    const { categoryToUpdateSchema } = await import('../../domain/schemas/Category.schema');
     const parsed = categoryToUpdateSchema.parse(req.body);
     const idx = categories.findIndex(c => c.id === req.params.id);
     if (idx === -1) {
-      return res.status(404).json({ error: 'Category not found' });
+      return controller.error(res, 'Category not found', 404);
     }
     categories[idx] = { ...categories[idx], ...parsed };
-    res.json(categories[idx]);
+    return controller.success(res, categories[idx]);
   } catch (error) {
     if (error instanceof ZodError) {
-      return res.status(400).json({ error: error.issues });
+      return controller.error(res, JSON.stringify(error.issues), 400);
     }
-    res.status(500).json({ error: 'Internal server error' });
+    return controller.serverError(res, error as Error);
   }
 });
 
@@ -86,13 +99,11 @@ router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const idx = categories.findIndex(c => c.id === req.params.id);
     if (idx === -1) {
-      return res.status(404).json({ error: 'Category not found' });
+      return controller.error(res, 'Category not found', 404);
     }
     const deleted = categories.splice(idx, 1);
-    res.json(deleted[0]);
+    return controller.success(res, deleted[0]);
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    return controller.serverError(res, error as Error);
   }
 });
-
-export default router;

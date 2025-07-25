@@ -1,12 +1,12 @@
-import express from 'express';
+import express from "express";
 
 import {
   errorHandler,
   errorLogger,
   notFoundHandler,
-  requestLogger
-} from './presentation/middleware/errorMiddleware';
-import { enviromentVariables } from './shared/config/enviroment-variables';
+  requestLogger,
+} from "./presentation/middleware/errorMiddleware";
+import { enviromentVariables } from "./shared/config/enviroment-variables";
 
 const app = express();
 
@@ -15,29 +15,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
 
-// // Health check endpoint
-// app.get('/health', (req, res) => {
-//   res.json({
-//     status: 'OK',
-//     timestamp: new Date().toISOString(),
-//     environment: enviromentVariables.nodeEnv,
-//     version: process.env.npm_package_version || '1.0.0'
-//   });
-// });
+app.get("/health", (req: express.Request, res: express.Response) => {
+  res.json({
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    environment: enviromentVariables.nodeEnv,
+    version: process.env.npm_package_version || "1.0.0",
+  });
+});
 
-// // Basic route
-// app.get('/', (req, res) => {
-//   res.json({
-//     message: 'Welcome to the DDD Express.js API!',
-//     timestamp: new Date().toISOString(),
-//     documentation: '/docs',
-//     health: '/health'
-//   });
-// });
+app.get("/", (req: express.Request, res: express.Response) => {
+  res.json({
+    message: "Welcome to the DDD Express.js API!",
+    timestamp: new Date().toISOString(),
+    documentation: "/docs",
+    health: "/health",
+  });
+});
 
 // Category CRUD routes
-import categoryRouter from './presentation/controllers/CategoryController';
-app.use('/api/v1/categories', categoryRouter);
+import { categoryRouter } from "./presentation/controllers/CategoryController";
+app.use("/api/v1/categories", categoryRouter);
 
 // Error handling middleware (must be last)
 app.use(errorLogger);

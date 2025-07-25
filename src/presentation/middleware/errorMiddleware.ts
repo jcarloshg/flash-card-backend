@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 
-// Error logging middleware
+/**
+ * Error logging middleware
+ * Logs error details for debugging and monitoring
+ */
 export const errorLogger = (
   error: Error,
   req: Request,
@@ -17,7 +20,10 @@ export const errorLogger = (
   next(error);
 };
 
-// Global error handler
+/**
+ * Global error handler middleware
+ * Sends standardized error response
+ */
 export const errorHandler = (
   error: Error,
   req: Request,
@@ -31,7 +37,10 @@ export const errorHandler = (
   });
 };
 
-// 404 handler
+/**
+ * 404 Not Found handler
+ * Sends standardized not found response
+ */
 export const notFoundHandler = (req: Request, res: Response): Response => {
   return res.status(404).json({
     success: false,
