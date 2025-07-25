@@ -8,13 +8,8 @@
     "dev": "nodemon --exec ts-node src/index.ts",
     "clean": "rm -rf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db:init": "ts-node src/infrastructure/persistence/sqlite/scripts/db-cli.ts init",
-    "db:init:seed": "ts-node src/infrastructure/persistence/sqlite/scripts/db-cli.ts init --seed",
-    "db:migrate": "ts-node src/infrastructure/persistence/sqlite/scripts/db-cli.ts migrate",
-    "db:seed": "ts-node src/infrastructure/persistence/sqlite/scripts/db-cli.ts seed",
-    "db:status": "ts-node src/infrastructure/persistence/sqlite/scripts/db-cli.ts status",
-    "db:rollback": "ts-node src/infrastructure/persistence/sqlite/scripts/db-cli.ts rollback",
-    "db:clear": "ts-node src/infrastructure/persistence/sqlite/scripts/db-cli.ts clear"
+    "sqlite:init": "ts-node src/infrastructure/data-base/scripts/db.scripts.ts init",
+    "sqlite:clean": "ts-node src/infrastructure/data-base/scripts/db.scripts.ts clean"
   },
   "keywords": [
     "express",
