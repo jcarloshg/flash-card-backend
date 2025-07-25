@@ -7,16 +7,10 @@ import { Database } from "./Database";
 export class MigrationManager {
     private migrationsDir: string;
 
-    /**
-     * @param migrationsDir - Directory containing .sql migration files
-     */
     constructor() {
         this.migrationsDir = path.join(__dirname, "/migrations");
     }
 
-    /**
-     * Runs all .sql migrations in the migrations directory, in sorted order.
-     */
     async runMigrations(): Promise<void> {
         const files = await fs.readdir(this.migrationsDir);
         const sqlFiles = files.filter((f) => f.endsWith(".sql")).sort();
@@ -29,19 +23,14 @@ export class MigrationManager {
         }
     }
 
-    /**
-     * Clears the database by deleting the database file from the filesystem.
-     * @throws Error if the database file cannot be deleted
-     */
     async clearDatabase(): Promise<void> {
         try {
             const dbName = getNameDbScript();
             const dbPath = path.join(__dirname, "db", dbName);
-            console.log(`[dbPath] -> `, dbPath)
+            console.log(`[dbPath] -> `, dbPath);
             await fs.rm(dbPath);
         } catch (error) {
-            throw new Error('Database cleaning failed');
+            throw new Error("Database cleaning failed");
         }
     }
-
 }
