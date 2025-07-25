@@ -1,6 +1,0 @@
-# Purpose: Value Objects
-
-Value objects are immutable and represent descriptive aspects of the domain. Main goals:
-- Model attributes without identity
-- Ensure immutability
-- Encapsulate validation logic

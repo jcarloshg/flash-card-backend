@@ -4,28 +4,85 @@ mode: agent
 
 # Domain-Driven Design Architecture Setup
 
-Generate a well-structured folder hierarchy following Domain-Driven Design (DDD) principles for this Express.js TypeScript project.
+Generate a well-structured folder hierarchy following Domain-Driven Design (DDD) principles for TypeScript project.
 
 ## Requirements
+
 - Create the folder structure inside `/src`
 - Follow DDD architectural patterns
-- Separate concerns between domains, application services, and infrastructure
-- Include proper TypeScript organization
+- Separate concerns between domains, application, infrastructure presentation
 - Consider scalability and maintainability
 
 ## Expected Structure
+
 The architecture should include:
-- **Domain Layer**: Core business logic, entities, value objects, domain services
-- **Application Layer**: Use cases, application services, DTOs
-- **Infrastructure Layer**: External concerns (database, APIs, frameworks)
-- **Presentation Layer**: Controllers, routes, middleware
-- **Shared/Common**: Cross-cutting concerns, utilities, types
+
+```
+├── src
+│   ├── application
+│   │   ├── dtos
+│   │   ├── services
+│   │   └── usecases
+│   │       └── CreateUserUseCase.ts
+│   ├── domain
+│   │   ├── bussines-logic
+│   │   ├── entities
+│   │   │   ├── Category.entity.ts
+│   │   │   ├── CommonSchema.ts
+│   │   │   └── User.ts
+│   │   ├── events
+│   │   └── repositories
+│   │       └── crud.repository.ts
+│   ├── infrastructure
+│   │   ├── database
+│   │   ├── external
+│   │   └── repositories
+│   ├── presentation
+│   │   ├── controllers
+│   │   ├── middleware
+│   │   └── routes
+│   └── shared
+│       ├── errors
+│       └── utils
+├── tests
+│   └── README.md
+└── tsconfig.json
+```
+
+- **Each folder** must have a `purpose.md` file to explain its purpose.
+
+### **Domain**
+
+- `bussines-logic/`
+- `entities/`
+- `events/`
+- `repositories/`
+
+### **Application**
+
+- `dtos/`
+- `services/`
+- `usecases/`
+
+### **Infrastructure**
+
+- `database/`
+- `external/`
+- `repositories/`
+
+### **Presentation**
+
+- `controllers/`
+- `middleware/`
+- `routes/`
 
 ## Additional Considerations
-- Include configuration management
-- Add proper separation for tests
-- Consider dependency injection structure
-- Include validation and error handling organization
+
 - Add documentation structure
 
-Please create a comprehensive folder structure that supports clean architecture principles and TypeScript best practices.
+## Install dependencies
+
+```bash
+npm i commander express sqlite sqlite3 zod
+npm i -D @types/commander @types/express @types/node @types/sqlite3 nodemon ts-node typescript
+```

@@ -1,35 +1,48 @@
-```typescript
-import sqlite3 from "sqlite3";
-import { open, Database as SqliteDatabase } from "sqlite";
-import path from "path";
-import { getNameDbScript } from "./scripts/getNameDb.script";
-
-/**
- * Example usage of the Database class.
- */
-async function exampleUsage(): Promise<void> {
-  try {
-    // Get database instance
-    const db = await Database.getInstance();
-
-    // Run a SQL statement (e.g., create a table)
-    await Database.run(
-      `CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL
-            )`
-    );
-
-    // Insert a user
-    await Database.run(`INSERT INTO users (name) VALUES (?)`, ["Alice"]);
-
-    // Query users
-    const users = await db.all<{ id: number; name: string }[]>(
-      `SELECT * FROM users`
-    );
-    console.log(users);
-  } catch (error) {
-    console.error("Database error:", error);
-  }
-}
+```
+├── src
+│   ├── application
+│   │   ├── dtos
+│   │   │   └── purpose-md
+│   │   ├── services
+│   │   │   └── purpose-md
+│   │   └── usecases
+│   │       ├── CreateUserUseCase.ts
+│   │       └── purpose-md
+│   ├── domain
+│   │   ├── bussines-logic
+│   │   ├── entities
+│   │   │   ├── Category.entity.ts
+│   │   │   ├── CommonSchema.ts
+│   │   │   ├── purpose-md
+│   │   │   └── User.ts
+│   │   ├── events
+│   │   │   └── purpose-md
+│   │   └── repositories
+│   │       ├── crud.repository.ts
+│   │       └── purpose-md
+│   ├── infrastructure
+│   │   ├── database
+│   │   │   └── purpose-md
+│   │   ├── external
+│   │   │   └── purpose-md
+│   │   └── repositories
+│   │       ├── purpose-md
+│   │       └── UserRepository.ts
+│   ├── presentation
+│   │   ├── controllers
+│   │   │   ├── purpose-md
+│   │   │   └── UserController.ts
+│   │   ├── middleware
+│   │   │   └── purpose-md
+│   │   └── routes
+│   │       └── purpose-md
+│   └── shared
+│       ├── errors
+│       │   ├── AppError.ts
+│       │   └── purpose-md
+│       └── utils
+│           └── purpose-md
+├── tests
+│   └── README.md
+└── tsconfig.json
 ```
