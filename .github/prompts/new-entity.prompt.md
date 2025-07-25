@@ -10,7 +10,7 @@ This prompt helps you create a new entity following TypeScript and Express.js be
 
 Provide the list of properties and their types for the new entity.
 
-## Requirements
+## Requirements for New Entity
 
 ### File Structure
 
@@ -18,20 +18,16 @@ Provide the list of properties and their types for the new entity.
 
   - **Files**:
   - with name `[entityName].entity.ts`
+    - DON't create and interface
     - Use **Zod** for runtime schema validation
     - use `CommonValidators` from `src/domain/entities/CommonSchema.ts`
-    - Implement proper type inference using `z.infer<typeof schema>`
-      - use `Schema.pick` and `Schema.partial` to:
-        - `[entityName]Schema` - Full entity schema
-        - `[entityName]ToCreateSchema` - Creation schema
-        - `[entityName]ToUpdateSchema` - Update schema
-
-## Implementation Guidelines
-
-- Follow strict TypeScript typing with proper exports
-- Use PascalCase for interfaces and camelCase for schemas
-- Add comprehensive JSDoc comments for all interfaces and schemas
-- Include field descriptions and validation rules in comments
-- Use appropriate Zod validators (e.g., `z.string().email()`, `z.number().positive()`)
-- Handle optional vs required fields correctly
-- Export all types and schemas from the index file
+      - always implement `uuid`, `createdAt` and `updatedAt` fields
+    - implement proper type inference using `z.infer<typeof schema>`
+    - create:
+      - `[entityName]Schema` - Full entity schema
+      - `[entityName]ToCreate` - Creation schema
+        - use `Schema.pick` to don't implement `uuid`, `createdAt` and `updatedAt` fields
+      - `[entityName]ToUpdate` - Update schema
+        - use `Schema.omit` to don't implement `createdAt` and `updatedAt` fields
+        - use `Schema.partial` to make all fields optional
+        - use `Schema.extend` to add `uuid` field
