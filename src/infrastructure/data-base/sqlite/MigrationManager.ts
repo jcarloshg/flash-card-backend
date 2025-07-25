@@ -1,12 +1,8 @@
-/**
- * MigrationManager class for running and managing SQLite migrations.
- * Loads and executes SQL migration files from a directory.
- * Uses async/await and strict typing.
- */
 import fs from "fs/promises";
 import path from "path";
-import { Database } from "../../infrastructure/data-base/Database";
+
 import { getNameDbScript } from "./scripts/getNameDb.script";
+import { Database } from "./Database";
 
 export class MigrationManager {
     private migrationsDir: string;

@@ -7,6 +7,7 @@
 import { program } from 'commander';
 import { MigrationManager } from '../MigrationManager';
 
+
 /**
  * Database management CLI
  * Provides commands for database operations
