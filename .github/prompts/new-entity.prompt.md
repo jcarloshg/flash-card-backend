@@ -14,28 +14,24 @@ Provide the list of properties and their types for the new entity.
 
 ### File Structure
 
-- **Location**: Place the new entity in the `src/domain/entities/[entity-name]/` folder
-- **Files**:
-  - `types.ts` - TypeScript interfaces
-  - `schemas.ts` - Zod validation schemas
-  - `index.ts` - Exports all types and schemas
+- **Location**: Place the new entity in the folder `src/domain/schemas`
 
-### Interfaces
+  - **Files**:
+  - with name `[entityName].schema.ts`
+    - Use **Zod** for runtime schema validation
+    - use `CommonValidators` from `src\domain\schemas\CommonSchemas.ts`
+    - Implement proper type inference using `z.infer<typeof schema>`
+      - `[entityName]Schema` - Full entity schema
+      - `[entityName]ToCreateSchema` - Creation schema
+      - `[entityName]ToUpdateSchema` - Update schema
 
-Create the following TypeScript interfaces:
+- **Location**: Place the new entity in the folder `src/domain/entities`
 
-- `[EntityName]` - Complete entity interface with all fields
-- `[EntityName]ToCreate` - Interface for entity creation (omits auto-generated fields like `id`, `createdAt`, `updatedAt`)
-- `[EntityName]ToUpdate` - Interface for entity updates (all fields optional except `id`)
-
-### Validation
-
-- Use **Zod** for runtime schema validation
-- Create corresponding Zod schemas for each interface:
-  - `[entityName]Schema` - Full entity schema
-  - `[entityName]ToCreateSchema` - Creation schema
-  - `[entityName]ToUpdateSchema` - Update schema
-- Implement proper type inference using `z.infer<typeof schema>`
+  - **Files**:
+  - with name `[entityName].entity.ts`
+  - use the class `src\domain\validation\DomainValidator.ts`
+  - implement `src\domain\entities\Entity.ts`
+  - use `src\domain\schemas\[entityName].schema.ts` to validate
 
 ## Implementation Guidelines
 
@@ -46,27 +42,3 @@ Create the following TypeScript interfaces:
 - Use appropriate Zod validators (e.g., `z.string().email()`, `z.number().positive()`)
 - Handle optional vs required fields correctly
 - Export all types and schemas from the index file
-
-## Example Structure
-
-```typescript
-// types.ts
-export interface User {
-  id: string;
-  email: string;
-  name: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface UserToCreate {
-  email: string;
-  name: string;
-}
-
-export interface UserToUpdate {
-  id: string;
-  email?: string;
-  name?: string;
-}
-```
