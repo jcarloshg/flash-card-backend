@@ -2,25 +2,23 @@
 
 <!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
 
-This is an Express.js project built with TypeScript. When writing code:
+This is an Express.js project built with TypeScript.
 
-- Use TypeScript with strict typing
-- Follow Express.js best practices
-- Use proper error handling with try-catch blocks
-- Use async/await for asynchronous operations
-- Type all request/response objects properly
-- Use proper HTTP status codes
-- Follow RESTful API conventions
-- Add proper JSDoc comments for functions
-- Use environment variables for configuration
-- Implement proper middleware for common tasks
+## TypeScript Best Practices
 
-## Project Structure
-- `src/` - TypeScript source files
-- `dist/` - Compiled JavaScript output
-- Main entry point: `src/index.ts`
+- Enable strict typing (`strict: true` in tsconfig).
+- Use explicit types for variables, function parameters, and return values.
+- Prefer interfaces and types for object shapes.
+- Avoid using `any`; use unknown or proper types.
+- Use enums for sets of related constants.
+- Leverage TypeScript's utility types (e.g., `Partial`, `Pick`, `Record`).
+- Organize code into modules for maintainability.
+- Use type guards and assertions where necessary.
+- Keep code DRY and avoid duplication.
+- Document types and interfaces with JSDoc comments.
 
-## Available Scripts
-- `npm run dev` - Run in development mode with hot reload
-- `npm run build` - Compile TypeScript to JavaScript
-- `npm start` - Run the compiled JavaScript
+## Additional Recommendations
+
+- Use ESLint and Prettier for code quality and formatting.
+- Write unit and integration tests for critical logic.
+- Document API endpoints and usage in a README or with OpenAPI/Swagger.
