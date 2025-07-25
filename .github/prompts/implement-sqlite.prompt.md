@@ -4,12 +4,23 @@ mode: agent
 
 # Create SQLite Database Structure
 
-path: `src/infrastructure/data-base/sqlite-02/`
+path: `src/infrastructure/database/sqlite-02/`
 
 ## Install Dependencies
 
 ```bash
 npm install sqlite sqlite3 @types/sqlite3 commander @types/commander
+```
+
+## Modify package.json
+
+add this scripts to your `package.json`:
+
+```json
+{
+  "db:init": "ts-node src/infrastructure/database/sqlite-02/scripts/db.scripts.ts init",
+  "db:clean": "ts-node src/infrastructure/database/sqlite-02/scripts/db.scripts.ts clean"
+}
 ```
 
 ## Requirements
