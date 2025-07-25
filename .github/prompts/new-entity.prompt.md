@@ -21,9 +21,10 @@ Provide the list of properties and their types for the new entity.
     - Use **Zod** for runtime schema validation
     - use `CommonValidators` from `src\domain\schemas\CommonSchemas.ts`
     - Implement proper type inference using `z.infer<typeof schema>`
-      - `[entityName]Schema` - Full entity schema
-      - `[entityName]ToCreateSchema` - Creation schema
-      - `[entityName]ToUpdateSchema` - Update schema
+      - user `Schema.pick` and `Schema.partial` to:
+        - `[entityName]Schema` - Full entity schema
+        - `[entityName]ToCreateSchema` - Creation schema
+        - `[entityName]ToUpdateSchema` - Update schema
 
 - **Location**: Place the new entity in the folder `src/domain/entities`
 
