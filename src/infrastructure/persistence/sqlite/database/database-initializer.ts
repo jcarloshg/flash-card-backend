@@ -21,7 +21,7 @@ export class DatabaseInitializer {
   }
 
   /**
-   * Initialize database with migrations and seeders
+   * Initialize database with migrations and (optionally) seeders
    */
   async initialize(runSeeders: boolean = false): Promise<void> {
     try {
@@ -32,17 +32,31 @@ export class DatabaseInitializer {
 
       // Connect to database
       const db = await this.connection.connect();
-      
+
       // Initialize migration runner and seeder
       this.migrationRunner = new MigrationRunner(db);
       this.seeder = new DatabaseSeeder(db);
 
       // Run migrations
-      await this.runMigrations();
+      console.log('Running database migrations...');
+      const migrations = [
+        createInitialTables
+        // Add more migrations here as they are created
+      ];
+      await this.migrationRunner.runMigrations(migrations);
 
       // Run seeders if requested (typically for development)
       if (runSeeders) {
-        await this.runSeeders();
+        if (!this.seeder) {
+          throw new Error('Database seeder not initialized');
+        }
+
+        console.log('Running database seeders...');
+        const seeders = [
+          developmentDataSeeder
+          // Add more seeders here as they are created
+        ];
+        await this.seeder.runSeeders(seeders);
       }
 
       console.log('Database initialization completed successfully');
@@ -50,42 +64,6 @@ export class DatabaseInitializer {
       console.error('Database initialization failed:', error);
       throw error;
     }
-  }
-
-  /**
-   * Run database migrations
-   */
-  private async runMigrations(): Promise<void> {
-    if (!this.migrationRunner) {
-      throw new Error('Migration runner not initialized');
-    }
-
-    console.log('Running database migrations...');
-    
-    const migrations = [
-      createInitialTables
-      // Add more migrations here as they are created
-    ];
-
-    await this.migrationRunner.runMigrations(migrations);
-  }
-
-  /**
-   * Run database seeders
-   */
-  private async runSeeders(): Promise<void> {
-    if (!this.seeder) {
-      throw new Error('Database seeder not initialized');
-    }
-
-    console.log('Running database seeders...');
-    
-    const seeders = [
-      developmentDataSeeder
-      // Add more seeders here as they are created
-    ];
-
-    await this.seeder.runSeeders(seeders);
   }
 
   /**
