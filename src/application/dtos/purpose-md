@@ -1,0 +1,6 @@
+# Purpose: DTOs
+
+Data Transfer Objects (DTOs) transfer data between layers. Main goals:
+- Define data contracts
+- Simplify data exchange
+- Decouple layers

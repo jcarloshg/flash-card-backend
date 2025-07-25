@@ -1,0 +1,6 @@
+# Purpose: External Integrations
+
+Integrates with external systems and services. Main goals:
+- Connect to third-party APIs
+- Handle external communication
+- Manage integration logic

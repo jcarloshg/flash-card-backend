@@ -1,0 +1,6 @@
+# Purpose: Domain Services
+
+Domain services encapsulate domain logic not naturally part of an entity or value object. Main goals:
+- Implement domain operations
+- Coordinate entities and value objects
+- Maintain domain purity

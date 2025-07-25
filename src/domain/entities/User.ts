@@ -1,31 +1,24 @@
-import { z } from 'zod';
-import { CommonSchema } from './CommonSchema';
+/**
+ * User Entity
+ * @module domain/entities/User
+ */
+export interface IUserProps {
+  id: string;
+  name: string;
+  email: string;
+}
 
 /**
- * User domain model schema using Zod
+ * Represents a User in the domain.
  */
-export const UserSchema = z.object({
-    id: CommonSchema.uuid,
-    userName: CommonSchema.nonEmptyString,
-    email: CommonSchema.email,
-    pass: CommonSchema.password,
-    createdAt: CommonSchema.createdAt,
-    updatedAt: CommonSchema.updatedAt,
-});
+export class User {
+  public readonly id: string;
+  public name: string;
+  public email: string;
 
-
-/**
- * Schema for creating a new user (no id, createdAt, updatedAt)
- */
-export const UserToCreateSchema = UserSchema.pick({
-    userName: true,
-    email: true,
-    pass: true,
-});
-export type UserToCreate = z.infer<typeof UserToCreateSchema>;
-
-/**
- * Schema for updating a user (all fields optional)
- */
-export const UserToUpdateSchema = UserSchema.partial();
-export type UserToUpdate = z.infer<typeof UserToUpdateSchema>;
+  constructor(props: IUserProps) {
+    this.id = props.id;
+    this.name = props.name;
+    this.email = props.email;
+  }
+}
