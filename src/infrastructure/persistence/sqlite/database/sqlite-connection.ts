@@ -1,7 +1,7 @@
 import sqlite3 from 'sqlite3';
-import { open, Database } from 'sqlite';
 import path from 'path';
-import { config } from '../../../config';
+import { open, Database } from 'sqlite';
+import { config } from '../../../../shared/config';
 
 /**
  * SQLite database connection manager

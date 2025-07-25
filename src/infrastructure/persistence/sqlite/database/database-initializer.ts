@@ -3,7 +3,8 @@ import { MigrationRunner } from '../migrations/migration-runner';
 import { DatabaseSeeder } from '../seeders/database-seeder';
 import { createInitialTables } from '../migrations/001_create_initial_tables';
 import { developmentDataSeeder } from '../seeders/development-data';
-import { config } from '../../../config';
+import { config } from '../../../../shared/config';
+
 import fs from 'fs';
 import path from 'path';
 

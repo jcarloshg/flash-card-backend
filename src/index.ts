@@ -1,11 +1,12 @@
 import express from 'express';
-import { config } from './config';
+
 import { 
   errorHandler, 
   errorLogger, 
   notFoundHandler, 
   requestLogger 
 } from './presentation/middleware/errorMiddleware';
+import { config } from './shared/config';
 
 const app = express();
 

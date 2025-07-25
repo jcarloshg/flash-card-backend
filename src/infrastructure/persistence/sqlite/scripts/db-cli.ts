@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
-import { databaseInitializer } from '../infrastructure/persistence/database/database-initializer';
 import { program } from 'commander';
+import { databaseInitializer } from '../database/database-initializer';
 
 /**
  * Database management CLI
