@@ -68,15 +68,17 @@ export class DIContainer {
 export const ServiceTokens = {
   // Repositories
   USER_REPOSITORY: Symbol('UserRepository'),
-  
+  CATEGORY_REPOSITORY: Symbol('CategoryRepository'),
+
   // Use Cases
   CREATE_USER_USE_CASE: Symbol('CreateUserUseCase'),
   GET_USER_USE_CASE: Symbol('GetUserUseCase'),
-  
+  CREATE_CATEGORY_USE_CASE: Symbol('CreateCategoryUseCase'),
+
   // Services
   EMAIL_SERVICE: Symbol('EmailService'),
   LOGGER_SERVICE: Symbol('LoggerService'),
-  
+
   // External Services
   DATABASE_CONNECTION: Symbol('DatabaseConnection'),
 } as const;
