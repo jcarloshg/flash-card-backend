@@ -42,8 +42,7 @@ export interface LoggingConfig {
   format: 'json' | 'simple';
 }
 
-// Configuration loader
-class ConfigLoader {
+class EnviromentVariables {
   private static instance: AppConfig;
 
   public static load(): AppConfig {
@@ -85,4 +84,4 @@ class ConfigLoader {
   }
 }
 
-export const config = ConfigLoader.load();
+export const enviromentVariables = EnviromentVariables.load();

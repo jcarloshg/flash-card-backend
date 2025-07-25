@@ -6,7 +6,7 @@ import {
   notFoundHandler, 
   requestLogger 
 } from './presentation/middleware/errorMiddleware';
-import { config } from './shared/config';
+import { enviromentVariables } from './shared/config/enviroment-variables';
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.get('/health', (req, res) => {
   res.json({
     status: 'OK',
     timestamp: new Date().toISOString(),
-    environment: config.nodeEnv,
+    environment: enviromentVariables.nodeEnv,
     version: process.env.npm_package_version || '1.0.0'
   });
 });
@@ -44,10 +44,10 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 // Start server
-const PORT = config.port;
+const PORT = enviromentVariables.port;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📖 Environment: ${config.nodeEnv}`);
+  console.log(`📖 Environment: ${enviromentVariables.nodeEnv}`);
   console.log(`🏥 Health check: http://localhost:${PORT}/health`);
 });
 

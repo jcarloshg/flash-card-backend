@@ -1,7 +1,7 @@
 import sqlite3 from 'sqlite3';
 import path from 'path';
-import { open, Database } from 'sqlite';
-import { config } from '../../../../shared/config';
+import { open, Database, ISqlite } from 'sqlite';
+import { enviromentVariables } from '../../../../shared/config/enviroment-variables';
 
 /**
  * SQLite database connection manager
@@ -11,7 +11,7 @@ export class SQLiteConnection {
   private static instance: SQLiteConnection;
   private db: Database<sqlite3.Database, sqlite3.Statement> | null = null;
 
-  private constructor() {}
+  private constructor() { }
 
   /**
    * Get singleton instance of SQLite connection
@@ -32,8 +32,8 @@ export class SQLiteConnection {
     }
 
     try {
-      const dbPath = config.database.sqlite.path || path.join(process.cwd(), 'data', 'database.sqlite');
-      
+      const dbPath = enviromentVariables.database.sqlite.path || path.join(process.cwd(), 'data', 'database.sqlite');
+
       this.db = await open({
         filename: dbPath,
         driver: sqlite3.Database
@@ -41,7 +41,7 @@ export class SQLiteConnection {
 
       // Enable foreign keys
       await this.db.exec('PRAGMA foreign_keys = ON;');
-      
+
       console.log(`SQLite database connected at: ${dbPath}`);
       return this.db;
     } catch (error) {
@@ -75,18 +75,18 @@ export class SQLiteConnection {
     if (!this.db) {
       throw new Error('Database not connected');
     }
-    
+
     return await this.db.all(sql, params);
   }
 
   /**
    * Execute SQL statement (INSERT, UPDATE, DELETE)
    */
-  public async executeStatement(sql: string, params?: any[]): Promise<sqlite3.RunResult> {
+  public async executeStatement(sql: string, params?: any[]): Promise<ISqlite.RunResult<sqlite3.Statement>> {
     if (!this.db) {
       throw new Error('Database not connected');
     }
-    
+
     return await this.db.run(sql, params);
   }
 
@@ -97,7 +97,7 @@ export class SQLiteConnection {
     if (!this.db) {
       throw new Error('Database not connected');
     }
-    
+
     await this.db.exec('BEGIN TRANSACTION;');
   }
 
@@ -108,7 +108,7 @@ export class SQLiteConnection {
     if (!this.db) {
       throw new Error('Database not connected');
     }
-    
+
     await this.db.exec('COMMIT;');
   }
 
@@ -119,7 +119,7 @@ export class SQLiteConnection {
     if (!this.db) {
       throw new Error('Database not connected');
     }
-    
+
     await this.db.exec('ROLLBACK;');
   }
 }

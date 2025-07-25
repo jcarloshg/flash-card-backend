@@ -3,7 +3,7 @@ import { MigrationRunner } from '../migrations/migration-runner';
 import { DatabaseSeeder } from '../seeders/database-seeder';
 import { createInitialTables } from '../migrations/001_create_initial_tables';
 import { developmentDataSeeder } from '../seeders/development-data';
-import { config } from '../../../../shared/config';
+import { enviromentVariables } from '../../../../shared/config/enviroment-variables';
 
 import fs from 'fs';
 import path from 'path';
@@ -92,7 +92,7 @@ export class DatabaseInitializer {
    * Ensure data directory exists
    */
   private async ensureDataDirectory(): Promise<void> {
-    const dbPath = config.database.sqlite.path;
+    const dbPath = enviromentVariables.database.sqlite.path;
     const directory = path.dirname(dbPath);
 
     if (!fs.existsSync(directory)) {
