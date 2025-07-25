@@ -14,10 +14,10 @@ Provide the list of properties and their types for the new entity.
 
 ### File Structure
 
-- **Location**: Place the new entity in the folder `src/domain/schemas`
+- **Location**: Place the new entity in the folder `src/domain/entities`
 
   - **Files**:
-  - with name `[entityName].schema.ts`
+  - with name `[entityName].entity.ts`
     - Use **Zod** for runtime schema validation
     - use `CommonValidators` from `src/domain/entities/CommonSchema.ts`
     - Implement proper type inference using `z.infer<typeof schema>`
@@ -25,14 +25,6 @@ Provide the list of properties and their types for the new entity.
         - `[entityName]Schema` - Full entity schema
         - `[entityName]ToCreateSchema` - Creation schema
         - `[entityName]ToUpdateSchema` - Update schema
-
-- **Location**: Place the new entity in the folder `src/domain/entities`
-
-  - **Files**:
-  - with name `[entityName].entity.ts`
-  - use the class `src\domain\validation\DomainValidator.ts`
-  - implement `src\domain\entities\Entity.ts`
-  - use `src\domain\schemas\[entityName].schema.ts` to validate
 
 ## Implementation Guidelines
 
