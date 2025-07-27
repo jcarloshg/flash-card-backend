@@ -9,6 +9,12 @@ mode: agent
 - provide the entity reference from `src/domain/entities/`
 - provide the script.sql reference for the table creation `src/infrastructure/database/sqlite-02/migrations/`
 
+## Installation dependencies
+
+```bash
+npm install sequelize sqlite3
+```
+
 ### File Structure
 
 - **Location**: Place the new repository in the folder `src/infrastructure/database/sqlite-02/repositories`
