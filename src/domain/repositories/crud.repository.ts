@@ -1,51 +1,67 @@
-export class CreateRepository<T> {
-    public async run(entity: T): Promise<T> {
+export class CreateRepository<DataToCreate, EntityCreated> {
+    public async run(entity: DataToCreate): Promise<EntityCreated> {
         throw new Error("Method not implemented.");
     }
 }
 
-export class ReadRepository<T> {
-    public async run(id: string): Promise<T | null> {
+export class ReadRepository<IdType, Entity> {
+    public async run(id: IdType): Promise<Entity | null> {
         throw new Error("Method not implemented.");
     }
 }
 
-export class UpdateRepository<T> {
-    public async run(id: string, entity: T): Promise<T | null> {
+export class UpdateRepository<IdType, DataToUpdate, EntityUpdated> {
+    public async run(id: IdType, entity: DataToUpdate): Promise<EntityUpdated | null> {
         throw new Error("Method not implemented.");
     }
 }
 
-export class DeleteRepository<T> {
-    public async run(id: string): Promise<boolean> {
+export class DeleteRepository<IdType> {
+    public async run(id: IdType): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
 }
 
 /**
- * Abstract CRUD repository for managing entities of type T.
+ * A generic CRUD (Create, Read, Update, Delete) repository class that delegates operations
+ * to specialized repository interfaces for each operation.
  *
- * @template T Entity type
+ * @typeParam IdType - The type used for the entity's unique identifier.
+ * @typeParam Entity - The type representing the entity managed by the repository.
+ * @typeParam DataToCreate - The type of data required to create a new entity.
+ * @typeParam DataToUpdate - The type of data required to update an existing entity.
  */
-export abstract class CrudRepository<T> {
-    public abstract readonly create: CreateRepository<T>;
-    public abstract readonly read: ReadRepository<T>;
-    public abstract readonly update: UpdateRepository<T>;
-    public abstract readonly delete: DeleteRepository<T>;
+export class CrudRepository<IdType, Entity, DataToCreate, DataToUpdate> {
+    private readonly create: CreateRepository<DataToCreate, Entity>;
+    private readonly read: ReadRepository<IdType, Entity>;
+    private readonly update: UpdateRepository<IdType, DataToUpdate, Entity>;
+    private readonly deleteRepo: DeleteRepository<IdType>;
 
-    public async runCreate(entity: T): Promise<T> {
-        throw new Error("Method not implemented.");
+    constructor(
+        create: CreateRepository<DataToCreate, Entity>,
+        read: ReadRepository<IdType, Entity>,
+        update: UpdateRepository<IdType, DataToUpdate, Entity>,
+        deleteRepo: DeleteRepository<IdType>
+    ) {
+        this.create = create;
+        this.read = read;
+        this.update = update;
+        this.deleteRepo = deleteRepo;
     }
 
-    public async runRead(id: string): Promise<T | null> {
-        throw new Error("Method not implemented.");
+    public async runCreate(entity: DataToCreate): Promise<Entity> {
+        return this.create.run(entity);
     }
 
-    public async runUpdate(id: string, entity: T): Promise<T | null> {
-        throw new Error("Method not implemented.");
+    public async runRead(id: IdType): Promise<Entity | null> {
+        return this.read.run(id);
     }
 
-    public async runDelete(id: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    public async runUpdate(id: IdType, entity: DataToUpdate): Promise<Entity | null> {
+        return this.update.run(id, entity);
+    }
+
+    public async runDelete(id: IdType): Promise<boolean> {
+        return this.deleteRepo.run(id);
     }
 }
