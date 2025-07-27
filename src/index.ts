@@ -1,4 +1,5 @@
 import express from "express";
+import { enviromentVariables } from "./shared/config/enviroment-variables";
 
 const app = express();
 
@@ -24,14 +25,15 @@ app.get("/", (req: express.Request, res: express.Response) => {
   });
 });
 
-// Category CRUD routes
-import { categoryRouter } from "./presentation/controllers/CategoryController";
-app.use("/api/v1/categories", categoryRouter);
+// // Category CRUD routes
+// import { categoryRouter } from "./presentation/controllers/CategoryController";
 
-// Error handling middleware (must be last)
-app.use(errorLogger);
-app.use(notFoundHandler);
-app.use(errorHandler);
+// app.use("/api/v1/categories", categoryRouter);
+
+// // Error handling middleware (must be last)
+// app.use(errorLogger);
+// app.use(notFoundHandler);
+// app.use(errorHandler);
 
 // Start server
 const PORT = enviromentVariables.port;
