@@ -1,5 +1,5 @@
+import { CategoryToCreateType, CategoryType } from '../../domain/entities/Category.entity';
 import { CategoryService } from '../services/CategoryService';
-import { CreateCategoryDTO, CategoryResponseDTO } from '../dtos/Category.dto';
 
 /**
  * Use case for creating a Category
@@ -15,7 +15,7 @@ export class CreateCategoryUseCase {
      * Execute the use case
      * @param dto Data for creating category
      */
-    public async execute(dto: CreateCategoryDTO): Promise<CategoryResponseDTO> {
+    public async execute(dto: CategoryToCreateType): Promise<CategoryType> {
         return this.categoryService.createCategory(dto);
     }
 }
