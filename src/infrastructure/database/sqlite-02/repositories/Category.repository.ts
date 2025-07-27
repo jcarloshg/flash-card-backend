@@ -6,7 +6,6 @@ import {
     CategoryToUpdateType,
 } from "../../../../domain/entities/Category.entity";
 import {
-    CrudRepository,
     CreateRepository,
     ReadRepository,
     UpdateRepository,
@@ -37,8 +36,4 @@ export class DeleteCategory implements DeleteRepository<string> {
     public run(id: string): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
-}
-
-export class CategoryRespository implements CreateRepository<string, CategoryType, CategoryToCreateType, CategoryToUpdateType> {
-
 }
