@@ -14,6 +14,7 @@ mode: agent
 - Implement each repository method with a try-catch block for robust error handling.
 - Define variables for SQL queries and their parameters explicitly.
 - Use the singleton `Database` class from `src/infrastructure/database/sqlite-02/Database.ts` for all database operations.
+  - run the queries using `Database.run(sql, params)`
 
 ## File Structure
 
@@ -24,6 +25,7 @@ mode: agent
   - **File Name**: `create-{entityName}.sqlite.ts`
 
     - Implement the class from `src/domain/repositories/create.repository.ts`
+      - implement the `run` method
     - Use the entity reference from `src/domain/entities/`
     - Use the `script.sql` reference to construct the query
     - Import and use `uuid` with `import { v4 as uuidv4 } from "uuid";`
@@ -32,6 +34,7 @@ mode: agent
   - **File Name**: `read-{entityName}.sqlite.ts`
 
     - Implement the class from `src/domain/repositories/read.repository.ts`
+      - implement the `run` method
     - Use the entity reference from `src/domain/entities/`
     - Use the `script.sql` reference to construct the query
     - Add JSDoc comments for all public methods and interfaces
@@ -39,10 +42,12 @@ mode: agent
   - **File Name**: `update-{entityName}.sqlite.ts`
 
     - Implement the class from `src/domain/repositories/update.repository.ts`
+      - implement the `run` method
     - Use the entity reference from `src/domain/entities/`
     - Add JSDoc comments for all public methods and interfaces
 
   - **File Name**: `delete-{entityName}.sqlite.ts`
     - Implement the class from `src/domain/repositories/delete.repository.ts`
+      - implement the `run` method
     - Use the entity reference from `src/domain/entities/`
     - Add JSDoc comments for all public methods and interfaces

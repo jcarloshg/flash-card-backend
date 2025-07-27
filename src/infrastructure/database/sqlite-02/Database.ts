@@ -1,5 +1,5 @@
 import sqlite3 from "sqlite3";
-import { open, Database as SqliteDatabase } from "sqlite";
+import { ISqlite, open, Database as SqliteDatabase } from "sqlite";
 import path from "path";
 import { getNameDbScript } from "./scripts/getNameDb.script";
 
@@ -17,13 +17,13 @@ export class Database {
     return Database.instance;
   }
 
-  /**
-   * Runs a SQL statement (INSERT, UPDATE, DELETE).
-   * @param sql - The SQL statement.
-   * @param params - Statement parameters.
-   */
-  public static async run(sql: string, params?: unknown[]) {
-    const db = await Database.getInstance();
-    await db.run(sql, params);
-  }
+  // /**
+  //  * Runs a SQL statement (INSERT, UPDATE, DELETE).
+  //  * @param sql - The SQL statement.
+  //  * @param params - Statement parameters.
+  //  */
+  // public static async run(sql: string, params?: unknown[]): Promise<ISqlite.RunResult<sqlite3.Statement>> {
+  //   const db = await Database.getInstance();
+  //   return await db.run(sql, params);
+  // }
 }

@@ -19,7 +19,7 @@ export class MigrationManager {
             console.log(`[MigrationManager] Running: ${file}`);
             const filePath = path.join(this.migrationsDir, file);
             const sql = await fs.readFile(filePath, "utf-8");
-            await Database.run(sql);
+            (await Database.getInstance()).run(sql);
         }
     }
 
