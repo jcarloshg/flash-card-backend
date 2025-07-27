@@ -21,9 +21,8 @@ export class Database {
    * Runs a SQL statement (INSERT, UPDATE, DELETE).
    * @param sql - The SQL statement.
    * @param params - Statement parameters.
-   * @returns Promise<void>
    */
-  public static async run(sql: string, params?: unknown[]): Promise<void> {
+  public static async run(sql: string, params?: unknown[]) {
     const db = await Database.getInstance();
     await db.run(sql, params);
   }

@@ -13,7 +13,7 @@ mode: agent
 
 - Implement each method try-catch block
 - Create the variables for the query and the parameters
-- use `src/infrastructure/database/sqlite-02/Database.ts`
+- use the dingleton class Database from `src/infrastructure/database/sqlite-02/Database.ts`
 
 ### File Structure
 
