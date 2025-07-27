@@ -12,34 +12,34 @@ mode: agent
 ## Requirements
 
 - Implement each method try-catch block
+- Create the variables for the query and the parameters
+- use `src/infrastructure/database/sqlite-02/Database.ts`
 
 ### File Structure
 
 - **Location**: Place the new repository in the folder `src/infrastructure/database/sqlite-02/repositories/{entityName}/`
 
-- **Create File**: `{entityName}-create.sqlite.ts`
+- **Create Files**:
 
-  - **File Name**: The file should be named `{entityName}-create.sqlite.ts`
-  - implement the class `src/domain/repositories/create.repository.ts`
-  - use entity reference from `src/domain/entities/`
-  - use the script.sql reference to create the query
-  - implement `import { v4 as uuidv4 } from "uuid";`
+  - **File Name**: `create-{entityName}.sqlite.ts`
 
-- **Create File**: `{entityName}-read.sqlite.ts`
+    - implement the class `src/domain/repositories/create.repository.ts`
+    - use entity reference from `src/domain/entities/`
+    - use the script.sql reference to create the query
+    - implement `import { v4 as uuidv4 } from "uuid";`
 
-  - **File Name**: The file should be named `{entityName}-read.sqlite.ts`
-  - implement the class `src/domain/repositories/read.repository.ts`
-  - use entity reference from `src/domain/entities/`
-  - use the script.sql reference to create the query
+  - **File Name**: `read-{entityName}.sqlite.ts`
 
-- **Create File**: `{entityName}-update.sqlite.ts`
+    - implement the class `src/domain/repositories/read.repository.ts`
+    - use entity reference from `src/domain/entities/`
+    - use the script.sql reference to create the query
 
-  - **File Name**: The file should be named `{entityName}-update.sqlite.ts`
-  - use entity reference from `src/domain/entities/`
-  - implement the class `src/domain/repositories/update.repository.ts`
+  - **File Name**: `update-{entityName}.sqlite.ts`
 
-- **Create File**: `{entityName}-delete.sqlite.ts`
+    - use entity reference from `src/domain/entities/`
+    - implement the class `src/domain/repositories/update.repository.ts`
 
-  - **File Name**: The file should be named `{entityName}-delete.sqlite.ts`
-  - use entity reference from `src/domain/entities/`
-  - implement the class `src/domain/repositories/delete.repository.ts`
+  - **File Name**: `delete-{entityName}.sqlite.ts`
+
+    - use entity reference from `src/domain/entities/`
+    - implement the class `src/domain/repositories/delete.repository.ts`
