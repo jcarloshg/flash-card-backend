@@ -17,8 +17,17 @@ export class CustomResponse<T> {
     }
 
     // ============================================================
-    //
+    // 200
     // ============================================================
+
+    static created(objectCreated: any): CustomResponse<any> {
+        return new CustomResponse<any>(
+            objectCreated,
+            201,
+            "Resource created successfully",
+            "The resource has been created successfully"
+        );
+    }
 
     // ============================================================
     // 400
