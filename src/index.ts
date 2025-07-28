@@ -1,5 +1,7 @@
 import express from "express";
 import { enviromentVariables } from "./shared/config/enviroment-variables";
+import { createHelperRoutes } from "./presentation/routes/helper_router/helper.router";
+import { categoryRoutes } from "./presentation/routes/categories/category.routes";
 
 const app = express();
 
@@ -7,30 +9,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/health", (req: express.Request, res: express.Response) => {
-  res.json({
-    status: "OK",
-    timestamp: new Date().toISOString(),
-    environment: enviromentVariables.nodeEnv,
-    version: process.env.npm_package_version || "1.0.0",
-  });
-});
+createHelperRoutes(app);
+categoryRoutes(app);
 
-app.get("/", (req: express.Request, res: express.Response) => {
-  res.json({
-    message: "Welcome to the DDD Express.js API!",
-    timestamp: new Date().toISOString(),
-    documentation: "/docs",
-    health: "/health",
-  });
-});
-
-// // Category CRUD routes
-// import { categoryRouter } from "./presentation/controllers/CategoryController";
-
-// app.use("/api/v1/categories", categoryRouter);
-
-// // Error handling middleware (must be last)
+// Error handling middleware (must be last)
 // app.use(errorLogger);
 // app.use(notFoundHandler);
 // app.use(errorHandler);
