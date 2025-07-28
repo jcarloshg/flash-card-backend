@@ -20,10 +20,18 @@ This prompt helps you create CRUD routes for a new entity following TypeScript a
 ## File Structure
 
 - create the folder `src/presentation/controllers/{entityName}/`
+
   - create the file `create-{entityName}.controller.ts`
   - create the file `read-{entityName}.controller.ts`
   - create the file `update-{entityName}.controller.ts`
   - create the file `delete-{entityName}.controller.ts`
+
+  - implement the following in each controller:
+    - use the schemas from entity reference to validate the request body or query parameters
+    - use the function `src/presentation/utils/make-response.ts`in each controller
+    - implement the class `CustomResponse` from `src/domain/entities/custom-response.entity.ts` in each controller
+    - implement the class `EntityError` from `src/domain/entities/entity-error.ts` in each controller
+
 - create the folder `src/presentation/routes/{entityName}/`
   - create the file `{entityName}.routes.ts`
   - implement code as:
