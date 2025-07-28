@@ -31,6 +31,16 @@ This prompt helps you create CRUD routes for a new entity following TypeScript a
     - use the function `src/presentation/utils/make-response.ts`in each controller
     - implement the class `CustomResponse` from `src/domain/entities/custom-response.entity.ts` in each controller
     - implement the class `EntityError` from `src/domain/entities/entity-error.ts` in each controller
+      - implement in the `catch` of the controller as:
+        ```typescript
+        catch (error) {
+            if (error instanceof EntityError) {
+                makeResponse(res, EntityError.getMessage(error));
+                return;
+            }
+            return makeResponse.error(new EntityError("Internal Server Error", 500));
+        }
+        ```
 
 - create the folder `src/presentation/routes/{entityName}/`
   - create the file `{entityName}.routes.ts`
