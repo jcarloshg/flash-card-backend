@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { CustomResponse } from "../../domain/entities/CustomResponse.entity";
+import { CustomResponse } from "../../domain/entities/custom-response.entity";
 
 export const makeResponse = (
     res: Response,

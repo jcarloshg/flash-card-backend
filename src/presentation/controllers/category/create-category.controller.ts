@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { CategoryToCreate } from "../../../domain/entities/Category.entity";
-import { EntityError } from "../../../domain/entities/validation-errors";
-import { CustomResponse } from "../../../domain/entities/CustomResponse.entity";
+import { EntityError } from "../../../domain/entities/entity-error";
+import { CustomResponse } from "../../../domain/entities/custom-response.entity";
 import { getCreateCategoryApplication } from "../../../application/usecases/create-category.application";
 import { makeResponse } from "../../utils/make-response";
 

@@ -1,5 +1,5 @@
 import z from "zod";
-import { CustomResponse } from "./CustomResponse.entity";
+import { CustomResponse } from "./custom-response.entity";
 
 export class EntityError extends z.ZodError {
     static getMessage(zodError: z.ZodError): CustomResponse<null> {
