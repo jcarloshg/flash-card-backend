@@ -1,8 +1,17 @@
+
 import { Express, Request, Response } from "express";
 import { enviromentVariables } from "../../../shared/config/enviroment-variables";
 
-export const createHelperRoutes = (app: Express) => {
-    app.get("/health", (req: Request, res: Response) => {
+/**
+ * Registers helper routes to the Express app (health check, root info).
+ * @param app - Express application instance
+ */
+export const createHelperRoutes = (app: Express): void => {
+    /**
+     * Health check endpoint
+     * GET /health
+     */
+    app.get("/health", (req: Request, res: Response): void => {
         res.json({
             status: "OK",
             timestamp: new Date().toISOString(),
@@ -11,7 +20,11 @@ export const createHelperRoutes = (app: Express) => {
         });
     });
 
-    app.get("/", (req: Request, res: Response) => {
+    /**
+     * Root endpoint info
+     * GET /
+     */
+    app.get("/", (req: Request, res: Response): void => {
         res.json({
             message: "Welcome to the DDD Express.js API!",
             timestamp: new Date().toISOString(),

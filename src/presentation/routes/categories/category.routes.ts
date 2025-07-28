@@ -1,18 +1,16 @@
-import { Express, Request, Response } from "express";
-import { Router } from "express";
+
+import { Express, Router } from "express";
 import { createCategoryController } from "../../controllers/category/create-category.controller";
 
-export const categoryRoutes = (app: Express) => {
+/**
+ * Registers category-related routes to the Express app.
+ * @param app - Express application instance
+ */
+export const categoryRoutes = (app: Express): void => {
     const categoryRouter = Router();
 
     app.use("/api/v1/categories", categoryRouter);
 
-    // CREATE
     categoryRouter.post("/", createCategoryController);
 
-    // READ
-
-    // UPDATE
-
-    // DELETE
 };
