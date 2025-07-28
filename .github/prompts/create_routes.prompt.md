@@ -38,7 +38,7 @@ This prompt helps you create CRUD routes for a new entity following TypeScript a
                 makeResponse(res, EntityError.getMessage(error));
                 return;
             }
-            return makeResponse.error(new EntityError("Internal Server Error", 500));
+            return makeResponse(new EntityError("Internal Server Error", 500));
         }
         ```
 
