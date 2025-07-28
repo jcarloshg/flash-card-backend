@@ -24,7 +24,7 @@ export const createCategoryController = async (
         const categoryCreated = await createCategoryUseCase.execute(parsedBody);
 
         // make response
-        makeResponse(res, CustomResponse.created(categoryCreated));
+        makeResponse(res, CustomResponse.created({ categoryCreated }));
         return;
     } catch (error) {
         if (error instanceof EntityError) {
