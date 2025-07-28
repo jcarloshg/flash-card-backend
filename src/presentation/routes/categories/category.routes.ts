@@ -1,4 +1,3 @@
-
 import { Express, Router } from "express";
 import { createCategoryController } from "../../controllers/category/create-category.controller";
 
