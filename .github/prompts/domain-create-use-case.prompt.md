@@ -1,5 +1,5 @@
 ---
-mode: ask
+mode: agent
 ---
 
 # Domain Create Use Case
