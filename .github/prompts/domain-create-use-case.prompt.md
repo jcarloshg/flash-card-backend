@@ -2,27 +2,41 @@
 mode: ask
 ---
 
-# Domain Create Use Case
+# Domain Use Case Creation Prompt
 
-- Create a single use case.
+This prompt guides you to create a single, well-structured domain use case following TypeScript best practices.
 
-## Input Required
+## Required Inputs
 
-- Provide the list of entities reference from `src/domain/entities/`
-- Provide the name of the use case (e.g., "Get all categories", "Create a new category", etc.)
-  - transform the name to snake case (e.g., "get-all-categories", "create-new-category", etc.)
-- Provide the objective of the use case (e.g., "Get all categories", "Create a new category", etc.)
+1. **Entities Reference**
+
+   - List all entities from `src/domain/entities/`.
+
+2. **Use Case Name**
+
+   - Provide a descriptive name (e.g., "Get all categories", "Create a new category").
+   - The name will be transformed to snake_case (e.g., "get_all_categories", "create_new_category").
+
+3. **Use Case Objective**
+   - Clearly state the objective (e.g., "Retrieve all categories", "Add a new category").
 
 ## File Structure
 
-- Create the file `src/domain/use-cases/{name-of-use-case}.use-case.ts`
+- The use case implementation will be created at:  
+  `src/domain/use-cases/{snake_case_use_case_name}.use-case.ts`
 
 ## Specifications
 
-- read the folder `src/domain/entities/`
-- read the folder `src/domain/repositories/`
-- create the necesary `src/domain/repositories/specific/`
-  - for each repository file to create:
-    - give me the objective of the repository
-    - give me the name of the repository
-    - request me the approve to create the file
+1. **Entities & Repositories**
+
+   - Read all files in `src/domain/entities/` and `src/domain/repositories/`.
+
+2. **Repository Creation**
+   - For each required repository in `src/domain/repositories/specific/`:
+     - Create a repository with a single responsibility.
+       - for example, if the use case is "Get all categories", create a repository named `get-all-categories.repository.ts`.
+     - State the objective of the repository.
+     - Provide a clear, descriptive repository name.
+     - Request approval before creating the repository file.
+
+---
