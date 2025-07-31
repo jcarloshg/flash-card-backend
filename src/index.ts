@@ -1,7 +1,7 @@
 import express from "express";
 import { enviromentVariables } from "./shared/config/enviroment-variables";
 import { createHelperRoutes } from "./presentation/routes/helper_router/helper.router";
-import { categoryRoutes } from "./presentation/routes/categories/category.routes";
+import { registerCategoryRoutes } from "./presentation/routes/category/category.routes";
 
 const app = express();
 
@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 createHelperRoutes(app);
-categoryRoutes(app);
+registerCategoryRoutes(app);
 
 // Error handling middleware (must be last)
 // app.use(errorLogger);

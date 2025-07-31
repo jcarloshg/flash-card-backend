@@ -1,3 +1,8 @@
+export type CustomResponseMsgs = {
+    userMessage?: string;
+    developerMessage?: string;
+};
+
 export class CustomResponse<T> {
     public readonly data: T;
     public readonly statusCode: number;
@@ -20,6 +25,14 @@ export class CustomResponse<T> {
     // 200
     // ============================================================
 
+    static ok<T>(data: T, msgs?: CustomResponseMsgs): CustomResponse<T> {
+        const {
+            userMessage = "Request was successful",
+            developerMessage = "The request was processed successfully",
+        } = msgs ?? {};
+        return new CustomResponse<T>(data, 200, userMessage, developerMessage);
+    }
+
     static created(objectCreated: any): CustomResponse<any> {
         return new CustomResponse<any>(
             objectCreated,
@@ -37,13 +50,20 @@ export class CustomResponse<T> {
         userMessage: string,
         developerMessage: string
     ): CustomResponse<null> {
-        return new CustomResponse<null>(
-            null,
-            400,
-            userMessage,
-            developerMessage
-        );
+        return new CustomResponse<null>(null, 400, userMessage, developerMessage);
     }
+
+    static notFound(prop: CustomResponseMsgs): CustomResponse<null> {
+        const {
+            userMessage = "Resource not found",
+            developerMessage = "The requested resource could not be found",
+        } = prop ?? {};
+        return new CustomResponse<null>(null, 404, userMessage, developerMessage);
+    }
+
+    // ============================================================
+    // 500
+    // ============================================================
 
     static internalServerError(): CustomResponse<null> {
         return new CustomResponse<null>(
@@ -53,8 +73,4 @@ export class CustomResponse<T> {
             "An unexpected error occurred"
         );
     }
-
-    // ============================================================
-    //
-    // ============================================================
 }

@@ -22,7 +22,7 @@ This prompt helps you create CRUD routes for a new entity following TypeScript a
 - create the folder `src/presentation/controllers/{entityName}/`
 
   - create the file `create-{entityName}.controller.ts`
-  - create the file `read-{entityName}.controller.ts`
+  - create the file `read-all-{entityName}.controller.ts`
   - create the file `update-{entityName}.controller.ts`
   - create the file `delete-{entityName}.controller.ts`
 
@@ -52,6 +52,6 @@ This prompt helps you create CRUD routes for a new entity following TypeScript a
     ```
   - implement in this file the next files:
     - `src/presentation/controllers/{entityName}/create-{entityName}.controller.ts`
-    - `src/presentation/controllers/{entityName}/create-{entityName}.controller.ts`
-    - `src/presentation/controllers/{entityName}/create-{entityName}.controller.ts`
-    - `src/presentation/controllers/{entityName}/create-{entityName}.controller.ts`
+    - `src/presentation/controllers/{entityName}/read-all-{entityName}.controller.ts`
+    - `src/presentation/controllers/{entityName}/update-{entityName}.controller.ts`
+    - `src/presentation/controllers/{entityName}/delete-{entityName}.controller.ts`

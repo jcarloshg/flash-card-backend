@@ -1,12 +1,12 @@
 import { CategoryType } from "../../../../../domain/entities/Category.entity";
-import { ReadRepository } from "../../../../../domain/repositories/read.repository";
+import { ReadAllRepository } from "../../../../../domain/repositories/read-all.repository";
 import { Database } from "../../Database";
 
 /**
  * Repository for reading Category entities from SQLite database.
  * Implements robust error handling and uses singleton Database instance.
  */
-export class ReadCategorySQLiteRepository implements ReadRepository<string, CategoryType[]> {
+export class ReadAllCategorySQLiteRepository implements ReadAllRepository<string, CategoryType[]> {
     /**
      * Retrieves all Category entities from the database.
      * @returns Array of Category entities

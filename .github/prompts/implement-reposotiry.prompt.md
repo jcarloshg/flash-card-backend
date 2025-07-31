@@ -31,9 +31,9 @@ mode: agent
     - Import and use `uuid` with `import { v4 as uuidv4 } from "uuid";`
     - Add JSDoc comments for all public methods and interfaces
 
-  - **File Name**: `read-{entityName}.sqlite.ts`
+  - **File Name**: `read-all-{entityName}.sqlite.ts`
 
-    - Implement the class from `src/domain/repositories/read.repository.ts`
+    - Implement the class from `src/domain/repositories/read-all.repository.ts`
       - implement the `run` method
     - Use the entity reference from `src/domain/entities/`
     - Use the `script.sql` reference to construct the query
