@@ -3,7 +3,7 @@ import { createCategoryController } from "../../controllers/category/create-cate
 import { readCategoryController } from "../../controllers/category/read-all-category.controller";
 import { updateCategoryController } from "../../controllers/category/update-category.controller";
 import { deleteCategoryController } from "../../controllers/category/delete-category.controller";
-import { readCategoryGetByIdController } from "../../controllers/category/read-category-get-by-id.controller";
+import { readCategoryGetByUuidController } from "../../controllers/category/read-category-get-by-uuid.controller";
 
 /**
  * Minimal example middleware that logs the request method and URL.
@@ -19,7 +19,7 @@ export const registerCategoryRoutes = (app: Express): void => {
     categoryRouter.post("/", createCategoryController);
     // Apply middleware only to GET method
     categoryRouter.get("/", logRequestMiddleware, readCategoryController);
-    categoryRouter.get("/:uuid", logRequestMiddleware, readCategoryGetByIdController);
+    categoryRouter.get("/get-by-uuid/:uuid", logRequestMiddleware, readCategoryGetByUuidController);
     categoryRouter.put("/", updateCategoryController);
     categoryRouter.delete("/", deleteCategoryController);
 

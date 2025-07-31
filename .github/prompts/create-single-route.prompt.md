@@ -18,8 +18,7 @@ This prompt helps you create a single route for a new entity following TypeScrip
 
 - Adding one more route to the existing CRUD operations
 - Follow RESTful API conventions
-- Include error handling and validation
-- Write unit tests for each route
+- Don't valid the input data, only just past the input to the service layer
 
 ## File Structure
 
@@ -34,13 +33,14 @@ This prompt helps you create a single route for a new entity following TypeScrip
   - implement the following in each controller:
     - use the function `src/presentation/utils/make-response.ts`in each controller
     - implement the class `CustomResponse` from `src/domain/entities/custom-response.entity.ts` in each controller
+      - implement the function `makeResponse` from `src/presentation/utils/make-response.ts`
+      - for example: `return makeResponse(res, CustomResponse);`
     - implement the class `EntityError` from `src/domain/entities/entity-error.ts` in each controller
       - implement in the `catch` of the controller as:
         ```typescript
         catch (error) {
             if (error instanceof EntityError) {
-                makeResponse(res, EntityError.getMessage(error));
-                return;
+                return makeResponse(res, EntityError.getMessage(error));
             }
             return makeResponse(new EntityError("Internal Server Error", 500));
         }
