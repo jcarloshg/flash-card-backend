@@ -22,10 +22,9 @@ export const readCategoryController = async (req: Request, res: Response) => {
     try {
         // get use case
         const readCategoryApplication = getReadCategoryApplication();
-        const props: ReadCategoryUseCaseProps = {
-            ...req.query,
-        } as unknown as ReadCategoryUseCaseProps;
-        const result = await readCategoryApplication.execute(props);
+        const result = await readCategoryApplication.execute({
+            uuid: req.query.uuid || "",
+        });
         return makeResponse(res, result);
 
     } catch (error) {
