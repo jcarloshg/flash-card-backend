@@ -23,6 +23,12 @@ mode: agent
 - Create the file `src/domain/use-cases/{name-of-use-case}.use-case.ts`
 - This must be a class that has a method named `run`:
   - that executes the objective of the use case
+  - that valid all input data
+    - use the schemas from `src/domain/entities/`
+    - if the input data is not valid, it must return a `CustomResponse` with the error message
+  - implement statement try-catch in the `run` method
+    - if an error occurs, it must return a `CustomResponse` with the error message
+    - if the use case is successful, it must return a `CustomResponse` with the result
   - that returns a promise
     - it must return `Promise<CustomResponse>` from `src/domain/entities/custom-response.entity.ts`
   - implement the class `EntityError` from `src/domain/entities/entity-error.ts`:
