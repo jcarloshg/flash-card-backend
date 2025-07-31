@@ -1,112 +1,129 @@
-# Express TypeScript Project
+# Proofs Node MCP
 
-A simple Express.js server built with TypeScript that provides a clean starting point for building web APIs.
+## Dependencies
+This project uses the following main dependencies:
+- Node.js
+- TypeScript
+- SQLite
+- Express
+- Zod (validation)
+- Prettier & ESLint
 
-## Features
-
-- ✅ Express.js web framework
-- ✅ TypeScript for type safety
-- ✅ Hot reload with nodemon
-- ✅ Built-in health check endpoint
-- ✅ JSON request/response handling
-- ✅ Proper TypeScript configuration
-- ✅ Development and production scripts
-
-## Prerequisites
-
-- Node.js (version 14 or higher)
-- npm or yarn
-
-## Installation
-
-1. Install dependencies:
-```bash
+Install all dependencies with:
+```zsh
 npm install
 ```
 
-## Development
+## Architecture
 
-Run the development server with hot reload:
-```bash
-npm run dev
+
+The project follows a layered architecture for maintainability and scalability:
+
+- **Domain Layer** (`src/domain/`):
+  - `entities/`
+  - `repositories/`
+    - `specific/`
+  - `events/`
+  - `use-case/`
+- **Application Layer** (`src/application/`):
+  - `usecases/`
+- **Infrastructure Layer** (`src/infrastructure/`):
+  - `database/`
+    - `sqlite/`
+  - `external/`
+- **Presentation Layer** (`src/presentation/`):
+  - `controllers/`
+  - `middleware/`
+  - `routes/`
+  - `utils/`
+
+
+## Available Commands
+The following npm scripts are available in this project:
+
+- `npm run build` — Compile TypeScript files to JavaScript (output in `dist/`)
+- `npm start` — Run the compiled production server (`dist/index.js`)
+- `npm run dev` — Start development server with hot-reload using nodemon and ts-node
+- `npm run clean` — Remove the `dist/` directory
+- `npm run test` — Placeholder for tests (currently not implemented)
+- `npm run db:init` — Initialize the SQLite database using migration scripts
+- `npm run db:clean` — Clean the SQLite database using migration scripts
+
+Run any command with:
+```zsh
+npm run <command>
 ```
 
-The server will start at `http://localhost:3000`
+---
 
-## Production
+## Endpoint Documentation (Minimal Examples)
 
-Build the TypeScript code:
-```bash
-npm run build
-```
-
-Start the production server:
-```bash
-npm start
-```
-
-## Available Scripts
-
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Compile TypeScript to JavaScript
-- `npm start` - Start production server
-- `npm run clean` - Remove dist folder
-
-## API Endpoints
-
-### GET /
-Returns a welcome message with timestamp.
-
-**Response:**
+### Create Category
+**POST** `/api/category`
+Request body:
 ```json
 {
-  "message": "Hello World! Express + TypeScript server is running!",
-  "timestamp": "2025-07-24T10:00:00.000Z"
+  "name": "string",
+  "description": "string"
+}
+```
+Response:
+```json
+{
+  "uuid": "string",
+  "name": "string",
+  "description": "string"
 }
 ```
 
-### GET /health
-Health check endpoint that returns server status.
-
-**Response:**
+### Get Category by UUID
+**GET** `/api/category/:uuid`
+Response:
 ```json
 {
-  "status": "OK",
-  "uptime": 123.456,
-  "timestamp": "2025-07-24T10:00:00.000Z"
+  "uuid": "string",
+  "name": "string",
+  "description": "string"
 }
 ```
 
-## Project Structure
-
+### Read All Categories
+**GET** `/api/category`
+Response:
+```json
+[
+  {
+    "uuid": "string",
+    "name": "string",
+    "description": "string"
+  }
+]
 ```
-├── src/
-│   └── index.ts          # Main server file
-├── dist/                 # Compiled JavaScript (after build)
-├── .github/
-│   └── copilot-instructions.md
-├── package.json
-├── tsconfig.json
-└── README.md
+
+### Update Category
+**PUT** `/api/category/:uuid`
+Request body:
+```json
+{
+  "name": "string",
+  "description": "string"
+}
+```
+Response:
+```json
+{
+  "uuid": "string",
+  "name": "string",
+  "description": "string"
+}
 ```
 
-## Environment Variables
+### Delete Category
+**DELETE** `/api/category/:uuid`
+Response:
+```json
+{
+  "message": "Category deleted successfully"
+}
+```
 
-- `PORT` - Server port (default: 3000)
-
-## TypeScript Configuration
-
-The project uses a strict TypeScript configuration with:
-- Target: ES2020
-- Module: CommonJS
-- Source maps enabled
-- Declaration files generated
-- Strict type checking
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests (when available)
-5. Submit a pull request
