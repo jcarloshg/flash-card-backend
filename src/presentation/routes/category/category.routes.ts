@@ -1,13 +1,23 @@
-import { Express, Router } from "express";
+import { Express, Router, Request, Response, NextFunction } from "express";
 import { createCategoryController } from "../../controllers/category/create-category.controller";
 import { readCategoryController } from "../../controllers/category/read-all-category.controller";
 import { updateCategoryController } from "../../controllers/category/update-category.controller";
 import { deleteCategoryController } from "../../controllers/category/delete-category.controller";
 
+/**
+ * Minimal example middleware that logs the request method and URL.
+ */
+const logRequestMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+    console.log(`[${req.method}] ${req.originalUrl}`);
+    next();
+};
+
 export const registerCategoryRoutes = (app: Express): void => {
     const categoryRouter = Router();
+
     categoryRouter.post("/", createCategoryController);
-    categoryRouter.get("/", readCategoryController);
+    // Apply middleware only to GET method
+    categoryRouter.get("/", logRequestMiddleware, readCategoryController);
     categoryRouter.put("/", updateCategoryController);
     categoryRouter.delete("/", deleteCategoryController);
 
