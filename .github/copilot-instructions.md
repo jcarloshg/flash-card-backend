@@ -18,3 +18,4 @@
   - Document public APIs and complex logic.
   - ADD comprehensive JSDoc comments for all interfaces and schemas.
   - Ensure code style consistency by configuring and using Prettier and ESLint with recommended settings for TypeScript projects.
+  - entityName should be in kebab-case (e.g., `question`, `answer`)

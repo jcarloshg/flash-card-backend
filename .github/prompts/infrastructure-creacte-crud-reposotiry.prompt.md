@@ -7,14 +7,18 @@ mode: agent
 ## Input Required
 
 - Provide the entity reference from `src/domain/entities/`
+- Provide the crud repository references from `src/domain/repositories/`
 - Provide the `script.sql` reference for the table creation from `src/infrastructure/database/sqlite-02/migrations/`
 
 ## Requirements
 
-- Implement each repository method with a try-catch block for robust error handling.
-- Define variables for SQL queries and their parameters explicitly.
-- Use the singleton `Database` class from `src/infrastructure/database/sqlite-02/Database.ts` for all database operations.
+- Use the entity reference from `src/domain/entities/{entityName}`
+- Implement the `run` method
+  - Define variables for SQL queries and their parameters explicitly.
+  - Implement each repository method with a try-catch block for robust error handling.
   - run the queries using `Database.run(sql, params)`
+- Add JSDoc comments for all
+- Use the singleton `Database` class from `src/infrastructure/database/sqlite-02/Database.ts` for all database operations.
 
 ## File Structure
 
@@ -24,30 +28,16 @@ mode: agent
 
   - **File Name**: `create-{entityName}.sqlite.ts`
 
-    - Implement the class from `src/domain/repositories/create.repository.ts`
-      - implement the `run` method
-    - Use the entity reference from `src/domain/entities/`
-    - Use the `script.sql` reference to construct the query
+    - Implement the class from `src/domain/repositories/crud-repository/create.repository.ts`
     - Import and use `uuid` with `import { v4 as uuidv4 } from "uuid";`
-    - Add JSDoc comments for all public methods and interfaces
 
   - **File Name**: `read-all-{entityName}.sqlite.ts`
 
-    - Implement the class from `src/domain/repositories/read-all.repository.ts`
-      - implement the `run` method
-    - Use the entity reference from `src/domain/entities/`
-    - Use the `script.sql` reference to construct the query
-    - Add JSDoc comments for all public methods and interfaces
+    - Implement the class from `src/domain/repositories/crud-repository/read-all.repository.ts`
 
   - **File Name**: `update-{entityName}.sqlite.ts`
 
-    - Implement the class from `src/domain/repositories/update.repository.ts`
-      - implement the `run` method
-    - Use the entity reference from `src/domain/entities/`
-    - Add JSDoc comments for all public methods and interfaces
+    - Implement the class from `src/domain/repositories/crud-repository/update.repository.ts`
 
   - **File Name**: `delete-{entityName}.sqlite.ts`
-    - Implement the class from `src/domain/repositories/delete.repository.ts`
-      - implement the `run` method
-    - Use the entity reference from `src/domain/entities/`
-    - Add JSDoc comments for all public methods and interfaces
+    - Implement the class from `src/domain/repositories/crud-repository/delete.repository.ts`
