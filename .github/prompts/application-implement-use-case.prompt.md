@@ -7,7 +7,7 @@ mode: agent
 ## Input Required
 
 - Provide the reference from `src/domain/use-case/`
-- Provide the repositories reference from `src/infrastructure/database/sqlite`
+- Provide the repositories reference from `src/infrastructure/database/sqlite/repositories/{entity-name}/`
 
 ## File structure
 

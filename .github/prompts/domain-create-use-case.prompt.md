@@ -21,7 +21,14 @@ mode: agent
 - read the folder `src/domain/repositories/{entity-name}/`
 
 - Create the file `src/domain/use-cases/{name-of-use-case}.use-case.ts`
+
+- This must have an interface called `{name-of-use-case}Props`, (eg `CategoryProps`, `QuestionProps`, etc.):
+
+  - This interface must have the property `metadata`, `metadata: { [key: string]: any }`
+  - This interface must have the property `data`, `data: { [key: string]: any }`
+
 - This must be a class that has a method named `run`:
+  - implement as parameter the interface `{name-of-use-case}Props`
   - that executes the objective of the use case
   - that valid all input data
     - use the schemas from `src/domain/entities/`
