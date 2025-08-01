@@ -5,13 +5,12 @@ import { ReadAllRepository } from '../crud-repository/read-all.repository';
  * Repository for reading all Question entities.
  * Implements the ReadAllRepository interface for Question.
  */
-export class ReadAllQuestionRepository implements ReadAllRepository<string, Question[]> {
+export class ReadAllQuestionRepository implements ReadAllRepository<Question> {
     /**
-     * Retrieves all Question entities for a given user or context.
-     * @param id - The identifier for the context (e.g., user uuid).
+     * Retrieves all Question entities.
      * @returns An array of Question entities.
      */
-    public async run(id: string): Promise<Question[]> {
+    public async run(): Promise<Question[]> {
         throw new Error('Method not implemented.');
     }
 }
