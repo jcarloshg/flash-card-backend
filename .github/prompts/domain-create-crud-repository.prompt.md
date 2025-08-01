@@ -11,6 +11,7 @@ mode: agent
 ## Requirements
 
 - Implement each class from `src/domain/repositories/crud-repository`
+- entityName should be in kebab-case (e.g., `question`, `answer`)
 
 ## File Structure
 
