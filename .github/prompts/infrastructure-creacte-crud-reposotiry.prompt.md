@@ -7,8 +7,10 @@ mode: agent
 ## Input Required
 
 - Provide the entity reference from `src/domain/entities/`
-- Provide the crud repository references from `src/domain/repositories/`
+- Provide the crud repository references from `src/domain/repositories/{entityName}`
 - Provide the `script.sql` reference for the table creation from `src/infrastructure/database/sqlite-02/migrations/`
+
+## DON'T START THE NEXT TASK UNTIL THE **Input Required** IS COMPLETE.
 
 ## Requirements
 
