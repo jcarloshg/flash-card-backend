@@ -40,6 +40,7 @@ The architecture should include:
 │   │   │   └── entity-error.ts
 │   │   ├── events
 │   │   └── repositories
+│   │       ├── error-repository.ts
 │   │       └── crud-repository
 │   │           ├── create.repository.ts
 │   │           ├── delete.repository.ts
@@ -73,6 +74,7 @@ The architecture should include:
   - `entity-error.ts`
 - `events/`
 - `repositories/`
+  - `error-repository.ts`
   - `crud-repository/`
     - `create.repository.ts`
     - `delete.repository.ts`
@@ -192,5 +194,21 @@ export class UpdateRepository<IdType, DataToUpdate, EntityUpdated> {
   ): Promise<EntityUpdated | null> {
     throw new Error("Method not implemented.");
   }
+}
+```
+
+- **error-repository.ts**
+
+```typescript
+export class ErrorRepository extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = "ErrorRepository";
+    }
+
+    static getMessage(error: ErrorRepository): string {
+        const completeMessage = `[${this.name}]: ${error.message}`;
+        return completeMessage;
+    }
 }
 ```

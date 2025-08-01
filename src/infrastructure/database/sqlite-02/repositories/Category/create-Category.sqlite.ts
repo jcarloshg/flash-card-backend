@@ -6,6 +6,7 @@ import {
     CategoryType,
 } from "../../../../../domain/entities/Category.entity";
 import { CreateRepository } from "../../../../../domain/repositories/crud-repository/create.repository";
+import { ErrorRepository } from "../../../../../domain/repositories/error-repository";
 
 /**
  * Repository for creating Category entities in SQLite database.
@@ -35,10 +36,9 @@ export class CreateCategorySQLiteRepository
                 updatedAt: now,
             };
         } catch (error) {
-            throw new Error(
-                `Failed to create Category: ${error instanceof Error ? error.message : String(error)
-                }`
-            );
+            const errorMessage = error instanceof Error ? error.message : "Unknown error";
+            console.error(`[CreateCategorySQLiteRepository]: ${errorMessage}`);
+            throw new ErrorRepository(errorMessage);
         }
     }
 }
