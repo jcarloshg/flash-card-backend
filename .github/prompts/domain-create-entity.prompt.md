@@ -10,6 +10,8 @@ This prompt helps you create a new entity following TypeScript and Express.js be
 
 Provide the list of properties and their types for the new entity.
 
+**Do not start implementation until all required inputs are available.**
+
 ## Requirements for New Entity
 
 ### File Structure

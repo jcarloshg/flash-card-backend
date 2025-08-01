@@ -9,6 +9,8 @@ mode: agent
 - Provide the reference from `src/domain/use-case/`
 - Provide the repositories reference from `src/infrastructure/database/sqlite/repositories/{entity-name}/`
 
+**Do not start implementation until all required inputs are available.**
+
 ## File structure
 
 - Create the file in `src/application/use-cases/run-{name-of-use-case}.application.ts`
