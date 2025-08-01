@@ -12,6 +12,7 @@ This prompt guides you to create robust, maintainable CRUD routes for a new enti
 
 ## Requirements
 
+- DON'T Validate all incoming data.
 - Implement all CRUD operations: Create, Read-all, Update, Delete.
 - Adhere to RESTful API conventions.
 - Use strict TypeScript typing; avoid `any`.

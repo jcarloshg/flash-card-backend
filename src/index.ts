@@ -2,6 +2,7 @@ import express from "express";
 import { enviromentVariables } from "./shared/config/enviroment-variables";
 import { createHelperRoutes } from "./presentation/routes/helper_router/helper.router";
 import { registerCategoryRoutes } from "./presentation/routes/category/category.routes";
+import { registerQuestionRoutes } from "./presentation/routes/question/question.routes";
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 createHelperRoutes(app);
 registerCategoryRoutes(app);
+registerQuestionRoutes(app);
 
 // Error handling middleware (must be last)
 // app.use(errorLogger);
