@@ -3,14 +3,14 @@ import { CommonSchema } from "./common-schema";
 import { CategorySchema } from "./Category.entity";
 
 /**
- * Zod schema for Deck entity
- * Validates all required fields and types
- * - uuid: required, UUID v4
- * - name: required, non-empty string
- * - description: required, non-empty string
- * - category: required, Category entity
- * - createdAt: required, valid Date
- * - updatedAt: required, valid Date
+ * Deck entity schema.
+ * @description Validates Deck entity fields.
+ * @property {string} uuid - Deck UUID (v4).
+ * @property {string} name - Deck name (non-empty).
+ * @property {string} description - Deck description (non-empty).
+ * @property {CategoryType} category - Deck category entity.
+ * @property {Date} createdAt - Creation date.
+ * @property {Date} updatedAt - Last update date.
  */
 export const DeckSchema = z.object({
     uuid: CommonSchema.uuid,
@@ -22,9 +22,11 @@ export const DeckSchema = z.object({
 });
 
 /**
- * Zod schema for creating a Deck
- * Only name, description, and category are required
- * Does NOT include uuid, createdAt, updatedAt
+ * Schema for creating a Deck.
+ * @description Requires name, description, and category_uuid.
+ * @property {string} name - Deck name.
+ * @property {string} description - Deck description.
+ * @property {string} category_uuid - UUID of the category.
  */
 export const DeckToCreate = DeckSchema.pick({
     name: true,
@@ -34,14 +36,17 @@ export const DeckToCreate = DeckSchema.pick({
 });
 
 /**
- * Zod schema for updating a Deck
- * All fields are optional except createdAt and updatedAt (not included)
- * Adds uuid as optional field
+ * Schema for updating a Deck.
+ * @description All fields optional except createdAt/updatedAt. Use category_uuid for category updates.
+ * @property {string} [name] - Deck name.
+ * @property {string} [description] - Deck description.
+ * @property {string} [category_uuid] - UUID of the category.
+ * @property {string} [uuid] - Deck UUID.
  */
 export const DeckToUpdate = DeckSchema.omit({
     createdAt: true,
     updatedAt: true,
-    category: true, // category is not updated directly, use category_uuid instead
+    category: true,
 })
     .partial()
     .extend({
@@ -50,8 +55,16 @@ export const DeckToUpdate = DeckSchema.omit({
     });
 
 /**
- * Type inference for Deck schemas
+ * Deck entity type.
  */
 export type DeckType = z.infer<typeof DeckSchema>;
+
+/**
+ * Deck creation type.
+ */
 export type DeckToCreateType = z.infer<typeof DeckToCreate>;
+
+/**
+ * Deck update type.
+ */
 export type DeckToUpdateType = z.infer<typeof DeckToUpdate>;
