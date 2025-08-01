@@ -12,14 +12,19 @@ export class MigrationManager {
     }
 
     async runMigrations(): Promise<void> {
+        const db = await Database.getInstance();
         const files = await fs.readdir(this.migrationsDir);
         const sqlFiles = files.filter((f) => f.endsWith(".sql")).sort();
         console.log(`[MigrationManager] Found:`, sqlFiles);
         for (const file of sqlFiles) {
-            console.log(`[MigrationManager] Running: ${file}`);
             const filePath = path.join(this.migrationsDir, file);
             const sql = await fs.readFile(filePath, "utf-8");
-            (await Database.getInstance()).run(sql);
+            console.log(`[MigrationManager] Running: ${file}, ${sql}`);
+            try {
+                await db.run(sql);
+            } catch (error) {
+                console.error(`[MigrationManager] Error running migration ${file}:`, error);
+            }
         }
     }
 

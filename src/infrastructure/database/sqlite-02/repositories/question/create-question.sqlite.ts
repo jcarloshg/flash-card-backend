@@ -15,7 +15,7 @@ export class CreateQuestionSqliteRepository extends CreateRepository<QuestionCre
      * @returns The created Question entity.
      */
     public async run(entity: QuestionCreate): Promise<Question> {
-        
+
         const uuid = uuidv4();
         const createdAt = new Date();
         const updatedAt = createdAt
