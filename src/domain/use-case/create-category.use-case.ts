@@ -1,5 +1,5 @@
 import { CategoryToCreateType, CategoryType } from "../entities/Category.entity";
-import { CreateRepository } from "../repositories/create.repository";
+import { CreateRepository } from "../repositories/crud-repository/create.repository";
 
 export class CreateCategoryUseCase {
 

@@ -1,7 +1,7 @@
 import { CategorySchema, CategoryType } from "../entities/Category.entity";
 import { CustomResponse } from "../entities/custom-response.entity";
 import { EntityError } from "../entities/entity-error";
-import { ReadAllRepository } from "../repositories/read-all.repository";
+import { ReadAllRepository } from "../repositories/crud-repository/read-all.repository";
 
 export class ReadCategoryUseCase {
     private readonly ReadAllRepository: ReadAllRepository<string, CategoryType[]>;

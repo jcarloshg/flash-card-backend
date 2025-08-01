@@ -40,10 +40,11 @@ The architecture should include:
 │   │   │   └── entity-error.ts
 │   │   ├── events
 │   │   └── repositories
-│   │       ├── create.repository.ts
-│   │       ├── delete.repository.ts
-│   │       ├── read.repository.ts
-│   │       └── update.repository.ts
+│   │       └── crud-repository
+│   │           ├── create.repository.ts
+│   │           ├── delete.repository.ts
+│   │           ├── read.repository.ts
+│   │           └── update.repository.ts
 │   ├── infrastructure
 │   │   ├── database
 │   │   └── external
@@ -72,6 +73,11 @@ The architecture should include:
   - `entity-error.ts`
 - `events/`
 - `repositories/`
+  - `crud-repository/`
+    - `create.repository.ts`
+    - `delete.repository.ts`
+    - `read.repository.ts`
+    - `update.repository.ts`
 
 ### **Application**
 

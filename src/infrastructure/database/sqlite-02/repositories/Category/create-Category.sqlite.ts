@@ -5,7 +5,7 @@ import {
     CategoryToCreateType,
     CategoryType,
 } from "../../../../../domain/entities/Category.entity";
-import { CreateRepository } from "../../../../../domain/repositories/create.repository";
+import { CreateRepository } from "../../../../../domain/repositories/crud-repository/create.repository";
 
 /**
  * Repository for creating Category entities in SQLite database.

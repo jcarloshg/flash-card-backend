@@ -1,4 +1,4 @@
-import { DeleteRepository } from "../../../../../domain/repositories/delete.repository";
+import { DeleteRepository } from "../../../../../domain/repositories/crud-repository/delete.repository";
 import { Database } from "../../Database";
 
 /**

@@ -1,6 +1,6 @@
 
 import { CategoryToUpdateType, CategoryType } from "../../../../../domain/entities/Category.entity";
-import { UpdateRepository } from "../../../../../domain/repositories/update.repository";
+import { UpdateRepository } from "../../../../../domain/repositories/crud-repository/update.repository";
 import { Database } from "../../Database";
 
 /**

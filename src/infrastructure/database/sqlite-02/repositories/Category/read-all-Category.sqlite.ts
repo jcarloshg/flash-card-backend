@@ -1,5 +1,5 @@
 import { CategoryType } from "../../../../../domain/entities/Category.entity";
-import { ReadAllRepository } from "../../../../../domain/repositories/read-all.repository";
+import { ReadAllRepository } from "../../../../../domain/repositories/crud-repository/read-all.repository";
 import { Database } from "../../Database";
 
 /**
