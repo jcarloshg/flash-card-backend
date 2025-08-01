@@ -2,44 +2,91 @@
 mode: agent
 ---
 
-# Implement Repository for an Entity
+# Repository Implementation Prompt
+
+## Objective
+
+Implement a robust, well-documented CRUD repository for a specified entity using best TypeScript and software engineering practices.
 
 ## Input Required
 
-- Provide the entity reference from `src/domain/entities/`
-- Provide the crud repository references from `src/domain/repositories/{entityName}`
-- Provide the `script.sql` reference for the table creation from `src/infrastructure/database/sqlite-02/migrations/`
+Before proceeding, ensure you have provided:
 
-## DON'T START THE NEXT TASK UNTIL THE **Input Required** IS COMPLETE.
+- The entity reference from `src/domain/entities/{entityName}`
+- The CRUD repository interfaces from `src/domain/repositories/{entityName}/`
+- The `script.sql` file for table creation from `src/infrastructure/database/sqlite-02/migrations/`
 
-## Requirements
+**Do not start implementation until all required inputs are available.**
 
-- Use the entity reference from `src/domain/entities/{entityName}`
-- Implement the `run` method
-  - Define variables for SQL queries and their parameters explicitly.
-  - Implement each repository method with a try-catch block for robust error handling.
-  - run the queries using `Database.run(sql, params)`
-- Add JSDoc comments for all
-- Use the singleton `Database` class from `src\infrastructure\database\sqlite-02\Database.ts` for all database operations.
+## Implementation Guidelines
+
+- **Entity Usage**: Import and use the entity from `src/domain/entities/{entityName}`.
+- **Repository Methods**: Implement all CRUD methods as defined in the corresponding repository class.
+- **Database Access**: Use the singleton `Database` class from `src/infrastructure/database/sqlite-02/Database.ts` for all database operations.
+- **SQL Queries**:
+  - Define SQL queries and their parameters as explicit, well-named variables.
+  - Use `Database.run(sql, params)` for executing queries.
+    - as the next example:
+      ```typescript
+      const db = await Database.getInstance();
+      await db.run(sql, params);
+      ```
+- **Error Handling**:
+  - Wrap each repository method in a try-catch block.
+    - as the next example:
+      ```typescript
+      try {
+        // method logic
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Unknown error";
+        console.error(`[{name-of-the-class}]: ${errorMessage}`);
+        throw new ErrorRepository(errorMessage);
+      }
+      ```
+  - Provide meaningful error messages and rethrow or handle errors as appropriate.
+- **UUID Generation**: For creation, use `import { v4 as uuidv4 } from "uuid";` to generate unique identifiers.
+- **Documentation**:
+  - Add comprehensive JSDoc comments for all classes, methods, and interfaces.
+  - Document method parameters, return types, and error cases.
+- **TypeScript Best Practices**:
+  - Use strict typing throughout.
+  - Prefer interfaces over types where applicable.
+  - Avoid `any`; use explicit types.
+  - Organize imports and exports clearly.
+  - Follow consistent naming conventions (e.g., entity names in kebab-case).
+  - Ensure code style consistency (Prettier, ESLint recommended).
 
 ## File Structure
 
-- **Location**: Place the new repository in `src/infrastructure/database/sqlite-02/repositories/{entityName}/`
+Create the following files in `src/infrastructure/database/sqlite-02/repositories/{entityName}/`:
 
-- **Create Files**:
+- **create-{entityName}.sqlite.ts**
 
-  - **File Name**: `create-{entityName}.sqlite.ts`
+  - Implements the interface from `src/domain/repositories/crud-repository/create.repository.ts`
+  - Handles entity creation with UUID assignment.
 
-    - Implement the class from `src/domain/repositories/crud-repository/create.repository.ts`
-    - Import and use `uuid` with `import { v4 as uuidv4 } from "uuid";`
+- **read-all-{entityName}.sqlite.ts**
 
-  - **File Name**: `read-all-{entityName}.sqlite.ts`
+  - Implements the interface from `src/domain/repositories/crud-repository/read-all.repository.ts`
+  - Handles retrieval of all entities.
 
-    - Implement the class from `src/domain/repositories/crud-repository/read-all.repository.ts`
+- **update-{entityName}.sqlite.ts**
 
-  - **File Name**: `update-{entityName}.sqlite.ts`
+  - Implements the interface from `src/domain/repositories/crud-repository/update.repository.ts`
+  - Handles entity updates.
 
-    - Implement the class from `src/domain/repositories/crud-repository/update.repository.ts`
+- **delete-{entityName}.sqlite.ts**
+  - Implements the interface from `src/domain/repositories/crud-repository/delete.repository.ts`
+  - Handles entity deletion.
 
-  - **File Name**: `delete-{entityName}.sqlite.ts`
-    - Implement the class from `src/domain/repositories/crud-repository/delete.repository.ts`
+## Quality Checklist
+
+- [ ] All methods are robustly typed and documented.
+- [ ] Error handling is comprehensive and consistent.
+- [ ] Code style follows project standards.
+- [ ] All files are placed in the correct directory structure.
+- [ ] No use of `any` or implicit types.
+- [ ] Imports are organized and minimal.
+
+---
