@@ -10,6 +10,8 @@ This prompt guides you to create robust, maintainable CRUD routes for a new enti
 
 - Specify the entity reference from `src/domain/entities/` (e.g., `question`, `answer`).
 
+**Do not start implementation until all required inputs are available.**
+
 ## Requirements
 
 - DON'T Validate all incoming data.
@@ -25,6 +27,7 @@ This prompt guides you to create robust, maintainable CRUD routes for a new enti
 ## File Structure
 
 - Create the folder: `src/presentation/controllers/{entityName}/`
+
   - `create-{entityName}.controller.ts`
   - `read-all-{entityName}.controller.ts`
   - `update-{entityName}.controller.ts`
@@ -34,8 +37,10 @@ This prompt guides you to create robust, maintainable CRUD routes for a new enti
     - Implement the `CustomResponse` class from `src/domain/entities/custom-response.entity.ts`.
 
 - Create the folder: `src/presentation/routes/{entityName}/`
+
   - `{entityName}.routes.ts`
   - Example code:
+
     ```typescript
     import { Express, Router } from "express";
     import { create{EntityName}Controller } from "../../controllers/{entityName}/create-{entityName}.controller";
@@ -54,6 +59,7 @@ This prompt guides you to create robust, maintainable CRUD routes for a new enti
       app.use("/api/v1/{entityName}", {entityName}Router);
     };
     ```
+
   - Ensure all controllers are imported and routes are registered.
 
 ## Additional Notes
