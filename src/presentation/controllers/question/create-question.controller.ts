@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { CustomResponse } from "../../../domain/entities/custom-response.entity";
 import { makeResponse } from "../../utils/make-response";
+import { runCreateQuestionUseCase } from "../../../application/usecases/run-create-question-use-case.application";
 
 /**
  * Controller for creating a question.
@@ -15,15 +16,24 @@ export const createQuestionController = async (
         // No validation of data
         const questionData = req.body ?? {};
 
-        // TODO: Implement create question use case
-        // const createQuestionUseCase = getCreateQuestionApplication();
-        // const questionCreated = await createQuestionUseCase.execute(questionData);
+        // Call the application use case to create the question
+        const createQuestionResponse = await runCreateQuestionUseCase({
+            data: {
+                QuestionCreate: questionData,
+            },
+            metadata: {},
+        });
+        makeResponse(res, createQuestionResponse);
 
         // Placeholder response until use case is implemented
-        makeResponse(res, CustomResponse.created({ 
-            message: "Create question endpoint created - use case implementation pending",
-            questionData
-        }));
+        makeResponse(
+            res,
+            CustomResponse.created({
+                message:
+                    "Create question endpoint created - use case implementation pending",
+                questionData,
+            })
+        );
         return;
     } catch (error) {
         makeResponse(res, CustomResponse.internalServerError());

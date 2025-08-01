@@ -25,10 +25,15 @@ export class CreateQuestionUseCase {
      * @param questionData - The question data to create
      * @returns Promise<CustomResponse> - Custom response with created question or error
      */
-    async run(questionData: QuestionCreate): Promise<CustomResponse<Question | null>> {
+    async run(props: CreateQuestionUseCaseProps): Promise<CustomResponse<Question | null>> {
         try {
+
+            const { metadata, data } = props;
+
+            console.log(`[metadata] -> `, metadata)
+
             // Validate input data using QuestionToCreate schema
-            const parseResult = QuestionToCreate.safeParse(questionData);
+            const parseResult = QuestionToCreate.safeParse(data.QuestionCreate);
             if (!parseResult.success) return EntityError.getMessage(parseResult.error);
 
             const validatedData = parseResult.data;

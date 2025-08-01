@@ -11,7 +11,7 @@ mode: agent
 
 ## File structure
 
-- Create the file in `src/application/use-cases/{name-of-use-case}.application.ts`
+- Create the file in `src/application/use-cases/run-{name-of-use-case}.application.ts`
 - The input function must be the same as the use case reference in its method `run`
 - This file must have a single arrow function that:
   - create the instance of the use case retrieved as input
