@@ -13,6 +13,8 @@ mode: agent
   - transform the name to snake case (e.g., "get-all-categories", "create-new-category", etc.)
 - Provide the objective of the use case (e.g., "Get all categories", "Create a new category", etc.)
 
+**Do not start implementation until all required inputs are available.**
+
 ## Implementation
 
 ### Create Use Case
