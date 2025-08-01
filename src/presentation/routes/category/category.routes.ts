@@ -17,7 +17,6 @@ export const registerCategoryRoutes = (app: Express): void => {
     const categoryRouter = Router();
 
     categoryRouter.post("/", createCategoryController);
-    // Apply middleware only to GET method
     categoryRouter.get("/", logRequestMiddleware, readCategoryController);
     categoryRouter.get("/:uuid", logRequestMiddleware, readCategoryGetByUuidController);
     categoryRouter.put("/", updateCategoryController);
