@@ -24,7 +24,8 @@ mode: agent
 
 - This must have an interface called `{name-of-use-case}Props`, (eg `CategoryProps`, `QuestionProps`, etc.):
 
-  - This interface must have the property `metadata`, `metadata: { [key: string]: any }`
+  - This interface must have the property `metadata`:
+    - `timestamp: Date`
   - This interface must have the property `data`, `data: { [key: string]: any }`
 
 - This must be a class that has a method named `run`:

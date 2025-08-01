@@ -49,8 +49,10 @@ export class CreateQuestionUseCase {
 
 
 export interface CreateQuestionUseCaseProps {
-    metadata: { [key: string]: any };
     data: {
         QuestionCreate: { [key: string]: any }
+    };
+    metadata: {
+        timestamp: Date;
     };
 }

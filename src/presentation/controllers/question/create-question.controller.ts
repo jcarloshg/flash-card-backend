@@ -13,15 +13,16 @@ export const createQuestionController = async (
     res: Response
 ): Promise<void> => {
     try {
-        // No validation of data
-        const questionData = req.body ?? {};
 
         // Call the application use case to create the question
+        const questionData = req.body ?? {};
         const createQuestionResponse = await runCreateQuestionUseCase({
             data: {
                 QuestionCreate: questionData,
             },
-            metadata: {},
+            metadata: {
+                timestamp: new Date(),
+            },
         });
         makeResponse(res, createQuestionResponse);
 
