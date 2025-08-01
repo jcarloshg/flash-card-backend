@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import { QuestionCreate, Question } from "../../../domain/entities/Question.entity";
-import { CreateRepository } from "../../../domain/repositories/crud-repository/create.repository";
-import { Database } from "../../sqlite-02/Database";
+import { CreateRepository } from "../../../../../domain/repositories/crud-repository/create.repository";
+import { Question, QuestionCreate } from "../../../../../domain/entities/Question.entity";
+import { Database } from "../../Database";
 
 /**
  * Repository for creating a Question entity in the database.
@@ -14,15 +14,17 @@ export class CreateQuestionSqliteRepository extends CreateRepository<QuestionCre
      * @returns The created Question entity.
      */
     public async run(entity: QuestionCreate): Promise<Question> {
-        const db = Database.getInstance();
+        const db = await Database.getInstance();
         const uuid = uuidv4();
-        const createdAt = new Date().toISOString();
-        const updatedAt = createdAt;
+        const createdAt = new Date();
+        const updatedAt = createdAt
+        const createdAtString = createdAt.toISOString();
+        const updatedAtString = createdAtString;
         const sql = `INSERT INTO question (uuid, created_at, updated_at, question, answers, answers_type) VALUES (?, ?, ?, ?, ?, ?)`;
         const params = [
             uuid,
-            createdAt,
-            updatedAt,
+            createdAtString,
+            updatedAtString,
             entity.question,
             entity.answers,
             entity.answers_type,
@@ -31,8 +33,8 @@ export class CreateQuestionSqliteRepository extends CreateRepository<QuestionCre
             await db.run(sql, params);
             return {
                 uuid,
-                createdAt,
-                updatedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
                 question: entity.question,
                 answers: entity.answers,
                 answers_type: entity.answers_type,

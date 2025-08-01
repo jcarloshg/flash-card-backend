@@ -1,6 +1,6 @@
-import { QuestionUpdate, Question } from "../../../domain/entities/Question.entity";
-import { UpdateRepository } from "../../../domain/repositories/crud-repository/update.repository";
-import { Database } from "../../sqlite-02/Database";
+import { Question, QuestionUpdate } from "../../../../../domain/entities/Question.entity";
+import { UpdateRepository } from "../../../../../domain/repositories/crud-repository/update.repository";
+import { Database } from "../../Database";
 
 /**
  * Repository for updating a Question entity in the database.
@@ -14,7 +14,7 @@ export class UpdateQuestionSqliteRepository extends UpdateRepository<string, Que
      * @returns The updated Question entity or null if not found.
      */
     public async run(uuid: string, entity: QuestionUpdate): Promise<Question | null> {
-        const db = Database.getInstance();
+        const db = await Database.getInstance();
         const updatedAt = new Date().toISOString();
         const sql = `UPDATE question SET updated_at = ?, question = ?, answers = ?, answers_type = ? WHERE uuid = ?`;
         const params = [

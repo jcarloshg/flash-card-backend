@@ -1,5 +1,5 @@
 import sqlite3 from "sqlite3";
-import { ISqlite, open, Database as SqliteDatabase } from "sqlite";
+import { open, Database as SqliteDatabase } from "sqlite";
 import path from "path";
 import { getNameDbScript } from "./scripts/getNameDb.script";
 

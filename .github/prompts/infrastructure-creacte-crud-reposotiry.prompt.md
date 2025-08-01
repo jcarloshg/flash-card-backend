@@ -18,7 +18,7 @@ mode: agent
   - Implement each repository method with a try-catch block for robust error handling.
   - run the queries using `Database.run(sql, params)`
 - Add JSDoc comments for all
-- Use the singleton `Database` class from `src/infrastructure/database/sqlite-02/Database.ts` for all database operations.
+- Use the singleton `Database` class from `src\infrastructure\database\sqlite-02\Database.ts` for all database operations.
 
 ## File Structure
 

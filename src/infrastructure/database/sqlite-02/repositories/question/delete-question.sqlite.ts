@@ -1,5 +1,6 @@
-import { DeleteRepository } from "../../../domain/repositories/crud-repository/delete.repository";
-import { Database } from "../../sqlite-02/Database";
+import { DeleteRepository } from "../../../../../domain/repositories/crud-repository/delete.repository";
+import { Database } from "../../Database";
+
 
 /**
  * Repository for deleting a Question entity from the database.
@@ -12,11 +13,11 @@ export class DeleteQuestionSqliteRepository extends DeleteRepository<string> {
      * @returns True if deleted, false otherwise.
      */
     public async run(uuid: string): Promise<boolean> {
-        const db = Database.getInstance();
+        const db = await Database.getInstance();
         const sql = `DELETE FROM question WHERE uuid = ?`;
         try {
             const result = await db.run(sql, [uuid]);
-            return result.changes > 0;
+            return (result?.changes ?? 0) > 0;
         } catch (error) {
             throw new Error(`Failed to delete question: ${error}`);
         }

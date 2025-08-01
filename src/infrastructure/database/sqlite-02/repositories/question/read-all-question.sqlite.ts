@@ -1,6 +1,6 @@
-import { Question } from "../../../domain/entities/Question.entity";
-import { ReadAllRepository } from "../../../domain/repositories/crud-repository/read-all.repository";
-import { Database } from "../../sqlite-02/Database";
+import { Question } from "../../../../../domain/entities/Question.entity";
+import { ReadAllRepository } from "../../../../../domain/repositories/crud-repository/read-all.repository";
+import { Database } from "../../Database";
 
 /**
  * Repository for reading all Question entities from the database.
@@ -12,9 +12,9 @@ export class ReadAllQuestionSqliteRepository extends ReadAllRepository<Question>
      * @returns Array of Question entities.
      */
     public async run(): Promise<Question[]> {
-        const db = Database.getInstance();
-        const sql = `SELECT uuid, created_at as createdAt, updated_at as updatedAt, question, answers, answers_type FROM question`;
         try {
+            const db = await Database.getInstance();
+            const sql = `SELECT uuid, created_at as createdAt, updated_at as updatedAt, question, answers, answers_type FROM question`;
             const rows = await db.all(sql);
             return rows.map((row: any) => ({
                 uuid: row.uuid,
