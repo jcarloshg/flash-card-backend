@@ -2,16 +2,6 @@ import { z } from "zod";
 import { CommonSchema } from "./common-schema";
 import { CategorySchema } from "./Category.entity";
 
-/**
- * Deck entity schema.
- * @description Validates Deck entity fields.
- * @property {string} uuid - Deck UUID (v4).
- * @property {string} name - Deck name (non-empty).
- * @property {string} description - Deck description (non-empty).
- * @property {CategoryType} category - Deck category entity.
- * @property {Date} createdAt - Creation date.
- * @property {Date} updatedAt - Last update date.
- */
 export const DeckSchema = z.object({
     uuid: CommonSchema.uuid,
     name: CommonSchema.nonEmptyString,
@@ -21,28 +11,30 @@ export const DeckSchema = z.object({
     updatedAt: CommonSchema.updatedAt,
 });
 
-/**
- * Schema for creating a Deck.
- * @description Requires name, description, and category_uuid.
- * @property {string} name - Deck name.
- * @property {string} description - Deck description.
- * @property {string} category_uuid - UUID of the category.
- */
-export const DeckToCreate = DeckSchema.pick({
+export const DeckSchemaToRepository = DeckSchema.omit({
+    category: true,
+})
+    .partial()
+    .extend({
+        category_uuid: CommonSchema.uuid,
+    });
+
+export const DeckSchemaToCreateToUser = DeckSchema.pick({
     name: true,
     description: true,
 }).extend({
     category_uuid: CommonSchema.uuid,
 });
 
-/**
- * Schema for updating a Deck.
- * @description All fields optional except createdAt/updatedAt. Use category_uuid for category updates.
- * @property {string} [name] - Deck name.
- * @property {string} [description] - Deck description.
- * @property {string} [category_uuid] - UUID of the category.
- * @property {string} [uuid] - Deck UUID.
- */
+export const DeckSchemaToCreateToRespository = DeckSchema.pick({
+    uuid: true,
+    name: true,
+    description: true,
+    category_uuid: true,
+    createdAt: true,
+    updatedAt: true,
+});
+
 export const DeckToUpdate = DeckSchema.omit({
     createdAt: true,
     updatedAt: true,
@@ -54,17 +46,15 @@ export const DeckToUpdate = DeckSchema.omit({
         uuid: CommonSchema.uuid.optional(),
     });
 
-/**
- * Deck entity type.
- */
+// CREATE
+export type DeckToCreateToUserType = z.infer<typeof DeckSchemaToCreateToUser>;
+export type DeckToCreateToRespository = z.infer<typeof DeckSchemaToCreateToRespository>;
+
+// READ
 export type DeckType = z.infer<typeof DeckSchema>;
+export type DeckToRepositoryType = z.infer<typeof DeckSchemaToRepository>;
 
-/**
- * Deck creation type.
- */
-export type DeckToCreateType = z.infer<typeof DeckToCreate>;
-
-/**
- * Deck update type.
- */
+// UPDATE
 export type DeckToUpdateType = z.infer<typeof DeckToUpdate>;
+
+// DELETE
