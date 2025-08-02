@@ -22,12 +22,15 @@ mode: agent
   - **File Name**: `create-{entityName}.repository.ts`
 
     - Implement the class from `src/domain/repositories/crud-repository/create.repository.ts`
+    - use the type `{entityName}ToCreateToRepository` and `{entityName}Repository`
 
   - **File Name**: `read-all-{entityName}.repository.ts`
 
     - Implement the class from `src/domain/repositories/crud-repository/read-all.repository.ts`
+    - use the type `{entityName}Repository`
 
   - **File Name**: `update-{entityName}.repository.ts`
+  - use the type `{entityName}ToUpdateType` and `{entityName}Repository`
 
     - Implement the class from `src/domain/repositories/crud-repository/update.repository.ts`
 
@@ -39,4 +42,3 @@ mode: agent
   - Implement the `run` method
     - add `throw new Error("Method not implemented.");`
   - Add JSDoc comments for all public methods and interfaces
-  
