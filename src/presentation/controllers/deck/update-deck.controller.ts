@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { makeResponse } from "@/presentation/utils/make-response";
 import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { runUpdateDeckByUuidApplication } from "@/application/usecases/run-update-deck-by-uuid.application";
 
 /**
  * Controller to handle updating a Deck entity.
@@ -10,10 +11,21 @@ import { CustomResponse } from "@/domain/entities/custom-response.entity";
  */
 export const updateDeckController = async (req: Request, res: Response): Promise<Response> => {
   try {
-    // TODO: Implement Deck update logic
-    // const updatedDeck = await updateDeckUseCase(req.params.id, req.body);
-    const response = CustomResponse.ok({}); // Replace {} with updated deck
-    makeResponse(res, response);
+
+    const { uuid } = req.params;
+    const body = req.body;
+
+    const runUpdateDeckByUuidRes = await runUpdateDeckByUuidApplication({
+      metadata:{
+        timestamp: new Date(),
+      },
+      data: {
+        uuid: uuid,
+        update: body,
+      }
+    })
+
+    makeResponse(res, runUpdateDeckByUuidRes);
     return res;
   } catch (error) {
     const response = CustomResponse.internalServerError();
