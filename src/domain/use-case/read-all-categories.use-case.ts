@@ -11,17 +11,17 @@ export interface ReadAllCategoriesProps {
     metadata: {
         timestamp: Date;
     };
-    data: { [key: string]: any };
+    data: any
 }
 
 /**
  * Use case for reading all categories
  */
 export class ReadAllCategoriesUseCase {
-    private readonly repository: ReadAllCategoryRepository;
+    private readonly readAllCategoryRepository: ReadAllCategoryRepository;
 
     constructor(repository: ReadAllCategoryRepository) {
-        this.repository = repository;
+        this.readAllCategoryRepository = repository;
     }
 
     /**
@@ -32,7 +32,7 @@ export class ReadAllCategoriesUseCase {
     async run(props: ReadAllCategoriesProps): Promise<CustomResponse<CategoryRepository[] | null>> {
         try {
             // No input data to validate for reading all categories
-            const categories = await this.repository.run();
+            const categories = await this.readAllCategoryRepository.run();
             return CustomResponse.ok(categories);
         } catch (error) {
             if (error instanceof EntityError) return EntityError.getMessage(error);

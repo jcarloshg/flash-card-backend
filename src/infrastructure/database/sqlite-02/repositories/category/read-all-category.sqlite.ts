@@ -16,6 +16,7 @@ export class ReadAllCategorySqliteRepository extends ReadAllCategoryRepository {
       const db = await Database.getInstance();
       const sql = `SELECT uuid, name, description, createdAt, updatedAt, active FROM Category WHERE active = 1`;
       const rows = await db.all(sql);
+      console.log(`[rows] -> `, rows)
       // Map DB rows to CategoryRepository objects
       return rows.map((row: any) => ({
         uuid: row.uuid,

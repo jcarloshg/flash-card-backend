@@ -45,12 +45,13 @@ export class CreateCategoryUseCase {
             }
 
             // Transform to repository DTO if needed
+            const create_at = new Date();
             const toRepository: CategoryToCreateToRepository = {
                 ...parseResult.data,
                 active: true,
                 uuid: crypto.randomUUID(),
-                createdAt: props.metadata.timestamp,
-                updatedAt: props.metadata.timestamp,
+                createdAt: create_at,
+                updatedAt: create_at,
             };
 
             // Attempt to create the category

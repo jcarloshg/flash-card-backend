@@ -1,12 +1,9 @@
 import { Request, Response } from "express";
-import {
-    CategorySchema,
-    CategoryToUpdate,
-} from "../../../domain/entities/Category.entity";
-import { makeResponse } from "../../utils/make-response";
-import { CustomResponse } from "../../../domain/entities/custom-response.entity";
-import { EntityError } from "../../../domain/entities/entity-error";
-import { getReadCategoryApplication } from "../../../application/usecases/read-category.application";
+
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+
+import { runReadAllCategoriesApplication } from "@/application/usecases/run-read-all-categories.application";
+import { makeResponse } from "@/presentation/utils/make-response";
 
 /**
  * Controller for reading a Category
@@ -15,10 +12,14 @@ import { getReadCategoryApplication } from "../../../application/usecases/read-c
  */
 export const readCategoryController = async (req: Request, res: Response) => {
     try {
-        // get use case
-        const readCategoryApplication = getReadCategoryApplication();
-        const result = await readCategoryApplication.execute();
-        return makeResponse(res, result);
+        const readAllCategoriesRes = await runReadAllCategoriesApplication({
+            metadata: {
+                timestamp: new Date(),
+            },
+            data: {}
+        });
+        makeResponse(res, readAllCategoriesRes);
+        return;
     } catch (error) {
         return makeResponse(res, CustomResponse.internalServerError());
     }

@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
-import { EntityError } from "../../../domain/entities/entity-error";
-import { CustomResponse } from "../../../domain/entities/custom-response.entity";
-import { makeResponse } from "../../utils/make-response";
-import { runCreateCategoryApplication } from "@/application/usecases/create-category.application";
+
+import { EntityError } from "@/domain/entities/entity-error";
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+
+import { runCreateCategoryApplication } from "@/application/usecases/run-create-category.application";
+import { makeResponse } from "@/presentation/utils/make-response";
 
 /**
  * Controller for creating a category.
