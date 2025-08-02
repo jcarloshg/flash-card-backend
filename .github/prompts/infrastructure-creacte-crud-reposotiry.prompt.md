@@ -71,6 +71,11 @@ Create the following files in `src/infrastructure/database/sqlite-02/repositorie
   - Implements the interface from `src/domain/repositories/crud-repository/read-all.repository.ts`
   - Handles retrieval of all entities.
 
+- **read-by-id-{entityName}.sqlite.ts**
+
+  - Implements the interface from `src/domain/repositories/crud-repository/read-by-id.repository.ts`
+  - Handles retrieval of all entities.
+
 - **update-{entityName}.sqlite.ts**
 
   - Implements the interface from `src/domain/repositories/crud-repository/update.repository.ts`

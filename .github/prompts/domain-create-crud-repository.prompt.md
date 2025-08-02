@@ -29,6 +29,12 @@ mode: agent
     - Implement the class from `src/domain/repositories/crud-repository/read-all.repository.ts`
     - use the type `{entityName}Repository`
 
+
+  - **File Name**: `read-by-id-{entityName}.repository.ts`
+
+    - Implement the class from `src/domain/repositories/crud-repository/read-by-id.repository.ts`
+    - use the type `{entityName}Repository`
+
   - **File Name**: `update-{entityName}.repository.ts`
   - use the type `{entityName}ToUpdateType` and `{entityName}Repository`
 
