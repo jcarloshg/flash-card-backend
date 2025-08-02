@@ -20,7 +20,7 @@ export const registerCategoryRoutes = (app: Express): void => {
     categoryRouter.get("/", logRequestMiddleware, readCategoryController);
     categoryRouter.get("/:uuid", logRequestMiddleware, readCategoryGetByUuidController);
     categoryRouter.put("/:uuid", updateCategoryController);
-    categoryRouter.delete("/", deleteCategoryController);
+    categoryRouter.delete("/:uuid", deleteCategoryController);
 
     app.use("/api/v1/categories", categoryRouter);
 };

@@ -3,6 +3,7 @@ import { makeResponse } from "../../utils/make-response";
 import { CustomResponse } from "../../../domain/entities/custom-response.entity";
 import { EntityError } from "../../../domain/entities/entity-error";
 import { CategorySchema } from "../../../domain/entities/Category.entity";
+import { runDeleteCategoryByUuidApplication } from "@/application/usecases/run-delete-category-by-uuid.application";
 
 /**
  * Controller for deleting a Category
@@ -11,10 +12,12 @@ import { CategorySchema } from "../../../domain/entities/Category.entity";
  */
 export const deleteCategoryController = async (req: Request, res: Response) => {
     try {
-        const { uuid } = req.query;
-        const parsed = CategorySchema.pick({ uuid: true }).parse({ uuid });
-
-        return makeResponse(res, CustomResponse.created({}));
+        const { uuid } = req.params;
+        const deleteCategoryByUuidResponse = await runDeleteCategoryByUuidApplication({
+            metadata: { timestamp: new Date() },
+            data: { uuid }
+        })
+        return makeResponse(res, deleteCategoryByUuidResponse);
     } catch (error) {
         if (error instanceof EntityError) {
             makeResponse(res, EntityError.getMessage(error));
