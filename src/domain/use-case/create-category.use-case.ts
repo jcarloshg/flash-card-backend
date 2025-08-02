@@ -10,14 +10,14 @@ import { CreateCategoryRepository } from "../repositories/category/create-catego
 
 /**
  * Props for creating a category use case.
- * @interface CreateCategoryProps
+ * @interface CreateCategoryUseCaseProps
  */
 
-export interface CreateCategoryProps {
+export interface CreateCategoryUseCaseProps {
     metadata: {
         timestamp: Date;
     };
-    data: { [key: string]: any }; // Adjusted to allow any data structure
+    data: any;
 }
 
 /**
@@ -36,7 +36,7 @@ export class CreateCategoryUseCase {
      * @param props - The properties for creating a category.
      * @returns Promise<CustomResponse<Category | null>>
      */
-    async run(props: CreateCategoryProps): Promise<CustomResponse<Category | null>> {
+    async run(props: CreateCategoryUseCaseProps): Promise<CustomResponse<Category | null>> {
         try {
             // Validate input data
             const parseResult = CategorySchemaToCreate.safeParse(props.data);
@@ -47,6 +47,7 @@ export class CreateCategoryUseCase {
             // Transform to repository DTO if needed
             const toRepository: CategoryToCreateToRepository = {
                 ...parseResult.data,
+                active: true,
                 uuid: crypto.randomUUID(),
                 createdAt: props.metadata.timestamp,
                 updatedAt: props.metadata.timestamp,

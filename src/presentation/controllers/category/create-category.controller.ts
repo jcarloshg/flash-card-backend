@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
-import { CategorySchemaToCreate } from "../../../domain/entities/Category.entity";
 import { EntityError } from "../../../domain/entities/entity-error";
 import { CustomResponse } from "../../../domain/entities/custom-response.entity";
-import { getCreateCategoryApplication } from "../../../application/usecases/create-category.application";
 import { makeResponse } from "../../utils/make-response";
+import { runCreateCategoryApplication } from "@/application/usecases/create-category.application";
 
 /**
  * Controller for creating a category.
@@ -15,16 +14,15 @@ export const createCategoryController = async (
     res: Response
 ): Promise<void> => {
     try {
-        // valid data
+
         const body: unknown = req.body ?? {};
-        const parsedBody = CategorySchemaToCreate.parse(body);
-
-        // get use case
-        const createCategoryUseCase = getCreateCategoryApplication();
-        const categoryCreated = await createCategoryUseCase.execute(parsedBody);
-
-        // make response
-        makeResponse(res, CustomResponse.created({ categoryCreated }));
+        const response = await runCreateCategoryApplication({
+            metadata: {
+                timestamp: new Date(),
+            },
+            data: body
+        })
+        makeResponse(res, response);
         return;
     } catch (error) {
         if (error instanceof EntityError) {

@@ -1,4 +1,7 @@
-import { CategoryToCreateToRepository, Category } from "@/domain/entities/Category.entity";
+import {
+    CategoryToCreateToRepository,
+    Category,
+} from "@/domain/entities/Category.entity";
 import { CreateCategoryRepository } from "@/domain/repositories/category/create-category.repository";
 import { ErrorRepository } from "@/domain/repositories/error-repository";
 import { Database } from "@/infrastructure/database/sqlite-02/Database";
@@ -16,10 +19,16 @@ export class CreateCategorySqliteRepository extends CreateCategoryRepository {
      */
     async run(data: CategoryToCreateToRepository): Promise<Category> {
         try {
-
             // create variables for SQL query and parameters (including 'active')
             const sql = `INSERT INTO Category (uuid, active, name, description, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)`;
-            const params = [data.uuid, 1, data.name, data.description, data.createdAt, data.updatedAt];
+            const params = [
+                data.uuid,
+                data.active ? 1 : 0,
+                data.name,
+                data.description,
+                data.createdAt,
+                data.updatedAt,
+            ];
 
             // get database instance and execute the query
             const db = await Database.getInstance();

@@ -15,7 +15,6 @@ export const CategorySchemaToRepository = CategorySchema;
 export const CategorySchemaToCreate = CategorySchema.pick({
     name: true,
     description: true,
-    active: true,
 });
 
 export const CategorySchemaToCreateToRepository = CategorySchema.pick({
