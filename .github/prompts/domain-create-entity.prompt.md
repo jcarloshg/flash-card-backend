@@ -27,6 +27,7 @@ Provide the list of properties and their types for the new entity.
     - implement proper type inference using `z.infer<typeof schema>`
     - create:
       - `[entityName]Schema` - Full entity schema
+      - `[entityName]SchemaToRepository`
       - `[entityName]ToCreate` - Creation schema
         - use `Schema.pick` to don't implement `uuid`, `createdAt` and `updatedAt` fields
       - `[entityName]ToUpdate` - Update schema

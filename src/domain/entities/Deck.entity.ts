@@ -19,7 +19,7 @@ export const DeckSchemaToRepository = DeckSchema.omit({
         category_uuid: CommonSchema.uuid,
     });
 
-export const DeckSchemaToCreateToUser = DeckSchema.pick({
+export const DeckSchemaToCreate = DeckSchema.pick({
     name: true,
     description: true,
 }).extend({
@@ -47,7 +47,7 @@ export const DeckToUpdate = DeckSchema.omit({
     });
 
 // CREATE
-export type DeckToCreateToUserType = z.infer<typeof DeckSchemaToCreateToUser>;
+export type DeckToCreate = z.infer<typeof DeckSchemaToCreate>;
 export type DeckToCreateToRespository = z.infer<typeof DeckSchemaToCreateToRespository>;
 
 // READ

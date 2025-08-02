@@ -1,4 +1,4 @@
-import { DeckSchemaToCreateToUser, DeckToCreateToUserType, DeckType } from "../entities/Deck.entity";
+import { DeckSchemaToCreate, DeckToCreate, DeckType } from "../entities/Deck.entity";
 import { CustomResponse } from "../entities/custom-response.entity";
 import { EntityError } from "../entities/entity-error";
 import { CreateDeckRepository } from "../repositories/deck/create-deck.repository";
@@ -44,7 +44,7 @@ export class CreateDeckUseCase {
   async run(props: CreateDeckProps): Promise<CustomResponse<DeckType | null>> {
     try {
       // Validate input data using DeckToCreate schema
-      const validated = DeckSchemaToCreateToUser.parse(props.data);
+      const validated = DeckSchemaToCreate.parse(props.data);
       // Attempt to create the deck
       const createdDeck = await this.repository.run(validated);
       return CustomResponse.created(createdDeck);

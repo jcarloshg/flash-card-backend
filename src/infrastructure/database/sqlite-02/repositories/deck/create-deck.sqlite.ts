@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { DeckType, DeckToCreateToUserType } from "@/domain/entities/Deck.entity";
+import { DeckType, DeckToCreate } from "@/domain/entities/Deck.entity";
 import { CreateDeckRepository } from "@/domain/repositories/deck/create-deck.repository";
 import { ErrorRepository } from "@/domain/repositories/error-repository";
 import { Database } from "@/infrastructure/database/sqlite-02/Database";
@@ -15,7 +15,7 @@ export class CreateDeckSqliteRepository extends CreateDeckRepository {
    * @returns The created Deck entity.
    * @throws {ErrorRepository} If a database error occurs.
    */
-  async run(entity: DeckToCreateToUserType): Promise<DeckType> {
+  async run(entity: DeckToCreate): Promise<DeckType> {
     const uuid = uuidv4();
     const sql = `INSERT INTO deck (uuid, name, description, category_uuid) VALUES (?, ?, ?, ?)`;
     const params = [uuid, entity.name, entity.description, entity.category_uuid];
