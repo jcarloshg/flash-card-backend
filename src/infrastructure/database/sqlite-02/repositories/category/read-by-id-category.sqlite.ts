@@ -21,7 +21,7 @@ export class ReadByIdCategorySqliteRepository implements ReadByIdCategoryReposit
             const db = await Database.getInstance();
             const row = await db.get(sql, [id]);
             if (!row) return null;
-            return {
+            const categoryRepository: CategoryRepository = {
                 uuid: row.uuid,
                 active: !!row.active,
                 name: row.name,
@@ -29,6 +29,7 @@ export class ReadByIdCategorySqliteRepository implements ReadByIdCategoryReposit
                 createdAt: new Date(row.createdAt),
                 updatedAt: new Date(row.updatedAt)
             };
+            return categoryRepository;
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Unknown error";
             console.error(`[ReadByIdCategorySqliteRepository]: ${errorMessage}`);
