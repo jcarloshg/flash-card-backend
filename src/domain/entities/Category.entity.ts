@@ -1,38 +1,32 @@
 import { z } from "zod";
 import { CommonSchema } from "./common-schema";
 
-/**
- * Zod schema for Category entity
- * Validates all required fields and types
- * - uuid: required, UUID v4
- * - name: required, non-empty string
- * - description: required, non-empty string
- * - createdAt: required, valid Date
- * - updatedAt: required, valid Date
- */
 export const CategorySchema = z.object({
     uuid: CommonSchema.uuid,
+    active: CommonSchema.active,
     name: CommonSchema.nonEmptyString,
     description: CommonSchema.nonEmptyString,
     createdAt: CommonSchema.createdAt,
     updatedAt: CommonSchema.updatedAt,
 });
 
-/**
- * Zod schema for creating a Category
- * Only name and description are required
- * Does NOT include uuid, createdAt, updatedAt
- */
-export const CategoryToCreate = CategorySchema.pick({
+export const CategorySchemaToRepository = CategorySchema;
+
+export const CategorySchemaToCreate = CategorySchema.pick({
     name: true,
     description: true,
+    active: true,
 });
 
-/**
- * Zod schema for updating a Category
- * All fields are optional except createdAt and updatedAt (not included)
- * Adds uuid as optional field
- */
+export const CategorySchemaToCreateToRepository = CategorySchema.pick({
+    uuid: true,
+    name: true,
+    description: true,
+    active: true,
+    createdAt: true,
+    updatedAt: true,
+});
+
 export const CategoryToUpdate = CategorySchema.omit({
     createdAt: true,
     updatedAt: true,
@@ -42,9 +36,17 @@ export const CategoryToUpdate = CategorySchema.omit({
         uuid: CommonSchema.uuid.optional(),
     });
 
-/**
- * Type inference for Category schemas
- */
-export type CategoryType = z.infer<typeof CategorySchema>;
-export type CategoryToCreateType = z.infer<typeof CategoryToCreate>;
+// CREATE
+export type CategoryToCreate = z.infer<typeof CategorySchemaToCreate>;
+export type CategoryToCreateToRepository = z.infer<typeof CategorySchemaToCreateToRepository>;
+
+// READ
+export type Category = z.infer<typeof CategorySchema>;
+export type CategoryRepository = z.infer<typeof CategorySchemaToRepository>;
+
+// UPDATE
 export type CategoryToUpdateType = z.infer<typeof CategoryToUpdate>;
+
+// DELETE
+
+

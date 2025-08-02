@@ -1,4 +1,4 @@
-import { CategoryType, CategorySchema } from "../entities/Category.entity";
+import { Category, CategorySchema } from "../entities/Category.entity";
 import { CustomResponse } from "../entities/custom-response.entity";
 import { EntityError } from "../entities/entity-error";
 import { GetCategoryByUuidRepository } from "../repositories/specific/get-category-by-uuid.repository";
@@ -24,7 +24,7 @@ export class GetCategoryByUuidUseCase {
      * @param uuid - The uuid of the category to retrieve
      * @returns Promise<CustomResponse> - Custom response with result or error
      */
-    async run(uuid: string): Promise<CustomResponse<CategoryType | null>> {
+    async run(uuid: string): Promise<CustomResponse<Category | null>> {
         try {
             // Validate input using CategorySchema (assuming uuid validation is part of schema)
             const parseResult = CategorySchema.shape.uuid.safeParse(uuid);
@@ -42,7 +42,7 @@ export class GetCategoryByUuidUseCase {
                     developerMessage: `No category found for uuid: ${uuid}`
                 });
             }
-            return CustomResponse.ok<CategoryType>(category);
+            return CustomResponse.ok<Category>(category);
         } catch (error) {
             if (error instanceof EntityError) return EntityError.getMessage(error);
             return CustomResponse.internalServerError();

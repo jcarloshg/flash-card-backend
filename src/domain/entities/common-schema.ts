@@ -30,4 +30,5 @@ export const CommonSchema = {
         .refine((val) => val instanceof Date && !isNaN(val.getTime()), {
             message: "updatedAt must be a valid Date",
         }),
+    active: z.boolean("Should be a boolean"),
 };

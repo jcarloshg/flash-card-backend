@@ -1,4 +1,4 @@
-import { CategoryType } from "../../../../../domain/entities/Category.entity";
+import { Category } from "../../../../../domain/entities/Category.entity";
 import { GetCategoryByUuidRepository } from "../../../../../domain/repositories/specific/get-category-by-uuid.repository";
 import { Database } from "../../Database";
 
@@ -13,12 +13,12 @@ export class GetCategoryByUuidSQLiteRepository extends GetCategoryByUuidReposito
      * @param uuid - The uuid of the category to retrieve
      * @returns Promise<CategoryType | null> - The found category or null if not found
      */
-    async run(uuid: string): Promise<CategoryType | null> {
+    async run(uuid: string): Promise<Category | null> {
         const sql = `SELECT * FROM Category WHERE uuid = ?`;
         try {
             const db = await Database.getInstance();
             const row = await db.get(sql, uuid);
-            return row ? (row as CategoryType) : null;
+            return row ? (row as Category) : null;
         } catch (error) {
             throw new Error(`Failed to fetch Category by uuid: ${error instanceof Error ? error.message : String(error)}`);
         }

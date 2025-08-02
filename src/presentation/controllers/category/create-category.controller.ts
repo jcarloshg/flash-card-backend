@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CategoryToCreate } from "../../../domain/entities/Category.entity";
+import { CategorySchemaToCreate } from "../../../domain/entities/Category.entity";
 import { EntityError } from "../../../domain/entities/entity-error";
 import { CustomResponse } from "../../../domain/entities/custom-response.entity";
 import { getCreateCategoryApplication } from "../../../application/usecases/create-category.application";
@@ -17,7 +17,7 @@ export const createCategoryController = async (
     try {
         // valid data
         const body: unknown = req.body ?? {};
-        const parsedBody = CategoryToCreate.parse(body);
+        const parsedBody = CategorySchemaToCreate.parse(body);
 
         // get use case
         const createCategoryUseCase = getCreateCategoryApplication();

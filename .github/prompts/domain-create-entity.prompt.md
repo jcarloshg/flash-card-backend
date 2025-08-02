@@ -23,7 +23,7 @@ Provide the list of properties and their types for the new entity.
     - DON't create and interface
     - Use **Zod** for runtime schema validation
     - use `CommonValidators` from `src/domain/entities/CommonSchema.ts`
-      - always implement `uuid`, `createdAt` and `updatedAt` fields
+      - always implement `uuid`, `active`, `createdAt` and `updatedAt` fields
     - implement proper type inference using `z.infer<typeof schema>`
     - create:
       - `[entityName]Schema` - Full entity schema
