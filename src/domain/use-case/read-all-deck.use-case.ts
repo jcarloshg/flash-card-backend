@@ -1,6 +1,6 @@
 import { ReadAllDeckRepository } from "@/domain/repositories/deck/read-all-deck.repository"
 import { CustomResponse } from "@/domain/entities/custom-response.entity";
-import { DeckType, DeckSchema } from "@/domain/entities/Deck.entity";
+import { DeckType, DeckSchema, DeckToRepositoryType } from "@/domain/entities/Deck.entity";
 import { EntityError } from "@/domain/entities/entity-error";
 import { ErrorRepository } from "@/domain/repositories/error-repository";
 
@@ -31,19 +31,9 @@ export class ReadAllDeckUseCase {
         this.repository = repository ?? new ReadAllDeckRepository();
     }
 
-    /**
-     * Executes the use case to get all Deck entities.
-     * @param {ReadAllDeckUseCaseProps} props - The use case input props.
-     * @returns {Promise<CustomResponse<DeckType[] | null>>}
-     */
-    /**
-     * Executes the use case to get all Deck entities.
-     * Validates input, handles errors, and returns a CustomResponse.
-     * @param {ReadAllDeckUseCaseProps} props - The use case input props.
-     * @returns {Promise<CustomResponse<DeckType[] | null>>}
-     */
-    async run(props: ReadAllDeckUseCaseProps): Promise<CustomResponse<DeckType[] | null>> {
+    async run(props: ReadAllDeckUseCaseProps): Promise<CustomResponse<DeckToRepositoryType[] | null>> {
         try {
+
             // // Validate metadata
             // if (!props?.metadata?.timestamp || !(props.metadata.timestamp instanceof Date)) {
             //     return CustomResponse.badRequest(
@@ -55,14 +45,8 @@ export class ReadAllDeckUseCase {
             // Fetch all Decks from the repository
             const decks = await this.repository.run();
             console.log(`[decks] -> `, decks);
+            return CustomResponse.ok(decks);
 
-            // Validate output
-            const parseResult = DeckSchema.array().safeParse(decks);
-            if (!parseResult.success) {
-                throw new EntityError(parseResult.error.issues);
-            }
-
-            return CustomResponse.ok(parseResult.data);
         } catch (error) {
             if (error instanceof EntityError) return EntityError.getMessage(error);
             if (error instanceof ErrorRepository) return ErrorRepository.getMessage(error);

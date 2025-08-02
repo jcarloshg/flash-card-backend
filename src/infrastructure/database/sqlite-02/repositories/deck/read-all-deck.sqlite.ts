@@ -1,29 +1,34 @@
 import { ReadAllDeckRepository } from "@/domain/repositories/deck/read-all-deck.repository";
-import { DeckType } from "@/domain/entities/Deck.entity";
-import { Database } from "@/infrastructure/database/sqlite-02/Database";
+import { DeckToRepositoryType } from "@/domain/entities/Deck.entity";
 import { ErrorRepository } from "@/domain/repositories/error-repository";
 
+import { Database } from "@/infrastructure/database/sqlite-02/Database";
+
 /**
- * SQLite repository for reading all Deck entities.
- * Implements the ReadAllDeckRepository interface.
+ * Repository class for reading all deck records from a SQLite database.
+ * 
+ * @extends ReadAllDeckRepository
  */
 export class ReadAllDeckSqliteRepository extends ReadAllDeckRepository {
     /**
-     * Retrieves all Deck entities from the database.
-     * @returns An array of Deck entities.
-     * @throws {ErrorRepository} If a database error occurs.
+     * Retrieves all decks from the SQLite database.
+     *
+     * @returns {Promise<DeckToRepositoryType[]>} A promise that resolves to an array of deck objects.
+     * @throws {ErrorRepository} Throws an error if the database query fails.
      */
-    async run(): Promise<DeckType[]> {
-        const sql = `SELECT d.uuid, d.name, d.description, d.category_uuid, d.created_at, d.updated_at FROM deck d`;
+    async run(): Promise<DeckToRepositoryType[]> {
         try {
             const db = await Database.getInstance();
-            const rows = await db.all(sql);
-            console.log(`[rows] -> `, rows);
+            const rows = await db.all(`
+                SELECT uuid, name, description, category_uuid, created_at, updated_at
+                FROM deck
+            `);
+
             return rows.map((row: any) => ({
                 uuid: row.uuid,
                 name: row.name,
                 description: row.description,
-                category: { uuid: row.category_uuid } as any, // Placeholder, resolve category entity elsewhere
+                category_uuid: row.category_uuid,
                 createdAt: new Date(row.created_at),
                 updatedAt: new Date(row.updated_at),
             }));
