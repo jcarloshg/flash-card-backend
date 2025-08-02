@@ -10,9 +10,9 @@ export const registerDeckRoutes = (app: Express): void => {
   const deckRouter = Router();
 
   deckRouter.post("/", createDeckController);
-  // deckRouter.get("/", readAllDeckController);
-  // deckRouter.put("/:id", updateDeckController);
-  // deckRouter.delete("/:id", deleteDeckController);
+  deckRouter.get("/", readAllDeckController);
+  deckRouter.put("/:id", updateDeckController);
+  deckRouter.delete("/:id", deleteDeckController);
 
   app.use("/api/v1/deck", deckRouter);
 };

@@ -2,6 +2,7 @@ import { DeckToCreate, DeckToCreateType, DeckType } from "../entities/Deck.entit
 import { CustomResponse } from "../entities/custom-response.entity";
 import { EntityError } from "../entities/entity-error";
 import { CreateDeckRepository } from "../repositories/deck/create-deck.repository";
+import { ErrorRepository } from "../repositories/error-repository";
 
 /**
  * Props for create-deck use case.
@@ -49,6 +50,7 @@ export class CreateDeckUseCase {
       return CustomResponse.created(createdDeck);
     } catch (error) {
       if (error instanceof EntityError) return EntityError.getMessage(error);
+      if (error instanceof ErrorRepository) return ErrorRepository.getMessage(error);
       if (error instanceof Error && "issues" in error) {
         // Zod validation error
         return EntityError.getMessage(error as any);

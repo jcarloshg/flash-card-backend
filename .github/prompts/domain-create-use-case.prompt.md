@@ -31,24 +31,36 @@ mode: agent
   - This interface must have the property `data`, `data: { [key: string]: any }`
 
 - This must be a class that has a method named `run`:
+
   - implement as parameter the interface `{name-of-use-case}Props`
   - that executes the objective of the use case
+
   - that valid all input data
+
     - use the schemas from `src/domain/entities/`
     - if the input data is not valid, it must return a `CustomResponse` with the error message
+
   - implement statement try-catch in the `run` method
+
     - if an error occurs, it must return a `CustomResponse` with the error message
     - if the use case is successful, it must return a `CustomResponse` with the result
+
   - that returns a promise
+
     - it must return `Promise<CustomResponse>` from `src/domain/entities/custom-response.entity.ts`
-  - implement the class `EntityError` from `src/domain/entities/entity-error.ts`:
-    - Follow this example:
-      ```typescript
-      catch (error) {
-        if (error instanceof EntityError) return EntityError.getMessage(error);
-        return CustomResponse.internalServerError();
-      }
+
+  - implement the classes errors:
+    - `ErrorRepository` from `src/domain/repositories/error-repository.ts`
+    - `EntityError` from `src/domain/entities/entity-error.ts`:
+      - Follow this example:
+        ```typescript
+        catch (error) {
+          if (error instanceof EntityError) return EntityError.getMessage(error);
+          if (error instanceof ErrorRepository) return ErrorRepository.getMessage(error);
+          return CustomResponse.internalServerError();
+        }
       ```
+
 - The class must use:
   - the necessary entities from `src/domain/entities/`
   - the necessary repositories from `src/domain/repositories/{entity-name}/`
