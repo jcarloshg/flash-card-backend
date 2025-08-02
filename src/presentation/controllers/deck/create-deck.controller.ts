@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { makeResponse } from "@/presentation/utils/make-response";
 import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { runCreateDeckUseCase } from "@/application/usecases/run-create-deck-use-case.application";
 
 /**
  * Controller to handle creation of a Deck entity.
@@ -8,13 +9,18 @@ import { CustomResponse } from "@/domain/entities/custom-response.entity";
  * @param res Express response object
  * @returns JSON response with created Deck or error
  */
-export const createDeckController = async (req: Request, res: Response): Promise<Response> => {
+export const createDeckController = async (req: Request, res: Response) => {
   try {
-    // TODO: Implement Deck creation logic
-    // const deck = await createDeckUseCase(req.body);
-    const response = CustomResponse.created({}); // Replace {} with created deck
-    makeResponse(res, response);
-    return res;
+    const createDeckRes = await runCreateDeckUseCase(
+      {
+        metadata: {
+          timestamp: new Date(),
+        },
+        data: req.body
+      }
+    );
+    makeResponse(res, createDeckRes);
+    return
   } catch (error) {
     const response = CustomResponse.internalServerError();
     makeResponse(res, response);
