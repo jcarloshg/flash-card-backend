@@ -18,20 +18,27 @@ export class ReadAllDeckSqliteRepository extends ReadAllDeckRepository {
      */
     async run(): Promise<DeckToRepositoryType[]> {
         try {
+            // Get the singleton instance of the database
             const db = await Database.getInstance();
-            const rows = await db.all(`
-                SELECT uuid, name, description, category_uuid, created_at, updated_at
-                FROM deck
-            `);
+            const rows = await db.all(`SELECT * FROM deck`);
 
-            return rows.map((row: any) => ({
-                uuid: row.uuid,
-                name: row.name,
-                description: row.description,
-                category_uuid: row.category_uuid,
-                createdAt: new Date(row.created_at),
-                updatedAt: new Date(row.updated_at),
-            }));
+            // Map the rows to DeckToRepositoryType
+            const decksToRepositoryType: DeckToRepositoryType[] = rows
+                .map((row: any) => {
+                    try {
+                        const deckToRepositoryType: DeckToRepositoryType = {
+                            ...row,
+                            createdAt: new Date(row.createdAt),
+                            updatedAt: new Date(row.updatedAt),
+                        }
+                        return deckToRepositoryType;
+                    } catch (error) {
+                        return null;
+                    }
+                })
+                .filter((deck) => deck !== null);
+
+            return decksToRepositoryType;
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Unknown error";
             console.error(`[ReadAllDeckSqliteRepository]: ${errorMessage}`);

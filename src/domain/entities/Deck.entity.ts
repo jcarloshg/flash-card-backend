@@ -14,7 +14,6 @@ export const DeckSchema = z.object({
 export const DeckSchemaToRepository = DeckSchema.omit({
     category: true,
 })
-    .partial()
     .extend({
         category_uuid: CommonSchema.uuid,
     });

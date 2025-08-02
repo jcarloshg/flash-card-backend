@@ -35,6 +35,7 @@ export class CreateDeckSqliteRepository extends CreateDeckRepository {
 
       const selectSql = `SELECT uuid, name, description, category_uuid, createdAt, updatedAt FROM deck WHERE uuid = ?`;
       const row = await db.get(selectSql, [entity.uuid]);
+
       if (!row) throw new ErrorRepository("Failed to fetch created deck");
 
       return {
@@ -42,12 +43,11 @@ export class CreateDeckSqliteRepository extends CreateDeckRepository {
         name: row.name,
         description: row.description,
         category_uuid: row.category_uuid,
-        createdAt: new Date(row.created_at),
-        updatedAt: new Date(row.updated_at),
+        createdAt: new Date(row.createdAt),
+        updatedAt: new Date(row.updatedAt),
       };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      console.error(`[CreateDeckSqliteRepository]: ${errorMessage}`);
       throw new ErrorRepository(errorMessage);
     }
   }
