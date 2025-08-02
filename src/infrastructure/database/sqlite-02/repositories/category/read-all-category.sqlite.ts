@@ -8,13 +8,13 @@ import { Database } from "@/infrastructure/database/sqlite-02/Database";
  */
 export class ReadAllCategorySqliteRepository extends ReadAllCategoryRepository {
   /**
-   * Reads all categories from the SQLite database.
-   * @returns An array of category entities.
+   * Reads all active categories from the SQLite database.
+   * @returns An array of active category entities.
    */
   async run(): Promise<CategoryRepository[]> {
     try {
       const db = await Database.getInstance();
-      const sql = `SELECT uuid, name, description, createdAt, updatedAt FROM Category`;
+      const sql = `SELECT uuid, name, description, createdAt, updatedAt, active FROM Category WHERE active = 1`;
       const rows = await db.all(sql);
       // Map DB rows to CategoryRepository objects
       return rows.map((row: any) => ({
@@ -23,7 +23,7 @@ export class ReadAllCategorySqliteRepository extends ReadAllCategoryRepository {
         description: row.description,
         createdAt: new Date(row.createdAt),
         updatedAt: new Date(row.updatedAt),
-        active: true, // Default to true; adjust if you add an 'active' column
+        active: Boolean(row.active),
       }));
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Unknown error";

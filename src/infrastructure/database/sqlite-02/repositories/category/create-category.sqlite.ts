@@ -17,9 +17,9 @@ export class CreateCategorySqliteRepository extends CreateCategoryRepository {
     async run(data: CategoryToCreateToRepository): Promise<Category> {
         try {
 
-            // create variables for SQL query and parameters
-            const sql = `INSERT INTO Category (uuid, name, description, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)`;
-            const params = [data.uuid, data.name, data.description, data.createdAt, data.updatedAt];
+            // create variables for SQL query and parameters (including 'active')
+            const sql = `INSERT INTO Category (uuid, active, name, description, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)`;
+            const params = [data.uuid, 1, data.name, data.description, data.createdAt, data.updatedAt];
 
             // get database instance and execute the query
             const db = await Database.getInstance();

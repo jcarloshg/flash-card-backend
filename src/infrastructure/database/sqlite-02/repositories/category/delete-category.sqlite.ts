@@ -7,14 +7,14 @@ import { Database } from "@/infrastructure/database/sqlite-02/Database";
  */
 export class DeleteCategorySqliteRepository extends DeleteCategoryRepository {
   /**
-   * Deletes a category from the SQLite database.
-   * @param uuid - The UUID of the category to delete.
-   * @returns True if the category was deleted, false otherwise.
+   * Soft deletes a category by setting its 'active' column to 0.
+   * @param uuid - The UUID of the category to deactivate.
+   * @returns True if the category was updated, false otherwise.
    */
   async run(uuid: string): Promise<boolean> {
     try {
       const db = await Database.getInstance();
-      const sql = `DELETE FROM Category WHERE uuid = ?`;
+      const sql = `UPDATE Category SET active = 0 WHERE uuid = ?`;
       const result = await db.run(sql, [uuid]);
       return (result?.changes ?? 0) > 0;
     } catch (error) {
