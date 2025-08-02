@@ -30,6 +30,7 @@ Provide the list of properties and their types for the new entity.
       - `[entityName]SchemaToRepository`
       - `[entityName]ToCreate` - Creation schema
         - use `Schema.pick` to don't implement `uuid`, `createdAt` and `updatedAt` fields
+      - `[entityName]ToCreateToRespository` - Creation schema
       - `[entityName]ToUpdate` - Update schema
         - use `Schema.omit` to don't implement `createdAt` and `updatedAt` fields
         - use `Schema.partial` to make all fields optional

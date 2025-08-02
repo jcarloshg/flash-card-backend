@@ -22,18 +22,21 @@ export const DeckSchemaToRepository = DeckSchema.omit({
 export const DeckSchemaToCreate = DeckSchema.pick({
     name: true,
     description: true,
-}).extend({
-    category_uuid: CommonSchema.uuid,
-});
+})
+    .extend({
+        category_uuid: CommonSchema.uuid,
+    });
 
 export const DeckSchemaToCreateToRespository = DeckSchema.pick({
     uuid: true,
     name: true,
     description: true,
-    category_uuid: true,
     createdAt: true,
     updatedAt: true,
-});
+})
+    .extend({
+        category_uuid: CommonSchema.uuid,
+    });
 
 export const DeckToUpdate = DeckSchema.omit({
     createdAt: true,

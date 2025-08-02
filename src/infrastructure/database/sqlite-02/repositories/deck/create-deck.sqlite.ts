@@ -1,36 +1,47 @@
-import { v4 as uuidv4 } from "uuid";
-import { DeckType, DeckToCreate } from "@/domain/entities/Deck.entity";
+import { DeckType, DeckToCreateToRespository, DeckToRepositoryType } from "@/domain/entities/Deck.entity";
 import { CreateDeckRepository } from "@/domain/repositories/deck/create-deck.repository";
 import { ErrorRepository } from "@/domain/repositories/error-repository";
 import { Database } from "@/infrastructure/database/sqlite-02/Database";
 
 /**
- * SQLite repository for creating Deck entities.
- * Implements the CreateDeckRepository interface.
+ * Repository implementation for creating a new deck in a SQLite database.
+ * 
+ * Extends the `CreateDeckRepository` abstract class and provides the logic to
+ * insert a new deck record and retrieve it after creation.
+ *
+ * @remarks
+ * This repository uses a singleton `Database` instance to execute SQL queries.
+ * It throws an `ErrorRepository` if the deck cannot be created or fetched.
+ *
+ * @param entity - The deck entity to be created, containing all required fields.
+ * @returns The created deck entity as stored in the repository.
+ * @throws ErrorRepository If the deck cannot be created or retrieved.
  */
 export class CreateDeckSqliteRepository extends CreateDeckRepository {
-  /**
-   * Creates a new Deck entity in the database.
-   * @param entity - The Deck data to create.
-   * @returns The created Deck entity.
-   * @throws {ErrorRepository} If a database error occurs.
-   */
-  async run(entity: DeckToCreate): Promise<DeckType> {
-    const uuid = uuidv4();
-    const sql = `INSERT INTO deck (uuid, name, description, category_uuid) VALUES (?, ?, ?, ?)`;
-    const params = [uuid, entity.name, entity.description, entity.category_uuid];
+  public async run(entity: DeckToCreateToRespository): Promise<DeckToRepositoryType> {
     try {
       const db = await Database.getInstance();
+
+      const sql = `INSERT INTO deck (uuid, name, description, category_uuid, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)`;
+      const params = [
+        entity.uuid,
+        entity.name,
+        entity.description,
+        entity.category_uuid,
+        entity.createdAt,
+        entity.updatedAt,
+      ];
       await db.run(sql, params);
-      const selectSql = `SELECT d.uuid, d.name, d.description, d.category_uuid, d.created_at, d.updated_at FROM deck d WHERE d.uuid = ?`;
-      const row = await db.get(selectSql, [uuid]);
-      if (!row) throw new Error("Failed to fetch created deck");
-      // Map DB row to DeckType (category will need to be resolved separately)
+
+      const selectSql = `SELECT uuid, name, description, category_uuid, created_at, updated_at FROM deck WHERE uuid = ?`;
+      const row = await db.get(selectSql, [entity.uuid]);
+      if (!row) throw new ErrorRepository("Failed to fetch created deck");
+
       return {
         uuid: row.uuid,
         name: row.name,
         description: row.description,
-        category: { uuid: row.category_uuid } as any, // Placeholder, resolve category entity elsewhere
+        category_uuid: row.category_uuid,
         createdAt: new Date(row.created_at),
         updatedAt: new Date(row.updated_at),
       };
