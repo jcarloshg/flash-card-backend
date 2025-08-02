@@ -18,14 +18,11 @@ export class CreateQuestionSqliteRepository extends CreateRepository<QuestionCre
 
         const uuid = uuidv4();
         const createdAt = new Date();
-        const updatedAt = createdAt
-        const createdAtString = createdAt.toISOString();
-        const updatedAtString = createdAtString;
-        const sql = `INSERT INTO question (uuid, created_at, updated_at, question, answers, answers_type) VALUES (?, ?, ?, ?, ?, ?)`;
+        const sql = `INSERT INTO question (uuid, createdAt, updatedAt, question, answers, answers_type) VALUES (?, ?, ?, ?, ?, ?)`;
         const params = [
             uuid,
-            createdAtString,
-            updatedAtString,
+            createdAt,
+            createdAt,
             entity.question,
             entity.answers,
             entity.answers_type,
@@ -36,7 +33,7 @@ export class CreateQuestionSqliteRepository extends CreateRepository<QuestionCre
             return {
                 uuid,
                 createdAt: createdAt,
-                updatedAt: updatedAt,
+                updatedAt: createdAt,
                 question: entity.question,
                 answers: entity.answers,
                 answers_type: entity.answers_type,

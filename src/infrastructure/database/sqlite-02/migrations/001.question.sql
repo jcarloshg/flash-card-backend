@@ -1,8 +1,8 @@
 -- Create the 'question' table if it does not already exist
 CREATE TABLE IF NOT EXISTS question (
     uuid TEXT PRIMARY KEY NOT NULL, -- Unique identifier for the question
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Timestamp when the question was created
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Timestamp when the question was last updated
+    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Timestamp when the question was created
+    updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Timestamp when the question was last updated
     question TEXT NOT NULL, -- The question text
     answers TEXT NOT NULL, -- Serialized answers (e.g., JSON string)
     answers_type TEXT NOT NULL CHECK (
