@@ -14,10 +14,8 @@ export class EntityError extends z.ZodError {
             .join(", ");
         const firstIssue = zodError.issues[0].message;
         const customMessage = `${propertyName}: ${firstIssue}`;
-        console.log({
-            propertyName,
-            firstIssue
-        });
+        
+        console.log(`[EntityError] -> `, customMessage)
 
         return CustomResponse.badRequest(customMessage, errorsMessage);
     }

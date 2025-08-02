@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { CategoryToUpdate } from "../../../domain/entities/Category.entity";
 import { makeResponse } from "../../utils/make-response";
 import { CustomResponse } from "../../../domain/entities/custom-response.entity";
 import { EntityError } from "../../../domain/entities/entity-error";
+import { runUpdateCategoryByUuid } from "@/application/usecases/run-update-category-by-uuid.application";
 
 /**
  * Controller for updating a Category
@@ -11,13 +11,19 @@ import { EntityError } from "../../../domain/entities/entity-error";
  */
 export const updateCategoryController = async (req: Request, res: Response) => {
     try {
-        const parsed = CategoryToUpdate.safeParse(req.body);
-
-        // TODO: Implement actual update logic (e.g., call use case)
-        const category = parsed.data;
-        return makeResponse(res, CustomResponse.created({
-            categoryToUpdate: "a",
-        }));
+        const { uuid } = req.params;
+        const body = req.body;
+        const response = await runUpdateCategoryByUuid({
+            metadata: {
+                timestamp: new Date(),
+            },
+            data: {
+                uuid: uuid,
+                update: body,
+            },
+        })
+        makeResponse(res, response);
+        return
     } catch (error) {
         if (error instanceof EntityError) {
             makeResponse(res, EntityError.getMessage(error));

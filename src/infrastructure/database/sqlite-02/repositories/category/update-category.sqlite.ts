@@ -42,6 +42,7 @@ export class UpdateCategorySqliteRepository implements UpdateCategoryRepository 
       fields.push("updatedAt = ?");
       params.push(updatedAt);
       params.push(uuid);
+      console.log(`[UpdateCategorySqliteRepository] -> `, { uuid, data });
       const sql = `UPDATE Category SET ${fields.join(", ")} WHERE uuid = ?`;
       const result = await db.run(sql, params);
       if (result.changes === 0) {

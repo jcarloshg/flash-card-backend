@@ -8,6 +8,7 @@ export class ErrorRepository extends Error {
 
     static getMessage(error: ErrorRepository): CustomResponse<null> {
         const completeMessage = `[${this.name}]: ${error.message}`;
+        console.log(`[ErrorRepository] -> `, completeMessage)
         return CustomResponse.badRequest("Something went wrong", completeMessage);
     }
 }
