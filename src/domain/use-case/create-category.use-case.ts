@@ -1,5 +1,8 @@
-
-import { CategorySchemaToCreate, Category, CategoryToCreate, CategoryToCreateToRepository } from "../entities/Category.entity";
+import {
+    CategorySchemaToCreate,
+    Category,
+    CategoryToCreateToRepository,
+} from "../entities/Category.entity";
 import { CustomResponse } from "../entities/custom-response.entity";
 import { EntityError } from "../entities/entity-error";
 import { ErrorRepository } from "../repositories/error-repository";
@@ -52,7 +55,6 @@ export class CreateCategoryUseCase {
             // Attempt to create the category
             const created = await this.repository.run(toRepository);
             return CustomResponse.created(created);
-
         } catch (error) {
             if (error instanceof EntityError) return EntityError.getMessage(error);
             if (error instanceof ErrorRepository) return ErrorRepository.getMessage(error);
