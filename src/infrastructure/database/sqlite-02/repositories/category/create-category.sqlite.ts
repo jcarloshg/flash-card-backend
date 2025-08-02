@@ -1,25 +1,24 @@
-import {
-    CategoryToCreateToRepository,
-    Category,
-} from "@/domain/entities/Category.entity";
+import { CategoryToCreateToRepository, Category } from "@/domain/entities/Category.entity";
 import { CreateCategoryRepository } from "@/domain/repositories/category/create-category.repository";
 import { ErrorRepository } from "@/domain/repositories/error-repository";
+
 import { Database } from "@/infrastructure/database/sqlite-02/Database";
 
 /**
- * SQLite implementation for creating a Category entity.
+ * SQLite repository for creating a category entity.
  * @implements {CreateCategoryRepository}
  */
-export class CreateCategorySqliteRepository extends CreateCategoryRepository {
+export class CreateCategorySqliteRepository implements CreateCategoryRepository {
     /**
      * Creates a new category in the SQLite database.
-     * @param data - The category data to create.
-     * @returns The created category entity.
-     * @throws {ErrorRepository} If a database error occurs.
+     * @param {CategoryToCreateToRepository} data - The category data to create.
+     * @returns {Promise<Category>} The created category entity.
+     * @throws {EntityError} If a database error occurs.
      */
     async run(data: CategoryToCreateToRepository): Promise<Category> {
         try {
-            // create variables for SQL query and parameters (including 'active')
+
+            // query to insert a new category
             const sql = `INSERT INTO Category (uuid, active, name, description, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)`;
             const params = [
                 data.uuid,
@@ -27,24 +26,17 @@ export class CreateCategorySqliteRepository extends CreateCategoryRepository {
                 data.name,
                 data.description,
                 data.createdAt,
-                data.updatedAt,
+                data.updatedAt
             ];
 
-            // get database instance and execute the query
+            // run the query
             const db = await Database.getInstance();
             await db.run(sql, params);
 
-            // return the created category entity
-            return {
-                uuid: data.uuid,
-                name: data.name,
-                description: data.description,
-                createdAt: data.createdAt,
-                updatedAt: data.updatedAt,
-                active: data.active,
-            };
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : "Unknown error";
+            // return the created category
+            return { ...data };
+        } catch (error: unknown) {
+            const errorMessage: string = error instanceof Error ? error.message : "Unknown error";
             console.error(`[CreateCategorySqliteRepository]: ${errorMessage}`);
             throw new ErrorRepository(errorMessage);
         }

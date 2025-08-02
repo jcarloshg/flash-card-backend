@@ -1,12 +1,17 @@
 import { CategoryToUpdateType, CategoryRepository } from "@/domain/entities/Category.entity";
 import { UpdateCategoryRepository } from "@/domain/repositories/category/update-category.repository";
+
 import { Database } from "@/infrastructure/database/sqlite-02/Database";
 
 /**
  * SQLite implementation for updating a Category entity.
  * @implements {UpdateCategoryRepository}
  */
-export class UpdateCategorySqliteRepository extends UpdateCategoryRepository {
+/**
+ * SQLite repository for updating a category entity.
+ * @implements {UpdateRepository<string, CategoryToUpdateType, CategoryRepository>}
+ */
+export class UpdateCategorySqliteRepository implements UpdateCategoryRepository {
   /**
    * Updates a category in the SQLite database.
    * @param uuid - The UUID of the category to update.

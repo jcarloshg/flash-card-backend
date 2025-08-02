@@ -1,11 +1,17 @@
 import { DeleteCategoryRepository } from "@/domain/repositories/category/delete-category.repository";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
+
 import { Database } from "@/infrastructure/database/sqlite-02/Database";
 
 /**
  * SQLite implementation for deleting a Category entity.
  * @implements {DeleteCategoryRepository}
  */
-export class DeleteCategorySqliteRepository extends DeleteCategoryRepository {
+/**
+ * SQLite repository for deleting a category entity.
+ * @implements {DeleteCategoryRepository}
+ */
+export class DeleteCategorySqliteRepository implements DeleteCategoryRepository {
   /**
    * Soft deletes a category by setting its 'active' column to 0.
    * @param uuid - The UUID of the category to deactivate.
@@ -20,7 +26,7 @@ export class DeleteCategorySqliteRepository extends DeleteCategoryRepository {
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Unknown error";
       console.error(`[DeleteCategorySqliteRepository]: ${errorMessage}`);
-      throw new Error(errorMessage);
+      throw new ErrorRepository(errorMessage);
     }
   }
 }
