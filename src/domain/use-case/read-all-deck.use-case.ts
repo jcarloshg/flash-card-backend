@@ -52,8 +52,9 @@ export class ReadAllDeckUseCase {
             //     );
             // }
 
-            // No input data to validate for read all, but could extend here if needed
+            // Fetch all Decks from the repository
             const decks = await this.repository.run();
+            console.log(`[decks] -> `, decks);
 
             // Validate output
             const parseResult = DeckSchema.array().safeParse(decks);

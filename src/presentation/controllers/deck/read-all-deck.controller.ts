@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { makeResponse } from "@/presentation/utils/make-response";
 import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { runReadAllDeckUseCase } from "@/application/usecases/run-read-all-deck-use-case.application";
 
 /**
  * Controller to handle fetching all Deck entities.
@@ -10,10 +11,13 @@ import { CustomResponse } from "@/domain/entities/custom-response.entity";
  */
 export const readAllDeckController = async (req: Request, res: Response): Promise<Response> => {
   try {
-    // TODO: Implement Deck fetching logic
-    // const decks = await readAllDecksUseCase();
-    const response = CustomResponse.ok([]); // Replace [] with fetched decks
-    makeResponse(res, response);
+    const readAllDeckRes = await runReadAllDeckUseCase({
+      metadata: {
+        timestamp: new Date(),
+      },
+      data: {},
+    });
+    makeResponse(res, readAllDeckRes);
     return res;
   } catch (error) {
     const response = CustomResponse.internalServerError();

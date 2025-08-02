@@ -18,6 +18,7 @@ export class ReadAllDeckSqliteRepository extends ReadAllDeckRepository {
         try {
             const db = await Database.getInstance();
             const rows = await db.all(sql);
+            console.log(`[rows] -> `, rows);
             return rows.map((row: any) => ({
                 uuid: row.uuid,
                 name: row.name,
