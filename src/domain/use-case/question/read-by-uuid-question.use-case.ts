@@ -57,8 +57,7 @@ export class ReadByUuidQuestionUseCase {
             return CustomResponse.ok(questionFound);
         } catch (error) {
             if (error instanceof EntityError) return EntityError.getMessage(error);
-            if (error instanceof ErrorRepository)
-                return ErrorRepository.getMessage(error);
+            if (error instanceof ErrorRepository) return ErrorRepository.getMessage(error);
             return CustomResponse.internalServerError();
         }
     }
