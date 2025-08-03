@@ -4,6 +4,7 @@ import { CustomResponse } from "@/domain/entities/custom-response.entity";
 import { runDeleteCategoryByUuidApplication } from "@/application/usecases/run-delete-category-by-uuid.application";
 
 import { makeResponse } from "@/presentation/utils/make-response";
+import { runDeleteDeckByUuidApplication } from "@/application/usecases/run-delete-deck-by-uuid.application";
 
 /**
  * Controller to handle deletion of a Deck entity.
@@ -15,7 +16,7 @@ export const deleteDeckController = async (req: Request, res: Response): Promise
   try {
     //
     const { uuid } = req.params;
-    const runDeleteCategoryByUuidResponse = await runDeleteCategoryByUuidApplication({
+    const runDeleteDeckByUuidResponse = await runDeleteDeckByUuidApplication({
       metadata: {
         timestamp: new Date()
       },
@@ -23,7 +24,7 @@ export const deleteDeckController = async (req: Request, res: Response): Promise
         uuid: uuid
       }
     });
-    makeResponse(res, runDeleteCategoryByUuidResponse);
+    makeResponse(res, runDeleteDeckByUuidResponse);
     return res;
   } catch (error) {
     const response = CustomResponse.internalServerError();
