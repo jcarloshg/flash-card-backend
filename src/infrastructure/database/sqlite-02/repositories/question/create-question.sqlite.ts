@@ -1,46 +1,59 @@
-import { v4 as uuidv4 } from "uuid";
-import { CreateRepository } from "../../../../../domain/repositories/crud-repository/create.repository";
-import { Question, QuestionCreate } from "../../../../../domain/entities/Question.entity";
-import { Database } from "../../Database";
-import { ErrorRepository } from "../../../../../domain/repositories/error-repository";
+import { QuestionCreateToRepository, QuestionToRepository } from "@/domain/entities/Question.entity";
+import { CreateQuestionRepository } from "@/domain/repositories/question/create-question.repository";
+import { Database } from "@/infrastructure/database/sqlite-02/Database";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
 
-/**
- * Repository for creating a Question entity in the database.
- * Implements robust error handling and uses the singleton Database class.
- */
-export class CreateQuestionSqliteRepository extends CreateRepository<QuestionCreate, Question> {
+export class CreateQuestionSqliteRepository implements CreateQuestionRepository {
+
     /**
-     * Creates a new Question record in the database.
-     * @param entity - The Question data to create.
-     * @returns The created Question entity.
+     * Inserts a new question into the 'question' table.
+     * @param entity The question entity to create.
+     * @returns The created question entity as stored in the repository.
      */
-    public async run(entity: QuestionCreate): Promise<Question> {
-
-        const uuid = uuidv4();
-        const createdAt = new Date();
-        const sql = `INSERT INTO question (uuid, createdAt, updatedAt, question, answers, answers_type) VALUES (?, ?, ?, ?, ?, ?)`;
-        const params = [
-            uuid,
-            createdAt,
-            createdAt,
-            entity.question,
-            entity.answers,
-            entity.answers_type,
-        ];
+    public async run(entity: QuestionCreateToRepository): Promise<QuestionToRepository> {
         try {
+
+            const query = `
+            INSERT INTO question (
+                uuid, active, question, answers, answers_type, createdAt, updatedAt
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                `;
+            const params = [
+                entity.uuid,
+                entity.active,
+                entity.question,
+                JSON.stringify(entity.answers),
+                entity.answers_type,
+                entity.createdAt,
+                entity.updatedAt
+            ];
+
             const db = await Database.getInstance();
-            await db.run(sql, params);
-            return {
-                uuid,
-                createdAt: createdAt,
-                updatedAt: createdAt,
-                question: entity.question,
-                answers: entity.answers,
-                answers_type: entity.answers_type,
-            };
+            await db.run(query, params);
+
+            const row = await db.get(
+                `SELECT * FROM question WHERE uuid = ?`,
+                [entity.uuid]
+            );
+            if (!row) throw new ErrorRepository(`Question with UUID ${entity.uuid} not found after insertion.`);
+
+            try {
+                const questionToRepository: QuestionToRepository = {
+                    uuid: row.uuid,
+                    active: !!row.active,
+                    question: row.question,
+                    answers: JSON.parse(row.answers),
+                    answers_type: row.answers_type,
+                    createdAt: row.createdAt,
+                    updatedAt: row.updatedAt
+                };
+                return questionToRepository;
+            } catch (error) {
+                throw new ErrorRepository(`Error parsing of ${entity.uuid}`);
+            }
+
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Unknown error";
-            console.error(`[CreateQuestionSqliteRepository]: ${errorMessage}`);
             throw new ErrorRepository(errorMessage);
         }
     }

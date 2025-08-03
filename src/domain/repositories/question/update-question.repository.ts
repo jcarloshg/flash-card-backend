@@ -1,18 +1,21 @@
-import { Question, QuestionUpdate } from '../../entities/Question.entity';
-import { UpdateRepository } from '../crud-repository/update.repository';
+import {
+    QuestionToRepository,
+    QuestionUpdate,
+} from "@/domain/entities/Question.entity";
+import { UpdateRepository } from "@/domain/repositories/crud-repository/update.repository";
 
 /**
- * Repository for updating Question entities.
- * Implements the UpdateRepository interface for Question.
+ * Repository class responsible for updating questions in the data source.
+ * Implements the {@link UpdateRepository} interface for question entities.
+ *
+ * @implements {UpdateRepository<string, QuestionUpdate, QuestionToRepository>}
  */
-export class UpdateQuestionRepository implements UpdateRepository<string, QuestionUpdate, Question> {
-    /**
-     * Updates an existing Question entity.
-     * @param id - The uuid of the Question to update.
-     * @param entity - The data required to update a Question.
-     * @returns The updated Question entity or null if not found.
-     */
-    public async run(id: string, entity: QuestionUpdate): Promise<Question | null> {
-        throw new Error('Method not implemented.');
+export class UpdateQuestionRepository
+    implements UpdateRepository<string, QuestionUpdate, QuestionToRepository> {
+    public run(
+        id: string,
+        entity: QuestionUpdate
+    ): Promise<QuestionToRepository | null> {
+        throw new Error("Method not implemented.");
     }
 }

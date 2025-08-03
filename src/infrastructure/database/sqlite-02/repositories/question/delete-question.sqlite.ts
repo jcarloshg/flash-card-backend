@@ -1,5 +1,6 @@
 import { DeleteRepository } from "../../../../../domain/repositories/crud-repository/delete.repository";
 import { Database } from "../../Database";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
 
 
 /**
@@ -19,7 +20,8 @@ export class DeleteQuestionSqliteRepository extends DeleteRepository<string> {
             const result = await db.run(sql, [uuid]);
             return (result?.changes ?? 0) > 0;
         } catch (error) {
-            throw new Error(`Failed to delete question: ${error}`);
+            const errorMessage = error instanceof Error ? error.message : "Unknown error";
+            throw new ErrorRepository(errorMessage);
         }
     }
 }
