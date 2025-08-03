@@ -16,42 +16,54 @@ export class UpdateDeckSqliteRepository extends UpdateDeckRepository {
      * @throws {ErrorRepository} If a database error occurs.
      */
     async run(id: string, entity: DeckToUpdateType): Promise<DeckType | null> {
-        const fields: string[] = [];
-        const params: any[] = [];
-        if (entity.name) {
-            fields.push("name = ?");
-            params.push(entity.name);
-        }
-        if (entity.description) {
-            fields.push("description = ?");
-            params.push(entity.description);
-        }
-        if (entity.category_uuid) {
-            fields.push("category_uuid = ?");
-            params.push(entity.category_uuid);
-        }
-        if (fields.length === 0) return null;
-        fields.push("updated_at = CURRENT_TIMESTAMP");
-        const sql = `UPDATE deck SET ${fields.join(", ")} WHERE uuid = ?`;
-        params.push(id);
         try {
+
+            // query
+            const fields: string[] = [];
+            const params: any[] = [];
+            if (entity.name) {
+                fields.push("name = ?");
+                params.push(entity.name);
+            }
+            if (entity.description) {
+                fields.push("description = ?");
+                params.push(entity.description);
+            }
+            if (entity.category_uuid) {
+                fields.push("category_uuid = ?");
+                params.push(entity.category_uuid);
+            }
+            if (typeof entity.active === "boolean") {
+                fields.push("active = ?");
+                params.push(entity.active ? 1 : 0);
+            }
+            if (fields.length === 0) return null;
+            fields.push("updatedAt = CURRENT_TIMESTAMP");
+            const sql = `UPDATE deck SET ${fields.join(", ")} WHERE uuid = ?`;
+            params.push(id);
+
+            // run the query
             const db = await Database.getInstance();
             const result = await db.run(sql, params);
             if (result.changes === 0) return null;
-            const selectSql = `SELECT d.uuid, d.name, d.description, d.category_uuid, d.created_at, d.updated_at FROM deck d WHERE d.uuid = ?`;
-            const row = await db.get(selectSql, [id]);
+
+            // get the updated deck
+            const selectSql = `SELECT d.uuid, d.name, d.description, d.active, d.category_uuid, d.createdAt, d.updatedAt FROM deck d WHERE d.uuid = ?`;
+            const paramsSelect = [id];
+            const row = await db.get(selectSql, paramsSelect);
+            
             if (!row) return null;
             return {
                 uuid: row.uuid,
                 name: row.name,
                 description: row.description,
+                active: !!row.active,
                 category: { uuid: row.category_uuid } as any, // Placeholder, resolve category entity elsewhere
-                createdAt: new Date(row.created_at),
-                updatedAt: new Date(row.updated_at),
+                createdAt: new Date(row.createdAt),
+                updatedAt: new Date(row.updatedAt),
             };
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Unknown error";
-            console.error(`[UpdateDeckSqliteRepository]: ${errorMessage}`);
             throw new ErrorRepository(errorMessage);
         }
     }
