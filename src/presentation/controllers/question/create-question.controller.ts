@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { CustomResponse } from "../../../domain/entities/custom-response.entity";
-import { makeResponse } from "../../utils/make-response";
-import { runCreateQuestionUseCase } from "../../../application/usecases/run-create-question-use-case.application";
+
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { runCreateQuestionUseCase } from "@/application/usecases/question/run-create-question-use-case.application";
+import { makeResponse } from "@/presentation/utils/make-response";
 
 /**
  * Controller for creating a question.
@@ -25,18 +26,10 @@ export const createQuestionController = async (
             },
         });
         makeResponse(res, createQuestionResponse);
-
-        // Placeholder response until use case is implemented
-        makeResponse(
-            res,
-            CustomResponse.created({
-                message:
-                    "Create question endpoint created - use case implementation pending",
-                questionData,
-            })
-        );
         return;
+
     } catch (error) {
         makeResponse(res, CustomResponse.internalServerError());
+        return;
     }
 };

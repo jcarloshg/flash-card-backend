@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { makeResponse } from "../../utils/make-response";
-import { CustomResponse } from "../../../domain/entities/custom-response.entity";
-import { EntityError } from "../../../domain/entities/entity-error";
-import { runUpdateCategoryByUuid } from "@/application/usecases/run-update-category-by-uuid.application";
+
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { runUpdateCategoryByUuid } from "@/application/usecases/category/run-update-category-by-uuid.application";
+import { makeResponse } from "@/presentation/utils/make-response";
 
 /**
  * Controller for updating a Category
@@ -21,14 +21,10 @@ export const updateCategoryController = async (req: Request, res: Response) => {
                 uuid: uuid,
                 update: body,
             },
-        })
+        });
         makeResponse(res, response);
-        return
+        return;
     } catch (error) {
-        if (error instanceof EntityError) {
-            makeResponse(res, EntityError.getMessage(error));
-            return;
-        }
         return makeResponse(res, CustomResponse.internalServerError());
     }
 };

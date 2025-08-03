@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { makeResponse } from "@/presentation/utils/make-response";
 import { CustomResponse } from "@/domain/entities/custom-response.entity";
-import { runCreateDeckUseCase } from "@/application/usecases/run-create-deck-use-case.application";
+import { runCreateDeckUseCase } from "@/application/usecases/deck/run-create-deck-use-case.application";
+
+import { makeResponse } from "@/presentation/utils/make-response";
 
 /**
  * Controller to handle creation of a Deck entity.

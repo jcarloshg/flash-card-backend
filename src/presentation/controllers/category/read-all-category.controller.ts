@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import { CustomResponse } from "@/domain/entities/custom-response.entity";
 
-import { runReadAllCategoriesApplication } from "@/application/usecases/run-read-all-categories.application";
+import { runReadAllCategoriesApplication } from "@/application/usecases/category/run-read-all-category.application";
 import { makeResponse } from "@/presentation/utils/make-response";
 
 /**

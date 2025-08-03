@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
-import { makeResponse } from "../../utils/make-response";
-import { CustomResponse } from "../../../domain/entities/custom-response.entity";
-import { EntityError } from "../../../domain/entities/entity-error";
-import { CategorySchema } from "../../../domain/entities/Category.entity";
-import { runDeleteCategoryByUuidApplication } from "@/application/usecases/run-delete-category-by-uuid.application";
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { runDeleteCategoryByUuidApplication } from "@/application/usecases/category/run-delete-category-by-uuid.application";
+import { makeResponse } from "@/presentation/utils/make-response";
+
 
 /**
  * Controller for deleting a Category
@@ -19,10 +18,6 @@ export const deleteCategoryController = async (req: Request, res: Response) => {
         })
         return makeResponse(res, deleteCategoryByUuidResponse);
     } catch (error) {
-        if (error instanceof EntityError) {
-            makeResponse(res, EntityError.getMessage(error));
-            return;
-        }
         return makeResponse(res, CustomResponse.internalServerError());
     }
 };

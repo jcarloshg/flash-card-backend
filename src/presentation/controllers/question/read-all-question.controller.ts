@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import { EntityError } from "../../../domain/entities/entity-error";
-import { CustomResponse } from "../../../domain/entities/custom-response.entity";
-import { makeResponse } from "../../utils/make-response";
-import { runReadAllQuestionsApplication } from "../../../application/usecases/run-read-all-questions.application";
+
+import { runReadAllQuestionsApplication } from "@/application/usecases/question/run-read-all-questions.application";
+import { makeResponse } from "@/presentation/utils/make-response";
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+
 
 /**
  * Controller for reading all questions.
@@ -14,7 +15,6 @@ export const readAllQuestionController = async (
     res: Response
 ): Promise<void> => {
     try {
-
         const readAllQuestionsRes = await runReadAllQuestionsApplication(
             {
                 metadata: {
@@ -26,10 +26,6 @@ export const readAllQuestionController = async (
         makeResponse(res, readAllQuestionsRes);
         return;
     } catch (error) {
-        if (error instanceof EntityError) {
-            makeResponse(res, EntityError.getMessage(error));
-            return;
-        }
         makeResponse(res, CustomResponse.internalServerError());
     }
 };

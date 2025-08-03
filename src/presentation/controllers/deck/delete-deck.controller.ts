@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
 import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { runDeleteDeckByUuidApplication } from "@/application/usecases/deck/run-delete-deck-by-uuid.application";
 
 import { makeResponse } from "@/presentation/utils/make-response";
-import { runDeleteDeckByUuidApplication } from "@/application/usecases/run-delete-deck-by-uuid.application";
 
 /**
  * Controller to handle deletion of a Deck entity.
@@ -11,23 +11,25 @@ import { runDeleteDeckByUuidApplication } from "@/application/usecases/run-delet
  * @param res Express response object
  * @returns JSON response with deletion result or error
  */
-export const deleteDeckController = async (req: Request, res: Response): Promise<Response> => {
+export const deleteDeckController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   try {
     //
     const { uuid } = req.params;
     const runDeleteDeckByUuidResponse = await runDeleteDeckByUuidApplication({
       metadata: {
-        timestamp: new Date()
+        timestamp: new Date(),
       },
       data: {
-        uuid: uuid
-      }
+        uuid: uuid,
+      },
     });
     makeResponse(res, runDeleteDeckByUuidResponse);
     return res;
   } catch (error) {
-    const response = CustomResponse.internalServerError();
-    makeResponse(res, response);
+    makeResponse(res, CustomResponse.internalServerError());
     return res;
   }
 };

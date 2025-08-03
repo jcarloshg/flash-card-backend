@@ -1,6 +1,6 @@
 
 import { Request, Response } from 'express';
-import { CreateUserUseCase } from '../../application/usecases/CreateUserUseCase';
+import { CreateUserUseCase } from '../../application/usecases/user/CreateUserUseCase';
 
 /**
  * Controller for user-related operations.

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { makeResponse } from "@/presentation/utils/make-response";
 import { CustomResponse } from "@/domain/entities/custom-response.entity";
-import { runReadAllDeckUseCase } from "@/application/usecases/run-read-all-deck-use-case.application";
+import { runReadAllDeckUseCase } from "@/application/usecases/deck/run-read-all-deck-use-case.application";
 
 /**
  * Controller to handle fetching all Deck entities.
