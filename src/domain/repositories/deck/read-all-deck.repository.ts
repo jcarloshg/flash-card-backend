@@ -14,8 +14,7 @@ import { ReadAllRepository } from "../crud-repository/read-all.repository";
  * @returns {Promise<DeckToRepositoryType[]>} A promise that resolves to an array of deck entities.
  * @throws {Error} If the method is not implemented.
  */
-export class ReadAllDeckRepository
-    implements ReadAllRepository<DeckToRepositoryType> {
+export class ReadAllDeckRepository implements ReadAllRepository<DeckToRepositoryType> {
     async run(): Promise<DeckToRepositoryType[]> {
         throw new Error("Method not implemented.");
     }
