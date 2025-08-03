@@ -14,7 +14,7 @@ export const registerQuestionRoutes = (app: Express) => {
     questionRouter.get("/", readAllQuestionController);
     questionRouter.get("/:uuid", readByIdQuestionController);
     questionRouter.put("/:uuid", updateQuestionController);
-    questionRouter.delete("/:id", deleteQuestionController);
+    questionRouter.delete("/:uuid", deleteQuestionController);
 
     app.use("/api/v1/question", questionRouter);
 

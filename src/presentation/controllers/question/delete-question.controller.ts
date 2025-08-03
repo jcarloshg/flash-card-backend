@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { EntityError } from "../../../domain/entities/entity-error";
 import { CustomResponse } from "../../../domain/entities/custom-response.entity";
 import { makeResponse } from "../../utils/make-response";
+import { runDeleteByUuidQuestion } from "@/application/usecases/question/run-delete-by-uuid-question.application";
 
 /**
  * Controller for deleting a question.
@@ -14,25 +15,20 @@ export const deleteQuestionController = async (
 ): Promise<void> => {
     try {
         // Extract UUID from params and validate
-        const uuid: string = req.params.id;
-        if (!uuid) {
-            makeResponse(res, CustomResponse.badRequest(
-                "Question ID is required",
-                "UUID parameter is missing from request"
-            ));
-            return;
-        }
+        const { uuid } = req.params;
 
-        // TODO: Implement delete question use case
-        // const deleteQuestionUseCase = getDeleteQuestionApplication();
-        // const result = await deleteQuestionUseCase.execute(uuid);
+        const deleteByUuidQuestionRes = await runDeleteByUuidQuestion({
+            metadata: {
+                timestamp: new Date(),
+            },
+            data: {
+                uuid,
+            },
+        });
 
-        // Placeholder response until use case is implemented
-        makeResponse(res, CustomResponse.ok(
-            { message: "Delete question endpoint created - use case implementation pending", uuid },
-            { userMessage: "Question deletion functionality will be available soon" }
-        ));
+        makeResponse(res, deleteByUuidQuestionRes);
         return;
+
     } catch (error) {
         if (error instanceof EntityError) {
             makeResponse(res, EntityError.getMessage(error));
