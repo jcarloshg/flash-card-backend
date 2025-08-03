@@ -22,18 +22,19 @@ export class CreateDeckSqliteRepository extends CreateDeckRepository {
     try {
       const db = await Database.getInstance();
 
-      const sql = `INSERT INTO deck (uuid, name, description, category_uuid, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)`;
+      const sql = `INSERT INTO deck (uuid, name, description, active, category_uuid, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?)`;
       const params = [
         entity.uuid,
         entity.name,
         entity.description,
+        entity.active,
         entity.category_uuid,
         entity.createdAt,
         entity.updatedAt,
       ];
       await db.run(sql, params);
 
-      const selectSql = `SELECT uuid, name, description, category_uuid, createdAt, updatedAt FROM deck WHERE uuid = ?`;
+      const selectSql = `SELECT * FROM deck WHERE uuid = ?`;
       const row = await db.get(selectSql, [entity.uuid]);
 
       if (!row) throw new ErrorRepository("Failed to fetch created deck");
@@ -42,6 +43,7 @@ export class CreateDeckSqliteRepository extends CreateDeckRepository {
         uuid: row.uuid,
         name: row.name,
         description: row.description,
+        active: Boolean(row.active),
         category_uuid: row.category_uuid,
         createdAt: new Date(row.createdAt),
         updatedAt: new Date(row.updatedAt),
