@@ -1,12 +1,12 @@
 import {
   DeckSchema,
+  DeckToRepositoryType,
   DeckToUpdateType,
-  DeckType,
-} from "../entities/Deck.entity";
-import { CustomResponse } from "../entities/custom-response.entity";
-import { EntityError } from "../entities/entity-error";
-import { ErrorRepository } from "../repositories/error-repository";
-import { UpdateDeckRepository } from "../repositories/deck/update-deck.repository";
+} from "@/domain/entities/Deck.entity";
+import { UpdateDeckRepository } from "@/domain/repositories/deck/update-deck.repository";
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { EntityError } from "@/domain/entities/entity-error";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
 
 /**
  * Props for updating a deck by UUID.
@@ -26,7 +26,7 @@ export interface UpdateDeckByUuidProps {
    */
   data: {
     uuid: string;
-    [key: string]: any;
+    dataToUpdate: { [key: string]: any; }
   };
 }
 
@@ -47,17 +47,17 @@ export class UpdateDeckByUuidUseCase {
    */
   async run(
     props: UpdateDeckByUuidProps
-  ): Promise<CustomResponse<DeckType | null>> {
+  ): Promise<CustomResponse<DeckToRepositoryType | null>> {
     try {
       // Validate input data
-      const { uuid, ...updateData } = props.data;
-      const parsed = DeckSchema.partial().safeParse(updateData);
+      const { uuid, dataToUpdate } = props.data;
+      const parsed = DeckSchema.partial().safeParse(dataToUpdate);
       if (!parsed.success) return EntityError.getMessage(parsed.error);
 
       // Update deck
       const updatedDeck = await this.updateDeckRepository.run(
         uuid,
-        updateData as DeckToUpdateType
+        dataToUpdate as DeckToUpdateType
       );
       if (!updatedDeck)
         return CustomResponse.notFound({
@@ -71,8 +71,7 @@ export class UpdateDeckByUuidUseCase {
 
     } catch (error) {
       if (error instanceof EntityError) return EntityError.getMessage(error);
-      if (error instanceof ErrorRepository)
-        return ErrorRepository.getMessage(error);
+      if (error instanceof ErrorRepository) return ErrorRepository.getMessage(error);
       return CustomResponse.internalServerError();
     }
   }

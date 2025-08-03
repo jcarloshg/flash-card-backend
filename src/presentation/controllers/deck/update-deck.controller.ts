@@ -16,12 +16,12 @@ export const updateDeckController = async (req: Request, res: Response): Promise
     const body = req.body;
 
     const runUpdateDeckByUuidRes = await runUpdateDeckByUuidApplication({
-      metadata:{
+      metadata: {
         timestamp: new Date(),
       },
       data: {
         uuid: uuid,
-        update: body,
+        dataToUpdate: body,
       }
     })
 

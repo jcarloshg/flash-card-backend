@@ -1,4 +1,4 @@
-import { DeckType, DeckToUpdateType } from "../../entities/Deck.entity";
+import { DeckToUpdateType, DeckToRepositoryType } from "../../entities/Deck.entity";
 import { UpdateRepository } from "../crud-repository/update.repository";
 
 /**
@@ -9,7 +9,7 @@ import { UpdateRepository } from "../crud-repository/update.repository";
  * Repository for updating Deck entities.
  * Implements the UpdateRepository interface for DeckType, DeckToUpdateType, and DeckType.
  */
-export class UpdateDeckRepository extends UpdateRepository<string, DeckToUpdateType, DeckType> {
+export class UpdateDeckRepository extends UpdateRepository<string, DeckToUpdateType, DeckToRepositoryType> {
     /**
      * Updates an existing Deck entity.
      * @param entity - The Deck entity to update.
@@ -21,7 +21,7 @@ export class UpdateDeckRepository extends UpdateRepository<string, DeckToUpdateT
      * @param entity - The Deck data to update.
      * @returns The updated Deck entity or null if not found.
      */
-    async run(id: string, entity: DeckToUpdateType): Promise<DeckType | null> {
+    async run(id: string, entity: DeckToUpdateType): Promise<DeckToRepositoryType | null> {
         throw new Error("Method not implemented.");
     }
 }
