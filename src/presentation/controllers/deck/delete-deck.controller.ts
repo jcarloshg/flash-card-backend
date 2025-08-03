@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import { CustomResponse } from "@/domain/entities/custom-response.entity";
-import { runDeleteCategoryByUuidApplication } from "@/application/usecases/run-delete-category-by-uuid.application";
 
 import { makeResponse } from "@/presentation/utils/make-response";
 import { runDeleteDeckByUuidApplication } from "@/application/usecases/run-delete-deck-by-uuid.application";
