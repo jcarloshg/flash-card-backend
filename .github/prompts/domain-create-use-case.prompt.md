@@ -22,7 +22,7 @@ mode: agent
 - read the folder `src/domain/entities/`
 - read the folder `src/domain/repositories/{entity-name}/`
 
-- Create the file `src/domain/use-cases/{name-of-use-case}.use-case.ts`
+- Create the file `src/domain/use-cases/{entity-name}/{name-of-use-case}.use-case.ts`
 
 - This must have an interface called `{name-of-use-case}Props`, (eg `CategoryProps`, `QuestionProps`, etc.):
 
