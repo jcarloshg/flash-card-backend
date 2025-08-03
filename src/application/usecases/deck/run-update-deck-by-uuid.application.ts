@@ -1,4 +1,7 @@
-import { UpdateDeckByUuidUseCase, UpdateDeckByUuidProps } from "@/domain/use-case/update-deck-by-uuid.use-case";
+import {
+  UpdateDeckByUuidProps,
+  UpdateDeckByUuidUseCase,
+} from "@/domain/use-case/deck/update-deck-by-uuid.use-case";
 import { UpdateDeckSqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/deck/update-deck.sqlite";
 
 /**
@@ -6,7 +9,9 @@ import { UpdateDeckSqliteRepository } from "@/infrastructure/database/sqlite-02/
  * @param props - Properties for updating a deck by UUID.
  * @returns A promise resolving to a CustomResponse with the updated deck or error.
  */
-export const runUpdateDeckByUuidApplication = async (props: UpdateDeckByUuidProps) => {
+export const runUpdateDeckByUuidApplication = async (
+  props: UpdateDeckByUuidProps
+) => {
   const repository = new UpdateDeckSqliteRepository();
   const useCase = new UpdateDeckByUuidUseCase(repository);
   return await useCase.run(props);

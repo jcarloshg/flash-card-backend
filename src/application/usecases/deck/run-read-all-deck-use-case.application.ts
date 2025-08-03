@@ -1,7 +1,7 @@
 import {
     ReadAllDeckUseCase,
     ReadAllDeckUseCaseProps,
-} from "@/domain/use-case/read-all-deck.use-case";
+} from "@/domain/use-case/deck/read-all-deck.use-case";
 import { ReadAllDeckSqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/deck/read-all-deck.sqlite";
 
 /**

@@ -1,7 +1,5 @@
-import {
-    DeleteDeckByUuidUseCase,
-    DeleteDeckByUuidProps,
-} from "@/domain/use-case/delete-deck-by-uuid.use-case";
+
+import { DeleteDeckByUuidProps, DeleteDeckByUuidUseCase } from "@/domain/use-case/deck/delete-deck-by-uuid.use-case";
 import { DeleteDeckSqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/deck/delete-deck.sqlite";
 
 /**

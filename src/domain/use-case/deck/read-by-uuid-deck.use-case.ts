@@ -1,8 +1,11 @@
-import { DeckSchema, DeckToRepositoryType } from "../entities/Deck.entity";
-import { CustomResponse } from "../entities/custom-response.entity";
-import { EntityError } from "../entities/entity-error";
-import { ErrorRepository } from "../repositories/error-repository";
-import { ReadByIdDeckRepository } from "../repositories/deck/read-by-id-deck.repository";
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import {
+    DeckSchema,
+    DeckToRepositoryType,
+} from "@/domain/entities/Deck.entity";
+import { EntityError } from "@/domain/entities/entity-error";
+import { ReadByIdDeckRepository } from "@/domain/repositories/deck/read-by-id-deck.repository";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
 
 /**
  * Props for read-by-uuid-deck use case
@@ -31,27 +34,29 @@ export class ReadByUuidDeckUseCase {
      * @param props - ReadByUuidDeckProps
      * @returns Promise<CustomResponse<DeckToRepositoryType | null>>
      */
-    async run(props: ReadByUuidDeckProps): Promise<CustomResponse<DeckToRepositoryType | null>> {
+    async run(
+        props: ReadByUuidDeckProps
+    ): Promise<CustomResponse<DeckToRepositoryType | null>> {
         try {
-
             // Validate input
             const parseResult = DeckSchema.pick({ uuid: true }).safeParse(props.data);
-            if (!parseResult.success) return EntityError.getMessage(parseResult.error);
+            if (!parseResult.success)
+                return EntityError.getMessage(parseResult.error);
 
             // Find deck by uuid
             const { uuid } = parseResult.data;
             const deck = await this.deckRepository.findById(uuid);
-            if (!deck) return CustomResponse.notFound({
-                userMessage: "Deck not found",
-                developerMessage: `Deck with uuid ${uuid} not found`,
-            });
+            if (!deck)
+                return CustomResponse.notFound({
+                    userMessage: "Deck not found",
+                    developerMessage: `Deck with uuid ${uuid} not found`,
+                });
 
             // Return successful response
             return CustomResponse.ok(deck, {
                 userMessage: "Deck retrieved successfully",
                 developerMessage: `Deck with uuid ${uuid} retrieved successfully`,
             });
-
         } catch (error) {
             if (error instanceof EntityError) return EntityError.getMessage(error);
             if (error instanceof ErrorRepository) return ErrorRepository.getMessage(error);

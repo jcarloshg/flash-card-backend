@@ -1,4 +1,7 @@
-import { ReadAllCategoriesUseCase, ReadAllCategoriesProps } from "@/domain/use-case/read-all-categories.use-case";
+import {
+    ReadAllCategoriesProps,
+    ReadAllCategoriesUseCase,
+} from "@/domain/use-case/category/read-all-categories.use-case";
 import { ReadAllCategorySqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/category/read-all-category.sqlite";
 
 /**
@@ -13,4 +16,3 @@ export const runReadAllCategoriesApplication = async (
     const useCase = new ReadAllCategoriesUseCase(repository);
     return await useCase.run(props);
 };
-    

@@ -1,7 +1,7 @@
 import {
     ReadAllQuestionsProps,
     ReadAllQuestionsUseCase,
-} from "@/domain/use-case/read-all-questions.use-case";
+} from "@/domain/use-case/question/read-all-questions.use-case";
 import { ReadAllQuestionSqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/question/read-all-question.sqlite";
 
 /**

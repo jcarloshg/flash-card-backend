@@ -1,9 +1,8 @@
-import { CustomResponse } from "../entities/custom-response.entity";
-import { EntityError } from "../entities/entity-error";
-import { ErrorRepository } from "../repositories/error-repository";
-import { DeleteDeckRepository } from "../repositories/deck/delete-deck.repository";
-import { z } from "zod";
-import { DeckSchema } from "../entities/Deck.entity";
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { DeckSchema } from "@/domain/entities/Deck.entity";
+import { EntityError } from "@/domain/entities/entity-error";
+import { DeleteDeckRepository } from "@/domain/repositories/deck/delete-deck.repository";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
 
 /**
  * Props for delete-deck-by-uuid use case

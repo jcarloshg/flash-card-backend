@@ -44,8 +44,8 @@ export class CreateQuestionSqliteRepository implements CreateQuestionRepository 
                     question: row.question,
                     answers: JSON.parse(row.answers),
                     answers_type: row.answers_type,
-                    createdAt: row.createdAt,
-                    updatedAt: row.updatedAt
+                    createdAt: new Date(row.createdAt),
+                    updatedAt: new Date(row.updatedAt)
                 };
                 return questionToRepository;
             } catch (error) {

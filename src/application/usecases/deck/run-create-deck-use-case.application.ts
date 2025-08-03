@@ -1,4 +1,7 @@
-import { CreateDeckUseCase, CreateDeckProps } from "@/domain/use-case/create-deck.use-case";
+import {
+    CreateDeckProps,
+    CreateDeckUseCase,
+} from "@/domain/use-case/deck/create-deck.use-case";
 import { CreateDeckSqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/deck/create-deck.sqlite";
 
 /**

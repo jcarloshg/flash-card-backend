@@ -1,7 +1,7 @@
 import {
     CreateQuestionUseCase,
     CreateQuestionUseCaseProps,
-} from "@/domain/use-case/create-question.use-case";
+} from "@/domain/use-case/question/create-question.use-case";
 import { CreateQuestionSqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/question/create-question.sqlite";
 
 /**

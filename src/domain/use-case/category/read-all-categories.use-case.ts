@@ -1,8 +1,9 @@
-import { CategoryRepository } from '../entities/Category.entity';
-import { CustomResponse } from '../entities/custom-response.entity';
-import { EntityError } from '../entities/entity-error';
-import { ErrorRepository } from '../repositories/error-repository';
-import { ReadAllCategoryRepository } from '../repositories/category/read-all-category.repository';
+import { CategoryRepository } from "@/domain/entities/Category.entity";
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { EntityError } from "@/domain/entities/entity-error";
+import { ReadAllCategoryRepository } from "@/domain/repositories/category/read-all-category.repository";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
+
 
 /**
  * Props for read-all-categories use case
