@@ -1,5 +1,5 @@
-import { QuestionToRepository } from '../../entities/Question.entity';
-import { ReadByIdRepository } from '../crud-repository/read-by-id.repository';
+import { QuestionToRepository } from '@/domain/entities/Question.entity';
+import { ReadByIdRepository } from '@/domain/repositories/crud-repository/read-by-id.repository';
 
 /**
  * Repository for reading a Question entity by ID.

@@ -1,40 +1,36 @@
-import { Database } from "../Database";
-import { QuestionToRepository, questionSchemaToRepository } from "../../../../domain/entities/Question.entity";
-import { ReadByIdRepository } from "../../../../domain/repositories/crud-repository/read-by-id.repository";
-import { ErrorRepository } from "../../../../domain/entities/entity-error";
+import { QuestionToRepository } from '@/domain/entities/Question.entity';
+import { ErrorRepository } from '@/domain/repositories/error-repository';
+import { ReadByIdQuestionRepository } from '@/domain/repositories/question/read-by-id-question.repository';
 
-/**
- * SQLite repository for reading a Question entity by ID.
- * Implements the ReadByIdRepository interface for Question.
- */
-export class ReadByIdQuestionSqliteRepository implements ReadByIdRepository<string, QuestionToRepository> {
-  /**
-   * Retrieves a Question entity by its UUID from the database.
-   * @param id - The UUID of the Question entity.
-   * @returns The Question entity, or null if not found.
-   * @throws {ErrorRepository} If retrieval fails.
-   */
+import { Database } from '@/infrastructure/database/sqlite-02/Database';
+
+export class ReadByIdQuestionSqliteRepository implements ReadByIdQuestionRepository {
   public async findById(id: string): Promise<QuestionToRepository | null> {
-    const sql = `SELECT uuid, active, question, answers, answers_type, createdAt, updatedAt FROM question WHERE uuid = ?`;
     try {
+      // Use parameterized queries to prevent SQL injection
+      const query = `SELECT * FROM question WHERE uuid = ?`;
+      const params = [id];
+
+      // run the query using the Database instance
       const db = await Database.getInstance();
-      const row = await db.get(sql, [id]);
+      const row = await db.get(query, params);
+
       if (!row) return null;
-      const question: QuestionToRepository = {
+
+      const questionToRepository: QuestionToRepository = {
         uuid: row.uuid,
-        active: row.active,
+        active: !!row.active,
+        createdAt: row.createdAt,
+        updatedAt: row.updatedAt,
         question: row.question,
         answers: row.answers,
         answers_type: row.answers_type,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-      };
-      questionSchemaToRepository.parse(question);
-      return question;
+      }
+
+      return questionToRepository;
+
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      console.error(`[ReadByIdQuestionSqliteRepository]: ${errorMessage}`);
-      throw new ErrorRepository(errorMessage);
+      throw new ErrorRepository(error);
     }
   }
 }

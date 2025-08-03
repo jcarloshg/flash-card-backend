@@ -1,8 +1,13 @@
 import { CustomResponse } from "../entities/custom-response.entity";
 
 export class ErrorRepository extends Error {
-    constructor(message: string) {
-        super(message);
+    constructor(error: unknown) {
+
+        let errorMessage = "Unknown error";
+        if (error instanceof Error) errorMessage = error.message;
+        if (typeof error === "string") errorMessage = error;
+
+        super(errorMessage);
         this.name = "ErrorRepository";
     }
 

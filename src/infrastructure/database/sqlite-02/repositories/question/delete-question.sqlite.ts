@@ -20,8 +20,7 @@ export class DeleteQuestionSqliteRepository extends DeleteRepository<string> {
             const result = await db.run(sql, [uuid]);
             return (result?.changes ?? 0) > 0;
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : "Unknown error";
-            throw new ErrorRepository(errorMessage);
+            throw new ErrorRepository(error);
         }
     }
 }

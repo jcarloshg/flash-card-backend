@@ -1,31 +1,56 @@
-import { Question } from "../../../../../domain/entities/Question.entity";
+import { ReadAllQuestionRepository } from "@/domain/repositories/question/read-all-question.repository";
+import {
+    Question,
+    QuestionToRepository,
+} from "../../../../../domain/entities/Question.entity";
 import { ReadAllRepository } from "../../../../../domain/repositories/crud-repository/read-all.repository";
 import { Database } from "../../Database";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
 
 /**
- * Repository for reading all Question entities from the database.
- * Implements robust error handling and uses the singleton Database class.
+ * ErrorRepository interface for logging errors.
+ * Ensure this interface/class is implemented in the specified path.
  */
-export class ReadAllQuestionSqliteRepository extends ReadAllRepository<Question> {
+
+export class ReadAllQuestionSqliteRepository
+    implements ReadAllQuestionRepository {
     /**
-     * Reads all Question records from the database.
-     * @returns Array of Question entities.
+     * Retrieves all questions from the database.
+     * @returns Promise resolving to an array of QuestionToRepository entities.
      */
-    public async run(): Promise<Question[]> {
+    public async run(): Promise<QuestionToRepository[]> {
         try {
+            // Use parameterized queries to prevent SQL injection
+            const query = `SELECT * FROM question`;
+            const params: unknown[] = [];
+
+            // run the query using the Database instance
             const db = await Database.getInstance();
-            const sql = `SELECT uuid, created_at as createdAt, updated_at as updatedAt, question, answers, answers_type FROM question`;
-            const rows = await db.all(sql);
-            return rows.map((row: any) => ({
-                uuid: row.uuid,
-                createdAt: row.createdAt,
-                updatedAt: row.updatedAt,
-                question: row.question,
-                answers: row.answers,
-                answers_type: row.answers_type,
-            }));
+            const rows = await db.all(query, params);
+
+            const questionsToRepository: QuestionToRepository[] = rows
+                .map((row: any) => {
+                    try {
+                        const questionToRepository: QuestionToRepository = {
+                            uuid: row.uuid,
+                            active: !!row.active,
+                            createdAt: row.createdAt,
+                            updatedAt: row.updatedAt,
+                            question: row.question,
+                            answers: row.answers,
+                            answers_type: row.answers_type,
+                        };
+                        return questionToRepository;
+                    } catch {
+                        return null;
+                    }
+                })
+                .filter((item) => item !== null);
+
+            return questionsToRepository;
+
         } catch (error) {
-            throw new Error(`Failed to read questions: ${error}`);
+            throw new ErrorRepository(error);
         }
     }
 }

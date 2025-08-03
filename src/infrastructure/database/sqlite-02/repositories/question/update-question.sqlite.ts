@@ -1,44 +1,83 @@
-import { Question, QuestionUpdate } from "../../../../../domain/entities/Question.entity";
-import { UpdateRepository } from "../../../../../domain/repositories/crud-repository/update.repository";
-import { Database } from "../../Database";
+import { QuestionToRepository, QuestionUpdate } from "@/domain/entities/Question.entity";
+import { UpdateQuestionRepository } from "@/domain/repositories/question/update-question.repository";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
+import { Database } from "@/infrastructure/database/sqlite-02/Database";
 
 /**
- * Repository for updating a Question entity in the database.
- * Implements robust error handling and uses the singleton Database class.
+ * SQLite repository for updating Question entities.
+ * Implements the UpdateQuestionRepository interface.
  */
-export class UpdateQuestionSqliteRepository extends UpdateRepository<string, QuestionUpdate, Question> {
+export class UpdateQuestionSqliteRepository extends UpdateQuestionRepository {
     /**
-     * Updates a Question record in the database.
-     * @param uuid - The UUID of the Question to update.
+     * Updates an existing Question entity in the database.
+     * @param id - The Question UUID to update.
      * @param entity - The Question data to update.
      * @returns The updated Question entity or null if not found.
+     * @throws {ErrorRepository} If a database error occurs.
      */
-    public async run(uuid: string, entity: QuestionUpdate): Promise<Question | null> {
-        const db = await Database.getInstance();
-        const updatedAt = new Date().toISOString();
-        const sql = `UPDATE question SET updated_at = ?, question = ?, answers = ?, answers_type = ? WHERE uuid = ?`;
-        const params = [
-            updatedAt,
-            entity.question,
-            entity.answers,
-            entity.answers_type,
-            uuid,
-        ];
+    async run(id: string, entity: QuestionUpdate): Promise<QuestionToRepository | null> {
         try {
+            const fields: string[] = [];
+            const params: unknown[] = [];
+
+            if (typeof entity.question === "string") {
+                fields.push("question = ?");
+                params.push(entity.question);
+            }
+            if (entity.answers !== undefined) {
+                fields.push("answers = ?");
+                params.push(entity.answers);
+            }
+            if (typeof entity.answers_type === "string") {
+                fields.push("answers_type = ?");
+                params.push(entity.answers_type);
+            }
+            if (typeof entity.active === "boolean") {
+                fields.push("active = ?");
+                params.push(entity.active ? 1 : 0);
+            }
+            if (fields.length === 0) return null;
+            fields.push("updated_at = CURRENT_TIMESTAMP");
+            const sql = `UPDATE question SET ${fields.join(", ")} WHERE uuid = ?`;
+            params.push(id);
+
+            const db = await Database.getInstance();
             const result = await db.run(sql, params);
             if (result.changes === 0) return null;
-            const selectSql = `SELECT uuid, created_at as createdAt, updated_at as updatedAt, question, answers, answers_type FROM question WHERE uuid = ?`;
-            const row = await db.get(selectSql, [uuid]);
-            return row ? {
-                uuid: row.uuid,
-                createdAt: row.createdAt,
-                updatedAt: row.updatedAt,
-                question: row.question,
-                answers: row.answers,
-                answers_type: row.answers_type,
-            } : null;
+
+            const query = `
+                SELECT 
+                    uuid, 
+                    active, 
+                    createdAt, 
+                    updatedAt, 
+                    question, 
+                    answers, 
+                    answers_type
+                FROM question
+                WHERE uuid = ?
+            `;
+            const paramsSelect = [id];
+            const row = await db.get(query, paramsSelect);
+            if (!row) return null;
+
+            try {
+                const questionToRepository: QuestionToRepository = {
+                    uuid: row.uuid,
+                    active: !!row.active,
+                    createdAt: new Date(row.createdAt),
+                    updatedAt: new Date(row.updatedAt),
+                    question: row.question,
+                    answers: row.answers,
+                    answers_type: row.answers_type,
+                };
+                return questionToRepository;
+            } catch {
+                throw new ErrorRepository("Error mapping database row to Question entity");
+            }
         } catch (error) {
-            throw new Error(`Failed to update question: ${error}`);
+            const errorMessage = error instanceof Error ? error.message : "Unknown error";
+            throw new ErrorRepository(errorMessage);
         }
     }
 }

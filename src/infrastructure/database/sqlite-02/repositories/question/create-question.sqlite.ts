@@ -40,7 +40,7 @@ export class CreateQuestionSqliteRepository implements CreateQuestionRepository 
             try {
                 const questionToRepository: QuestionToRepository = {
                     uuid: row.uuid,
-                    active: !!row.active,
+                    active: row.active,
                     question: row.question,
                     answers: JSON.parse(row.answers),
                     answers_type: row.answers_type,
@@ -49,12 +49,11 @@ export class CreateQuestionSqliteRepository implements CreateQuestionRepository 
                 };
                 return questionToRepository;
             } catch (error) {
-                throw new ErrorRepository(`Error parsing of ${entity.uuid}`);
+                throw new ErrorRepository(error);
             }
 
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : "Unknown error";
-            throw new ErrorRepository(errorMessage);
+            throw new ErrorRepository(error);
         }
     }
 }
