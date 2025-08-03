@@ -14,14 +14,19 @@ export class DeleteDeckSqliteRepository extends DeleteDeckRepository {
      * @throws {ErrorRepository} If a database error occurs.
      */
     async run(id: string): Promise<boolean> {
-        const sql = `DELETE FROM deck WHERE uuid = ?`;
         try {
+            // varibles to delete the deck
+            const sql = `UPDATE deck SET active = 0 WHERE uuid = ?`;
+            const params = [id];
+
+            // run the query
             const db = await Database.getInstance();
-            const result = await db.run(sql, [id]);
+            const result = await db.run(sql, params);
+
             return typeof result.changes === "number" && result.changes > 0;
+
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Unknown error";
-            console.error(`[DeleteDeckSqliteRepository]: ${errorMessage}`);
             throw new ErrorRepository(errorMessage);
         }
     }
