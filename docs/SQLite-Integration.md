@@ -55,8 +55,9 @@ Environment variables:
 
 ### Connection Management
 
+
 ```typescript
-import { SQLiteConnection } from './infrastructure/persistence';
+import { SQLiteConnection } from '../../src/infrastructure/persistence/database/sqlite-connection';
 
 const connection = SQLiteConnection.getInstance();
 const db = await connection.connect();
@@ -65,9 +66,10 @@ const db = await connection.connect();
 ### Repository Usage
 
 ```typescript
-import { SQLiteDeckRepository, SQLiteQuestionRepository } from './infrastructure/persistence';
+import { SQLiteDeckRepository } from '../../src/infrastructure/persistence/repositories/sqlite-deck-repository';
+import { SQLiteQuestionRepository } from '../../src/infrastructure/persistence/repositories/sqlite-question-repository';
 
-// Initialize repositories
+// Initialize repositories with the db instance
 const deckRepo = new SQLiteDeckRepository(db);
 const questionRepo = new SQLiteQuestionRepository(db);
 
@@ -91,9 +93,11 @@ const decks = await deckRepo.findByUserId('user123');
 const questions = await questionRepo.findByDeckId(deckId.toString());
 ```
 
+> **Note:** All repository methods are wrapped in try-catch blocks and log errors with class context for robust error handling.
+
 ## Migration System
 
-Migrations are managed through the `MigrationRunner` class and can be executed via CLI commands.
+Migrations are managed through the `MigrationRunner` class and can be executed via CLI commands or the database CLI script (e.g., `db.scripts.ts`).
 
 ### Creating Migrations
 
@@ -140,6 +144,8 @@ npm run db:rollback
 ## Seeding System
 
 Seeders populate the database with sample data for development and testing.
+
+> **Tip:** Register new migrations and seeders in `database-initializer.ts` to ensure they are executed by the CLI.
 
 ### Creating Seeders
 
@@ -227,12 +233,14 @@ npm run db:clear              # Clear all data (development only)
 
 ## Best Practices
 
-1. **Repository Pattern**: Use repositories for all database operations to maintain separation between domain and infrastructure
-2. **Migrations**: Always create migrations for schema changes to ensure database consistency
-3. **Transactions**: Use transactions for operations that modify multiple tables
-4. **Error Handling**: Implement proper error handling in all database operations
-5. **Connection Management**: Use the singleton connection manager to avoid connection leaks
-6. **Testing**: Use the seeding system to create consistent test data
+1. **Repository Pattern**: Use repositories for all database operations to maintain separation between domain and infrastructure.
+2. **Migrations**: Always create migrations for schema changes to ensure database consistency.
+3. **Transactions**: Use transactions for operations that modify multiple tables.
+4. **Error Handling**: All repository methods are wrapped in try-catch blocks and log errors with class context.
+5. **Connection Management**: Use the singleton connection manager to avoid connection leaks.
+6. **Testing**: Use the seeding system to create consistent test data.
+7. **Strict Typing**: All interfaces and schemas use strict TypeScript typing and are documented with JSDoc.
+8. **Entity Naming**: Entity names should be in kebab-case (e.g., `question`, `answer`).
 
 ## Error Handling
 
