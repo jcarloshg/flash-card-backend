@@ -1,8 +1,11 @@
-import { CustomResponse } from "../entities/custom-response.entity";
-import { EntityError } from "../entities/entity-error";
-import { ErrorRepository } from "../repositories/error-repository";
-import { CategorySchema, Category } from "../entities/Category.entity";
-import { ReadByIdCategoryRepository } from "../repositories/category/read-by-id-category.repository";
+import {
+    CategoryRepository,
+    CategorySchema,
+} from "@/domain/entities/Category.entity";
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { EntityError } from "@/domain/entities/entity-error";
+import { ReadByIdCategoryRepository } from "@/domain/repositories/category/read-by-id-category.repository";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
 
 /**
  * Props for read-by-id-category use case
@@ -29,10 +32,12 @@ export class ReadByIdCategoryUseCase {
 
     /**
      * Executes the use case to obtain a category by its uuid
-     * @param props - ReadByIdCategoryProps
-     * @returns Promise<CustomResponse<Category | null>>
+     * @param props - Props containing metadata and uuid
+     * @returns Promise<CustomResponse<CategoryRepository | null>>
      */
-    async run(props: ReadByIdCategoryProps): Promise<CustomResponse<Category | null>> {
+    async run(
+        props: ReadByIdCategoryProps
+    ): Promise<CustomResponse<CategoryRepository | null>> {
         try {
             // Validate input
             const uuidResult = CategorySchema.shape.uuid.safeParse(props.data.uuid);

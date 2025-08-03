@@ -1,9 +1,8 @@
-import { z } from "zod";
-import { CustomResponse } from "../entities/custom-response.entity";
-import { EntityError } from "../entities/entity-error";
-import { ErrorRepository } from "../repositories/error-repository";
-import { DeleteCategoryRepository } from "../repositories/category/delete-category.repository";
-import { CategorySchema } from "../entities/Category.entity";
+import { CategorySchema } from "@/domain/entities/Category.entity";
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { EntityError } from "@/domain/entities/entity-error";
+import { DeleteCategoryRepository } from "@/domain/repositories/category/delete-category.repository";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
 
 /**
  * Props for delete-category-by-uuid use case
@@ -53,8 +52,8 @@ export class DeleteCategoryByUuidUseCase {
             });
         } catch (error) {
             if (error instanceof EntityError) return EntityError.getMessage(error);
-            if (error instanceof ErrorRepository) return ErrorRepository.getMessage(error);
-            if (error instanceof z.ZodError) return EntityError.getMessage(error);
+            if (error instanceof ErrorRepository)
+                return ErrorRepository.getMessage(error);
             return CustomResponse.internalServerError();
         }
     }

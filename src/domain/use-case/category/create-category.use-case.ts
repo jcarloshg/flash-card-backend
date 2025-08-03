@@ -1,18 +1,17 @@
 import {
-    CategorySchemaToCreate,
     Category,
+    CategorySchemaToCreate,
     CategoryToCreateToRepository,
-} from "../entities/Category.entity";
-import { CustomResponse } from "../entities/custom-response.entity";
-import { EntityError } from "../entities/entity-error";
-import { ErrorRepository } from "../repositories/error-repository";
-import { CreateCategoryRepository } from "../repositories/category/create-category.repository";
+} from "@/domain/entities/Category.entity";
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { EntityError } from "@/domain/entities/entity-error";
+import { CreateCategoryRepository } from "@/domain/repositories/category/create-category.repository";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
 
 /**
  * Props for creating a category use case.
  * @interface CreateCategoryUseCaseProps
  */
-
 export interface CreateCategoryUseCaseProps {
     metadata: {
         timestamp: Date;
@@ -36,7 +35,9 @@ export class CreateCategoryUseCase {
      * @param props - The properties for creating a category.
      * @returns Promise<CustomResponse<Category | null>>
      */
-    async run(props: CreateCategoryUseCaseProps): Promise<CustomResponse<Category | null>> {
+    async run(
+        props: CreateCategoryUseCaseProps
+    ): Promise<CustomResponse<Category | null>> {
         try {
             // Validate input data
             const parseResult = CategorySchemaToCreate.safeParse(props.data);
@@ -59,7 +60,8 @@ export class CreateCategoryUseCase {
             return CustomResponse.created(created);
         } catch (error) {
             if (error instanceof EntityError) return EntityError.getMessage(error);
-            if (error instanceof ErrorRepository) return ErrorRepository.getMessage(error);
+            if (error instanceof ErrorRepository)
+                return ErrorRepository.getMessage(error);
             return CustomResponse.internalServerError();
         }
     }

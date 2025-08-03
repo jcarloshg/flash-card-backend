@@ -1,4 +1,7 @@
-import { CreateCategoryUseCase, CreateCategoryUseCaseProps } from "@/domain/use-case/create-category.use-case";
+import {
+    CreateCategoryUseCase,
+    CreateCategoryUseCaseProps,
+} from "@/domain/use-case/category/create-category.use-case";
 import { CreateCategorySqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/category/create-category.sqlite";
 
 /**
@@ -14,6 +17,5 @@ export const runCreateCategoryApplication = async (
     const useCase = new CreateCategoryUseCase(repository);
     return await useCase.run(props);
 };
-
 
 // ): Promise<ReturnType<CreateCategoryUseCase["run"]>> => {
