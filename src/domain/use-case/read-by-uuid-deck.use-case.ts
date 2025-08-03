@@ -34,6 +34,8 @@ export class ReadByUuidDeckUseCase {
     async run(props: ReadByUuidDeckProps): Promise<CustomResponse<DeckToRepositoryType | null>> {
         try {
 
+            console.log(`[props] -> `, props)
+
             // Validate input
             const parseResult = DeckSchema.pick({ uuid: true }).safeParse(props.data);
             if (!parseResult.success) return EntityError.getMessage(parseResult.error);

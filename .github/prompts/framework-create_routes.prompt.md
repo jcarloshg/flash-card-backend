@@ -30,6 +30,7 @@ This prompt guides you to create robust, maintainable CRUD routes for a new enti
 
   - `create-{entityName}.controller.ts`
   - `read-all-{entityName}.controller.ts`
+  - `read-by-id-{entityName}.controller.ts`
   - `update-{entityName}.controller.ts`
   - `delete-{entityName}.controller.ts`
   - In each controller:
@@ -45,6 +46,7 @@ This prompt guides you to create robust, maintainable CRUD routes for a new enti
     import { Express, Router } from "express";
     import { create{EntityName}Controller } from "../../controllers/{entityName}/create-{entityName}.controller";
     import { readAll{EntityName}Controller } from "../../controllers/{entityName}/read-all-{entityName}.controller";
+    import { readById{EntityName}Controller } from "../../controllers/{entityName}/read-by-id-{entityName}.controller";
     import { update{EntityName}Controller } from "../../controllers/{entityName}/update-{entityName}.controller";
     import { delete{EntityName}Controller } from "../../controllers/{entityName}/delete-{entityName}.controller";
 
@@ -52,6 +54,7 @@ This prompt guides you to create robust, maintainable CRUD routes for a new enti
 
     {entityName}Router.post("/", create{EntityName}Controller);
     {entityName}Router.get("/", readAll{EntityName}Controller);
+    {entityName}Router.get("/:id", readById{EntityName}Controller);
     {entityName}Router.put("/:id", update{EntityName}Controller);
     {entityName}Router.delete("/:id", delete{EntityName}Controller);
 
