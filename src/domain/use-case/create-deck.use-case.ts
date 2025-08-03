@@ -56,6 +56,7 @@ export class CreateDeckUseCase {
       const deckToCreateToRespository: DeckToCreateToRespository = {
         ...validated,
         uuid,
+        active: true, // Default to active
         createdAt: created_at,
         updatedAt: created_at,
       }

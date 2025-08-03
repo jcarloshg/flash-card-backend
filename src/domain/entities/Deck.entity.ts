@@ -26,7 +26,6 @@ export const DeckSchemaToCreate = DeckSchema.pick({
 })
     .extend({
         category_uuid: CommonSchema.uuid,
-        active: CommonSchema.active,
     });
 
 export const DeckSchemaToCreateToRespository = DeckSchema.pick({
