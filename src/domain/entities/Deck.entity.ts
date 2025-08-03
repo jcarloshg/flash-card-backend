@@ -9,6 +9,7 @@ export const DeckSchema = z.object({
     category: CategorySchema,
     createdAt: CommonSchema.createdAt,
     updatedAt: CommonSchema.updatedAt,
+    active: CommonSchema.active,
 });
 
 export const DeckSchemaToRepository = DeckSchema.omit({
@@ -16,6 +17,7 @@ export const DeckSchemaToRepository = DeckSchema.omit({
 })
     .extend({
         category_uuid: CommonSchema.uuid,
+        active: CommonSchema.active,
     });
 
 export const DeckSchemaToCreate = DeckSchema.pick({
@@ -24,6 +26,7 @@ export const DeckSchemaToCreate = DeckSchema.pick({
 })
     .extend({
         category_uuid: CommonSchema.uuid,
+        active: CommonSchema.active,
     });
 
 export const DeckSchemaToCreateToRespository = DeckSchema.pick({
@@ -35,6 +38,7 @@ export const DeckSchemaToCreateToRespository = DeckSchema.pick({
 })
     .extend({
         category_uuid: CommonSchema.uuid,
+        active: CommonSchema.active,
     });
 
 export const DeckToUpdate = DeckSchema.omit({
@@ -46,6 +50,7 @@ export const DeckToUpdate = DeckSchema.omit({
     .extend({
         category_uuid: CommonSchema.uuid,
         uuid: CommonSchema.uuid.optional(),
+        active: CommonSchema.active.optional(),
     });
 
 // CREATE
