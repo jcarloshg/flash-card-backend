@@ -37,7 +37,7 @@ export class UpdateQuestionSqliteRepository extends UpdateQuestionRepository {
                 params.push(entity.active ? 1 : 0);
             }
             if (fields.length === 0) return null;
-            fields.push("updated_at = CURRENT_TIMESTAMP");
+            fields.push("updatedAt = CURRENT_TIMESTAMP");
             const sql = `UPDATE question SET ${fields.join(", ")} WHERE uuid = ?`;
             params.push(id);
 
@@ -45,18 +45,7 @@ export class UpdateQuestionSqliteRepository extends UpdateQuestionRepository {
             const result = await db.run(sql, params);
             if (result.changes === 0) return null;
 
-            const query = `
-                SELECT 
-                    uuid, 
-                    active, 
-                    createdAt, 
-                    updatedAt, 
-                    question, 
-                    answers, 
-                    answers_type
-                FROM question
-                WHERE uuid = ?
-            `;
+            const query = `SELECT * FROM question WHERE uuid = ?`;
             const paramsSelect = [id];
             const row = await db.get(query, paramsSelect);
             if (!row) return null;
@@ -73,11 +62,10 @@ export class UpdateQuestionSqliteRepository extends UpdateQuestionRepository {
                 };
                 return questionToRepository;
             } catch {
-                throw new ErrorRepository("Error mapping database row to Question entity");
+                throw new ErrorRepository("Failed to map database row to QuestionToRepository entity.");
             }
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : "Unknown error";
-            throw new ErrorRepository(errorMessage);
+            throw new ErrorRepository(error);
         }
     }
 }

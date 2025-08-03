@@ -20,8 +20,8 @@ export class ReadByIdQuestionSqliteRepository implements ReadByIdQuestionReposit
       const questionToRepository: QuestionToRepository = {
         uuid: row.uuid,
         active: !!row.active,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
+        createdAt: new Date(row.createdAt),
+        updatedAt: new Date(row.updatedAt),
         question: row.question,
         answers: row.answers,
         answers_type: row.answers_type,

@@ -13,7 +13,7 @@ export const registerQuestionRoutes = (app: Express) => {
     questionRouter.post("/", createQuestionController);
     questionRouter.get("/", readAllQuestionController);
     questionRouter.get("/:uuid", readByIdQuestionController);
-    questionRouter.put("/:id", updateQuestionController);
+    questionRouter.put("/:uuid", updateQuestionController);
     questionRouter.delete("/:id", deleteQuestionController);
 
     app.use("/api/v1/question", questionRouter);

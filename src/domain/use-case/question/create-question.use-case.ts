@@ -36,8 +36,6 @@ export class CreateQuestionUseCase {
             if (!parseResult.success)
                 return EntityError.getMessage(parseResult.error);
 
-            console.log(`[metadata] -> `, metadata);
-
             // Create the question using the repository
             const validatedData = parseResult.data;
             const questionCreateToRepository: QuestionCreateToRepository = {

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { CustomResponse } from "@/domain/entities/custom-response.entity";
 import { makeResponse } from "@/presentation/utils/make-response";
+import { runUpdateQuestionByUuid } from "@/application/usecases/question/run-update-question-by-uuid.application";
 
 
 /**
@@ -14,15 +15,20 @@ export const updateQuestionController = async (
 ): Promise<void> => {
     try {
 
-        // TODO: Implement update question use case
-        // const updateQuestionUseCase = getUpdateQuestionApplication();
-        // const updatedQuestion = await updateQuestionUseCase.execute(parsedBody);
+        const { uuid } = req.params;
+        const body = req.body;
+        const updateQuestionByUuidRes = await runUpdateQuestionByUuid({
+            metadata: {
+                timestamp: new Date(),
+            },
+            data: {
+                uuid,
+                update: body,
+            },
+        });
 
-        // Placeholder response until use case is implemented
-        makeResponse(res, CustomResponse.ok(
-            { message: "Update question endpoint created - use case implementation pending" },
-            { userMessage: "Question update functionality will be available soon" }
-        ));
+        makeResponse(res, updateQuestionByUuidRes);
+
         return;
     } catch (error) {
         makeResponse(res, CustomResponse.internalServerError());
