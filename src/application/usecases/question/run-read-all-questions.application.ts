@@ -1,6 +1,8 @@
-import { ReadAllQuestionsUseCase, ReadAllQuestionsProps } from '../../domain/use-case/read-all-questions.use-case';
-import { ReadAllQuestionSqliteRepository } from '../../infrastructure/database/sqlite-02/repositories/question/read-all-question.sqlite';
-import { CustomResponse } from '../../domain/entities/custom-response.entity';
+import {
+    ReadAllQuestionsProps,
+    ReadAllQuestionsUseCase,
+} from "@/domain/use-case/read-all-questions.use-case";
+import { ReadAllQuestionSqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/question/read-all-question.sqlite";
 
 /**
  * Runs the ReadAllQuestions use case with the SQLite repository implementation.

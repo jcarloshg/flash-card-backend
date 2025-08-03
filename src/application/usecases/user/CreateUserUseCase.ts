@@ -1,4 +1,4 @@
-import { User, IUserProps } from '../../domain/entities/User';
+import { User, IUserProps } from '../../../domain/entities/User';
 
 /**
  * DTO for creating a user
