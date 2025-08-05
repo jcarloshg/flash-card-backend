@@ -41,6 +41,7 @@ export class CreateCategoryUseCase {
         try {
             // Validate input data
             const parseResult = CategorySchemaToCreate.safeParse(props.data);
+            console.log(`[parseResult] -> `, parseResult)
             if (!parseResult.success) {
                 return EntityError.getMessage(parseResult.error);
             }

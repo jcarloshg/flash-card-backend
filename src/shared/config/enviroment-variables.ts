@@ -73,10 +73,7 @@ class EnviromentVariables {
           }
           : undefined,
         cors: {
-          origin: process.env.CORS_ORIGIN?.split(",") || [
-            "http://localhost:3000",
-            "http://localhost:5173",
-          ],
+          origin: process.env.CORS_ORIGIN?.split(",") || ["*"],
           credentials: process.env.CORS_CREDENTIALS === "true",
         },
         logging: {
