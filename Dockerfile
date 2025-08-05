@@ -16,4 +16,4 @@ ENV API=PROOF_VALUE
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "dev" ]
+CMD sh -c "npm run db:clean && npm run db:init && npm run dev:docker"

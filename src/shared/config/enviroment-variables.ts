@@ -85,7 +85,6 @@ class EnviromentVariables {
         },
       };
     }
-    console.log(`[this.instance] -> `, this.instance);
     return this.instance;
   }
 }
