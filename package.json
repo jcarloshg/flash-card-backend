@@ -21,6 +21,7 @@
   "description": "A simple Express.js server built with TypeScript",
   "dependencies": {
     "commander": "^14.0.0",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "sequelize": "^6.37.7",
     "sqlite": "^5.1.1",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@types/commander": "^2.12.0",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.1.0",
     "@types/sqlite3": "^3.1.11",

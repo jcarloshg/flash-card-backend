@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { enviromentVariables } from "./shared/config/enviroment-variables";
 import { createHelperRoutes } from "./presentation/routes/helper_router/helper.router";
 import { registerCategoryRoutes } from "./presentation/routes/category/category.routes";
@@ -10,6 +11,12 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: enviromentVariables.cors.origin,
+    credentials: enviromentVariables.cors.credentials,
+  })
+);
 
 createHelperRoutes(app);
 registerCategoryRoutes(app);
