@@ -1,8 +1,9 @@
 import { z } from "zod";
-import { DeckSchema, DeckType } from "../entities/Deck.entity";
-import { CustomResponse } from "../entities/custom-response.entity";
-import { EntityError } from "../entities/entity-error";
-import { ErrorRepository } from "../repositories/error-repository";
+import { DeckSchema, DeckType, DeckToRepositoryType } from "@/domain/entities/Deck.entity";
+import { CustomResponse } from "@/domain/entities/custom-response.entity";
+import { EntityError } from "@/domain/entities/entity-error";
+import { ErrorRepository } from "@/domain/repositories/error-repository";
+import { ReadByIdDeckRepository } from "@/domain/repositories/deck/read-by-id-deck.repository";
 
 /**
  * Props for get-deck-by-uuid use case

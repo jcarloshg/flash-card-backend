@@ -2,7 +2,7 @@ import {
   UpdateDeckByUuidProps,
   UpdateDeckByUuidUseCase,
 } from "@/domain/use-case/deck/update-deck-by-uuid.use-case";
-import { UpdateDeckSqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/deck/update-deck.sqlite";
+import { UpdateDeckPostgresRepository } from "@/infrastructure/database/postgres/repositories/deck";
 
 /**
  * Application layer function to run the UpdateDeckByUuid use case.
@@ -12,7 +12,7 @@ import { UpdateDeckSqliteRepository } from "@/infrastructure/database/sqlite-02/
 export const runUpdateDeckByUuidApplication = async (
   props: UpdateDeckByUuidProps
 ) => {
-  const repository = new UpdateDeckSqliteRepository();
+  const repository = new UpdateDeckPostgresRepository();
   const useCase = new UpdateDeckByUuidUseCase(repository);
   return await useCase.run(props);
 };
