@@ -10,14 +10,13 @@ Implement a robust, well-documented CRUD repository for a specified entity using
 
 ## Input Required
 
+## IMPORTANT
+**DO NOT START IMPLEMENTATION UNTIL ALL REQUIRED INPUTS ARE AVAILABLE.**
+
 Before proceeding, ensure you have provided:
 
 - The entity reference from `src/domain/entities/{entityName}`
 - The CRUD repository interfaces from `src/domain/repositories/{entityName}/`
-
-**Do not start implementation until all required inputs are available.**
-**Do not start implementation until all required inputs are available.**
-**Do not start implementation until all required inputs are available.**
 
 ## Implementation Guidelines
 
@@ -29,8 +28,8 @@ Before proceeding, ensure you have provided:
   - Use `PostgresManager.query(sql, params)` for executing queries.
     - as the next example:
       ```typescript
-      const query = "";   // your SQL query here
-      const params = [];  // parameters for the query
+      const query = ""; // your SQL query here
+      const params = []; // parameters for the query
       const db = PostgresManager.getInstance();
       await db.connect();
       await db.query(query, params);
