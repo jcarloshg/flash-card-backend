@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { CategoryToCreateToRepository, Category } from '../../../../../domain/entities/Category.entity';
 import { CreateCategoryRepository } from '../../../../../domain/repositories/category/create-category.repository';
-import { PostgresManager } from '../../PostgresManager';
+import { postgresManager } from '../../PostgresManager';
 import { ErrorRepository } from '../../../../../domain/repositories/error-repository';
 
 /**
@@ -41,16 +41,15 @@ export class CreateCategoryPostgresRepository extends CreateCategoryRepository {
                 data.updatedAt
             ];
 
-            const db = PostgresManager.getInstance();
-            await db.connect();
-            const result = await db.query(insertCategoryQuery, insertCategoryParams);
+            await postgresManager.connect();
+            const result = await postgresManager.query(insertCategoryQuery, insertCategoryParams);
 
             if (result.rows.length === 0) {
                 throw new Error('Failed to create category: No data returned from database');
             }
 
             const createdCategory = result.rows[0];
-            
+
             return {
                 uuid: createdCategory.uuid,
                 active: createdCategory.active,

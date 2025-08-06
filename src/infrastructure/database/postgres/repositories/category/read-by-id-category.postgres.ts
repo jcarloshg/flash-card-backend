@@ -1,6 +1,6 @@
 import { CategoryRepository } from '../../../../../domain/entities/Category.entity';
 import { ReadByIdCategoryRepository } from '../../../../../domain/repositories/category/read-by-id-category.repository';
-import { PostgresManager } from '../../PostgresManager';
+import { postgresManager } from '../../PostgresManager';
 import { ErrorRepository } from '../../../../../domain/repositories/error-repository';
 
 /**
@@ -33,17 +33,15 @@ export class ReadByIdCategoryPostgresRepository extends ReadByIdCategoryReposito
 
             const selectCategoryByIdParams = [id];
 
-            const db = PostgresManager.getInstance();
-            await db.connect();
-            
-            const result = await db.query(selectCategoryByIdQuery, selectCategoryByIdParams);
+            await postgresManager.connect();
+            const result = await postgresManager.query(selectCategoryByIdQuery, selectCategoryByIdParams);
 
             if (result.rows.length === 0) {
                 return null;
             }
 
             const categoryRow = result.rows[0];
-            
+
             return {
                 uuid: categoryRow.uuid,
                 active: categoryRow.active,

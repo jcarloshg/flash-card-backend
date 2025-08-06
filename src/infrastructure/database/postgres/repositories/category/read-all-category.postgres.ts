@@ -1,6 +1,6 @@
 import { CategoryRepository } from '../../../../../domain/entities/Category.entity';
 import { ReadAllCategoryRepository } from '../../../../../domain/repositories/category/read-all-category.repository';
-import { PostgresManager } from '../../PostgresManager';
+import { postgresManager } from '../../PostgresManager';
 import { ErrorRepository } from '../../../../../domain/repositories/error-repository';
 
 /**
@@ -32,10 +32,8 @@ export class ReadAllCategoryPostgresRepository extends ReadAllCategoryRepository
 
             const selectAllCategoriesParams: any[] = [];
 
-            const db = PostgresManager.getInstance();
-            await db.connect();
-            
-            const result = await db.query(selectAllCategoriesQuery, selectAllCategoriesParams);
+            await postgresManager.connect();
+            const result = await postgresManager.query(selectAllCategoriesQuery, selectAllCategoriesParams);
 
             const categories: CategoryRepository[] = result.rows.map((row: any) => ({
                 uuid: row.uuid,

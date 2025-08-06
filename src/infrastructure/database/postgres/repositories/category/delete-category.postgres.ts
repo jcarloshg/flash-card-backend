@@ -1,5 +1,5 @@
 import { DeleteCategoryRepository } from '../../../../../domain/repositories/category/delete-category.repository';
-import { PostgresManager } from '../../PostgresManager';
+import { postgresManager } from '../../PostgresManager';
 import { ErrorRepository } from '../../../../../domain/repositories/error-repository';
 
 /**
@@ -25,10 +25,8 @@ export class DeleteCategoryPostgresRepository extends DeleteCategoryRepository {
 
             const deleteCategoryParams = [uuid];
 
-            const db = PostgresManager.getInstance();
-            await db.connect();
-            
-            const result = await db.query(deleteCategoryQuery, deleteCategoryParams);
+            await postgresManager.connect();
+            const result = await postgresManager.query(deleteCategoryQuery, deleteCategoryParams);
 
             // Check if any rows were affected (deleted)
             return result.rowCount > 0;

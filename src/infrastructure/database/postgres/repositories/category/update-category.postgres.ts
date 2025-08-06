@@ -1,6 +1,6 @@
 import { CategoryToUpdateType, CategoryRepository } from '../../../../../domain/entities/Category.entity';
 import { UpdateCategoryRepository } from '../../../../../domain/repositories/category/update-category.repository';
-import { PostgresManager } from '../../PostgresManager';
+import { postgresManager } from '../../PostgresManager';
 import { ErrorRepository } from '../../../../../domain/repositories/error-repository';
 
 /**
@@ -62,17 +62,15 @@ export class UpdateCategoryPostgresRepository extends UpdateCategoryRepository {
                 RETURNING uuid, active, name, description, createdAt, updatedAt
             `;
 
-            const db = PostgresManager.getInstance();
-            await db.connect();
-            
-            const result = await db.query(updateCategoryQuery, updateParams);
+            await postgresManager.connect();
+            const result = await postgresManager.query(updateCategoryQuery, updateParams);
 
             if (result.rows.length === 0) {
                 return null; // Category not found
             }
 
             const updatedCategory = result.rows[0];
-            
+
             return {
                 uuid: updatedCategory.uuid,
                 active: updatedCategory.active,
