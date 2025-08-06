@@ -1,8 +1,8 @@
-import { ReadByIdCategorySqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/category/read-by-id-category.sqlite";
 import {
   ReadByIdCategoryProps,
   ReadByIdCategoryUseCase,
 } from "@/domain/use-case/category/read-by-id-category.use-case";
+import { ReadByIdCategoryPostgresRepository } from "@/infrastructure/database/postgres/repositories/category";
 
 /**
  * Application layer function to run the ReadByIdCategory use case.
@@ -12,7 +12,7 @@ import {
 export const runReadByIdCategoryApplication = async (
   props: ReadByIdCategoryProps
 ) => {
-  const repository = new ReadByIdCategorySqliteRepository();
+  const repository = new ReadByIdCategoryPostgresRepository();
   const useCase = new ReadByIdCategoryUseCase(repository);
   return await useCase.run(props);
 };
