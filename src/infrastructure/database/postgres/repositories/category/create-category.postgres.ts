@@ -43,7 +43,6 @@ export class CreateCategoryPostgresRepository extends CreateCategoryRepository {
 
             const db = PostgresManager.getInstance();
             await db.connect();
-            
             const result = await db.query(insertCategoryQuery, insertCategoryParams);
 
             if (result.rows.length === 0) {

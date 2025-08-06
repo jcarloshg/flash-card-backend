@@ -41,7 +41,6 @@ export class CreateCategoryUseCase {
         try {
             // Validate input data
             const parseResult = CategorySchemaToCreate.safeParse(props.data);
-            console.log(`[parseResult] -> `, parseResult)
             if (!parseResult.success) {
                 return EntityError.getMessage(parseResult.error);
             }
@@ -61,8 +60,7 @@ export class CreateCategoryUseCase {
             return CustomResponse.created(created);
         } catch (error) {
             if (error instanceof EntityError) return EntityError.getMessage(error);
-            if (error instanceof ErrorRepository)
-                return ErrorRepository.getMessage(error);
+            if (error instanceof ErrorRepository) return ErrorRepository.getMessage(error);
             return CustomResponse.internalServerError();
         }
     }
