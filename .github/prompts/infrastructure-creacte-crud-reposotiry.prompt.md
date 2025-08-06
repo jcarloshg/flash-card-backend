@@ -14,8 +14,9 @@ Before proceeding, ensure you have provided:
 
 - The entity reference from `src/domain/entities/{entityName}`
 - The CRUD repository interfaces from `src/domain/repositories/{entityName}/`
-- The `script.sql` file for table creation from `src/infrastructure/database/postgres/migrations/`
 
+**Do not start implementation until all required inputs are available.**
+**Do not start implementation until all required inputs are available.**
 **Do not start implementation until all required inputs are available.**
 
 ## Implementation Guidelines
@@ -41,10 +42,7 @@ Before proceeding, ensure you have provided:
       try {
         // method logic
       } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : "Unknown error";
-        console.error(`[{name-of-the-class}]: ${errorMessage}`);
-        throw new ErrorRepository(errorMessage);
+        throw new ErrorRepository(error);
       }
       ```
   - Provide meaningful error messages and rethrow or handle errors as appropriate.

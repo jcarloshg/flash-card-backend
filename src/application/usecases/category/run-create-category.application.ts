@@ -2,7 +2,7 @@ import {
     CreateCategoryUseCase,
     CreateCategoryUseCaseProps,
 } from "@/domain/use-case/category/create-category.use-case";
-import { CreateCategorySqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/category/create-category.sqlite";
+import { CreateCategoryPostgresRepository } from "@/infrastructure/database/postgres/repositories/category";
 
 /**
  * Application layer function to run the create-category use case.
@@ -13,8 +13,8 @@ import { CreateCategorySqliteRepository } from "@/infrastructure/database/sqlite
 export const runCreateCategoryApplication = async (
     props: CreateCategoryUseCaseProps
 ) => {
-    const repository = new CreateCategorySqliteRepository();
-    const useCase = new CreateCategoryUseCase(repository);
+    const createCategoryRepository = new CreateCategoryPostgresRepository();
+    const useCase = new CreateCategoryUseCase(createCategoryRepository);
     return await useCase.run(props);
 };
 
