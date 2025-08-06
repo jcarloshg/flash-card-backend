@@ -70,6 +70,7 @@ class PostgresManager {
    */
   public async connect(): Promise<void> {
     try {
+
       if (this.pool) {
         console.log('[PostgresManager] Connection pool already exists');
         return;
@@ -83,7 +84,12 @@ class PostgresManager {
         max: this.config.max,
         idleTimeoutMillis: this.config.idleTimeoutMillis,
         connectionTimeoutMillis: this.config.connectionTimeoutMillis,
-        ssl: this.config.ssl ? { rejectUnauthorized: false } : false
+        ssl: this.config.ssl ? { rejectUnauthorized: false } : false,
+
+        password: enviromentVariables.POSTGRES_ENV.POSTGRES_PASSWORD,
+        user: enviromentVariables.POSTGRES_ENV.POSTGRES_USER,
+        database: enviromentVariables.POSTGRES_ENV.POSTGRES_DB,
+
       };
 
       this.pool = new Pool(poolConfig);

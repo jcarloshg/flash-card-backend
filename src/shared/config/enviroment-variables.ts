@@ -11,6 +11,9 @@ export interface AppConfig {
 
 export interface POSTGRES_ENV {
   POSTGRES_URL: string;
+  POSTGRES_DB: string;
+  POSTGRES_USER: string;
+  POSTGRES_PASSWORD: string;
 }
 
 export interface DatabaseConfig {
@@ -87,6 +90,9 @@ class EnviromentVariables {
         },
         POSTGRES_ENV: {
           POSTGRES_URL: process.env.POSTGRES_URL || "NOT-FOUND",
+          POSTGRES_DB: process.env.POSTGRES_DB || "NOT-FOUND",
+          POSTGRES_USER: process.env.POSTGRES_USER || "NOT-FOUND",
+          POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD || "NOT-FOUND",
         },
       };
     }
