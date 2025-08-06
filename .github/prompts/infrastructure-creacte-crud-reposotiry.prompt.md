@@ -14,7 +14,7 @@ Before proceeding, ensure you have provided:
 
 - The entity reference from `src/domain/entities/{entityName}`
 - The CRUD repository interfaces from `src/domain/repositories/{entityName}/`
-- The `script.sql` file for table creation from `src/infrastructure/database/sqlite-02/migrations/`
+- The `script.sql` file for table creation from `src/infrastructure/database/postgres/migrations/`
 
 **Do not start implementation until all required inputs are available.**
 
@@ -22,14 +22,17 @@ Before proceeding, ensure you have provided:
 
 - **Entity Usage**: Import and use the entity from `src/domain/entities/{entityName}`.
 - **Repository Methods**: Implement all CRUD methods as defined in the corresponding repository class.
-- **Database Access**: Use the singleton `Database` class from `src/infrastructure/database/sqlite-02/Database.ts` for all database operations.
+- **Database Access**: Use the singleton `PostgresManager` class from `src/infrastructure/database/postgres/PostgresManager.ts` for all database operations.
 - **SQL Queries**:
   - Define SQL queries and their parameters as explicit, well-named variables.
-  - Use `Database.run(sql, params)` for executing queries.
+  - Use `PostgresManager.query(sql, params)` for executing queries.
     - as the next example:
       ```typescript
-      const db = await Database.getInstance();
-      await db.run(sql, params);
+      const query = "";   // your SQL query here
+      const params = [];  // parameters for the query
+      const db = PostgresManager.getInstance();
+      await db.connect();
+      await db.query(query, params);
       ```
 - **Error Handling**:
   - Wrap each repository method in a try-catch block.
@@ -45,7 +48,6 @@ Before proceeding, ensure you have provided:
       }
       ```
   - Provide meaningful error messages and rethrow or handle errors as appropriate.
-- **UUID Generation**: For creation, use `import { v4 as uuidv4 } from "uuid";` to generate unique identifiers.
 - **Documentation**:
   - Add comprehensive JSDoc comments for all classes, methods, and interfaces.
   - Document method parameters, return types, and error cases.
@@ -59,7 +61,7 @@ Before proceeding, ensure you have provided:
 
 ## File Structure
 
-Create the following files in `src/infrastructure/database/sqlite-02/repositories/{entityName}/`:
+Create the following files in `src/infrastructure/database/postgres/repositories/{entityName}/`:
 
 - **create-{entityName}.sqlite.ts**
 
