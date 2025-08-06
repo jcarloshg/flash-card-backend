@@ -6,11 +6,11 @@ export interface AppConfig {
   jwt?: JWTConfig;
   cors: CORSConfig;
   logging: LoggingConfig;
-  dataBaseSql: DataBaseSql;
+  POSTGRES_ENV: POSTGRES_ENV;
 }
 
-export interface DataBaseSql {
-  DB_SQL_URL: string;
+export interface POSTGRES_ENV {
+  POSTGRES_URL: string;
 }
 
 export interface DatabaseConfig {
@@ -85,8 +85,8 @@ class EnviromentVariables {
           level: (process.env.LOG_LEVEL as any) || "info",
           format: (process.env.LOG_FORMAT as any) || "json",
         },
-        dataBaseSql: {
-          DB_SQL_URL: process.env.DB_SQL_URL || "NOT-FOUND",
+        POSTGRES_ENV: {
+          POSTGRES_URL: process.env.POSTGRES_URL || "NOT-FOUND",
         },
       };
     }
