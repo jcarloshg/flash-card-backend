@@ -41,7 +41,7 @@ export interface JWTConfig {
 }
 
 export interface CORSConfig {
-  origin: string[];
+  origin: string;
   credentials: boolean;
 }
 
@@ -81,7 +81,7 @@ class EnviromentVariables {
           }
           : undefined,
         cors: {
-          origin: process.env.CORS_ORIGIN?.split(",") || ["*"],
+          origin: "*",
           credentials: process.env.CORS_CREDENTIALS === "true",
         },
         logging: {
