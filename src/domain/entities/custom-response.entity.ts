@@ -65,7 +65,11 @@ export class CustomResponse<T> {
     // 500
     // ============================================================
 
-    static internalServerError(): CustomResponse<null> {
+    static internalServerError(error?: any): CustomResponse<null> {
+        if (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            console.log(`[ErrorRepository] -> `, errorMessage)
+        }
         return new CustomResponse<null>(
             null,
             500,

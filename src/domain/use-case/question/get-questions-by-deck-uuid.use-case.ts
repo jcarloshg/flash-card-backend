@@ -27,11 +27,6 @@ export class GetQuestionsByDeckUuidUseCase {
         this._ReadAllQuestionsByDeckUuidRepository = _ReadAllQuestionsByDeckUuidRepository;
     }
 
-    /**
-     * Run the use case
-     * @param props - GetQuestionsByDeckUuidProps
-     * @returns Promise<CustomResponse>
-     */
     public async run(props: GetQuestionsByDeckUuidProps): Promise<CustomResponse<any>> {
         try {
             // Validate input using zod
@@ -49,7 +44,7 @@ export class GetQuestionsByDeckUuidUseCase {
         } catch (error) {
             if (error instanceof EntityError) return EntityError.getMessage(error);
             if (error instanceof ErrorRepository) return ErrorRepository.getMessage(error);
-            return CustomResponse.internalServerError();
+            return CustomResponse.internalServerError(error);
         }
     }
 }
