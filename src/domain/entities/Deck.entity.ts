@@ -1,19 +1,23 @@
 import { z } from "zod";
 import { CommonSchema } from "./common-schema";
 import { CategorySchema } from "./Category.entity";
+import { questionSchema } from "./Question.entity";
 
 export const DeckSchema = z.object({
     uuid: CommonSchema.uuid,
     name: CommonSchema.nonEmptyString,
     description: CommonSchema.nonEmptyString,
-    category: CategorySchema,
     createdAt: CommonSchema.createdAt,
     updatedAt: CommonSchema.updatedAt,
     active: CommonSchema.active,
+    // Relationships
+    category: CategorySchema,
+    questions: z.array(questionSchema)
 });
 
 export const DeckSchemaToRepository = DeckSchema.omit({
     category: true,
+    questions: true,
 })
     .extend({
         category_uuid: CommonSchema.uuid,
@@ -23,6 +27,7 @@ export const DeckSchemaToRepository = DeckSchema.omit({
 export const DeckSchemaToCreate = DeckSchema.pick({
     name: true,
     description: true,
+    questions: true,
 })
     .extend({
         category_uuid: CommonSchema.uuid,
@@ -34,6 +39,7 @@ export const DeckSchemaToCreateToRespository = DeckSchema.pick({
     description: true,
     createdAt: true,
     updatedAt: true,
+    questions: true,
 })
     .extend({
         category_uuid: CommonSchema.uuid,
@@ -44,6 +50,7 @@ export const DeckToUpdate = DeckSchema.omit({
     createdAt: true,
     updatedAt: true,
     category: true,
+    questions: true,
 })
     .partial()
     .extend({

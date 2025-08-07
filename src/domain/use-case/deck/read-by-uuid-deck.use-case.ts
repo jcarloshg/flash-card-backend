@@ -7,6 +7,7 @@ import { EntityError } from "@/domain/entities/entity-error";
 import { ReadByIdCategoryRepository } from "@/domain/repositories/category/read-by-id-category.repository";
 import { ReadByIdDeckRepository } from "@/domain/repositories/deck/read-by-id-deck.repository";
 import { ErrorRepository } from "@/domain/repositories/error-repository";
+import { ReadAllQuestionsByDeckUuidRepository } from "@/domain/repositories/question/read-all-by-deck-uuid-question.repository";
 
 /**
  * Props for read-by-uuid-deck use case
@@ -24,15 +25,19 @@ export interface ReadByUuidDeckProps {
  * Use case to obtain one deck by uuid
  */
 export class ReadByUuidDeckUseCase {
+
     private readonly ReadByIdDeckRepository: ReadByIdDeckRepository;
     private readonly _ReadByIdCategoryRepository: ReadByIdCategoryRepository;
+    private readonly _ReadAllQuestionsByDeckUuidRepository: ReadAllQuestionsByDeckUuidRepository;
 
     constructor(
         _ReadByIdDeckRepository: ReadByIdDeckRepository,
-        _ReadByIdCategoryRepository: ReadByIdCategoryRepository
+        _ReadByIdCategoryRepository: ReadByIdCategoryRepository,
+        _ReadAllQuestionsByDeckUuidRepository: ReadAllQuestionsByDeckUuidRepository
     ) {
         this.ReadByIdDeckRepository = _ReadByIdDeckRepository;
         this._ReadByIdCategoryRepository = _ReadByIdCategoryRepository;
+        this._ReadAllQuestionsByDeckUuidRepository = _ReadAllQuestionsByDeckUuidRepository;
     }
 
     /**
@@ -70,11 +75,16 @@ export class ReadByUuidDeckUseCase {
                     developerMessage: `Category with uuid ${deckByUUID.category_uuid} not found`,
                 });
 
+            // Fetch questions related to the deck
+            const questionsByDeckUUID = await this._ReadAllQuestionsByDeckUuidRepository.run(uuid);
+
+
             // Return successful response
 
             const deckType: DeckType = {
                 ...deckByUUID,
-                category: { ...categoryByUUID }
+                category: { ...categoryByUUID },
+                questions: questionsByDeckUUID,
             }
             return CustomResponse.ok(deckType, {
                 userMessage: "Deck retrieved successfully",
