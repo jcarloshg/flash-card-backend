@@ -36,7 +36,7 @@ Before proceeding, ensure you have provided:
         const params = []; // parameters for the query
         await postgresManager.connect();
         const result = await postgresManager.query(query, params);
-      } 
+      }
       ...
       ```
 - **Error Handling**:
@@ -66,27 +66,27 @@ Before proceeding, ensure you have provided:
 
 Create the following files in `src/infrastructure/database/postgres/repositories/{entityName}/`:
 
-- **create-{entityName}.sqlite.ts**
+- **create-{entityName}.postgres.ts**
 
   - Implements the interface from `src/domain/repositories/crud-repository/create.repository.ts`
   - Handles entity creation with UUID assignment.
 
-- **read-all-{entityName}.sqlite.ts**
+- **read-all-{entityName}.postgres.ts**
 
   - Implements the interface from `src/domain/repositories/crud-repository/read-all.repository.ts`
   - Handles retrieval of all entities.
 
-- **read-by-id-{entityName}.sqlite.ts**
+- **read-by-id-{entityName}.postgres.ts**
 
   - Implements the interface from `src/domain/repositories/crud-repository/read-by-id.repository.ts`
   - Handles retrieval of all entities.
 
-- **update-{entityName}.sqlite.ts**
+- **update-{entityName}.postgres.ts**
 
   - Implements the interface from `src/domain/repositories/crud-repository/update.repository.ts`
   - Handles entity updates.
 
-- **delete-{entityName}.sqlite.ts**
+- **delete-{entityName}.postgres.ts**
   - Implements the interface from `src/domain/repositories/crud-repository/delete.repository.ts`
   - Handles entity deletion.
 
