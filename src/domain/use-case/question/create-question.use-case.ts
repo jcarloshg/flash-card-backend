@@ -33,8 +33,7 @@ export class CreateQuestionUseCase {
 
             // Validate input data using QuestionToCreate schema
             const parseResult = questionSchemaToCreate.safeParse(data.QuestionCreate);
-            if (!parseResult.success)
-                return EntityError.getMessage(parseResult.error);
+            if (!parseResult.success) return EntityError.getMessage(parseResult.error);
 
             // Create the question using the repository
             const validatedData = parseResult.data;
@@ -46,6 +45,7 @@ export class CreateQuestionUseCase {
                 question: validatedData.question,
                 createdAt: metadata.timestamp,
                 updatedAt: metadata.timestamp,
+                deck_uuid: validatedData.deck_uuid,
             };
             const createdQuestion = await this.repository.run(
                 questionCreateToRepository

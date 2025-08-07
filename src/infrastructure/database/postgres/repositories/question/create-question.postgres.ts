@@ -17,8 +17,8 @@ export class CreateQuestionPostgresRepository implements CreateRepository<Questi
      */
     public async run(entity: QuestionCreateToRepository): Promise<QuestionToRepository> {
         try {
-            const query = `INSERT INTO question (uuid, active, createdAt, updatedAt, question, answers, answers_type) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING uuid, active, createdAt, updatedAt, question, answers, answers_type`;
-            const params = [
+            const createQuestionQuery = `INSERT INTO question (uuid, active, createdAt, updatedAt, question, answers, answers_type) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING uuid, active, createdAt, updatedAt, question, answers, answers_type`;
+            const createQuestionParams = [
                 entity.uuid,
                 true,
                 entity.createdAt,
@@ -28,8 +28,15 @@ export class CreateQuestionPostgresRepository implements CreateRepository<Questi
                 entity.answers_type,
             ];
             await postgresManager.connect();
-            const result = await postgresManager.query(query, params);
-            return result.rows[0] as QuestionToRepository;
+            const result = await postgresManager.query(createQuestionQuery, createQuestionParams);
+            const questionToRepository: QuestionToRepository = result.rows[0] as QuestionToRepository;
+
+            // Insert into deck_question join table if deck_uuid is provided
+            const insertDeckQuestionQuery = `INSERT INTO deck_question (deck_uuid, question_uuid) VALUES ($1, $2)`;
+            const insertDeckQuestionParams = [entity.deck_uuid, questionToRepository.uuid];
+            await postgresManager.query(insertDeckQuestionQuery, insertDeckQuestionParams);
+
+            return questionToRepository;
         } catch (error) {
             throw new ErrorRepository(error);
         }

@@ -22,6 +22,8 @@ export const questionSchemaToCreate = questionSchema.omit({
     active: true,
     createdAt: true,
     updatedAt: true,
+}).extend({
+    deck_uuid: CommonSchema.uuid
 });
 
 export const questionSchemaToCreateToRepository = questionSchema.pick({
@@ -32,6 +34,8 @@ export const questionSchemaToCreateToRepository = questionSchema.pick({
     question: true,
     answers: true,
     answers_type: true,
+}).extend({
+    deck_uuid: CommonSchema.uuid
 });
 
 export const questionSchemaToRepository = questionSchema.pick({
