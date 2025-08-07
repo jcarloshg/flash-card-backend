@@ -11,6 +11,7 @@ Implement a robust, well-documented CRUD repository for a specified entity using
 ## Input Required
 
 ## IMPORTANT
+
 **DO NOT START IMPLEMENTATION UNTIL ALL REQUIRED INPUTS ARE AVAILABLE.**
 
 Before proceeding, ensure you have provided:
@@ -28,16 +29,21 @@ Before proceeding, ensure you have provided:
   - Use `PostgresManager.query(sql, params)` for executing queries.
     - as the next example:
       ```typescript
-      const query = ""; // your SQL query here
-      const params = []; // parameters for the query
-      const db = PostgresManager.getInstance();
-      await db.connect();
-      await db.query(query, params);
+      import { postgresManager } from "@/infrastructure/database/postgres/PostgresManager";
+      ...
+      try {
+        const query = ""; // your SQL query here
+        const params = []; // parameters for the query
+        await postgresManager.connect();
+        const result = await postgresManager.query(query, params);
+      } 
+      ...
       ```
 - **Error Handling**:
   - Wrap each repository method in a try-catch block.
     - as the next example:
       ```typescript
+      import { ErrorRepository } from "@/domain/repositories/error-repository";
       try {
         // method logic
       } catch (error) {
