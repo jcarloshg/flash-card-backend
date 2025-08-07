@@ -2,7 +2,7 @@ import {
     CreateQuestionUseCase,
     CreateQuestionUseCaseProps,
 } from "@/domain/use-case/question/create-question.use-case";
-import { CreateQuestionSqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/question/create-question.sqlite";
+import { CreateQuestionPostgresRepository } from "@/infrastructure/database/postgres/repositories/question/create-question.postgres";
 
 /**
  * Runs the CreateQuestionUseCase with the required repository.
@@ -12,7 +12,7 @@ import { CreateQuestionSqliteRepository } from "@/infrastructure/database/sqlite
 export const runCreateQuestionUseCase = async (
     props: CreateQuestionUseCaseProps
 ) => {
-    const repository = new CreateQuestionSqliteRepository();
+    const repository = new CreateQuestionPostgresRepository();
     const useCase = new CreateQuestionUseCase(repository);
     return await useCase.run(props);
 };

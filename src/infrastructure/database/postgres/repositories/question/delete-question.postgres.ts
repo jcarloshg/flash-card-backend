@@ -15,7 +15,7 @@ export class DeleteQuestionPostgresRepository implements DeleteRepository<string
      */
     public async run(id: string): Promise<boolean> {
         try {
-            const query = `UPDATE question SET active = 0 WHERE uuid = $1`;
+            const query = `UPDATE question SET active = false WHERE uuid = $1`;
             const params = [id];
             await postgresManager.connect();
             const result = await postgresManager.query(query, params);

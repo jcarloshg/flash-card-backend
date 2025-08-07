@@ -1,5 +1,5 @@
 import { ReadByUuidQuestionUseCase, ReadByUuidQuestionProps } from '@/domain/use-case/question/read-by-uuid-question.use-case';
-import { ReadByIdQuestionSqliteRepository } from '@/infrastructure/database/sqlite-02/repositories/question/read-by-id-question.sqlite';
+import { ReadByIdQuestionPostgresRepository } from '@/infrastructure/database/postgres/repositories/question/read-by-id-question.postgres';
 
 /**
  * Application layer function to run the ReadByUuidQuestion use case
@@ -9,7 +9,7 @@ import { ReadByIdQuestionSqliteRepository } from '@/infrastructure/database/sqli
 export const runReadByUuidQuestion = async (
     props: ReadByUuidQuestionProps
 ) => {
-    const repository = new ReadByIdQuestionSqliteRepository();
+    const repository = new ReadByIdQuestionPostgresRepository();
     const useCase = new ReadByUuidQuestionUseCase(repository);
     return await useCase.run(props);
 };

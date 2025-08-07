@@ -2,7 +2,7 @@ import {
     UpdateQuestionByUuidUseCase,
     UpdateQuestionByUuidProps,
 } from "@/domain/use-case/question/update-question-by-uuid.use-case";
-import { UpdateQuestionSqliteRepository } from "@/infrastructure/database/sqlite-02/repositories/question/update-question.sqlite";
+import { UpdateQuestionPostgresRepository } from "@/infrastructure/database/postgres/repositories/question/update-question.postgres";
 
 /**
  * Application layer function to update a question by uuid.
@@ -12,7 +12,7 @@ import { UpdateQuestionSqliteRepository } from "@/infrastructure/database/sqlite
 export const runUpdateQuestionByUuid = async (
     props: UpdateQuestionByUuidProps
 ) => {
-    const repository = new UpdateQuestionSqliteRepository();
+    const repository = new UpdateQuestionPostgresRepository();
     const useCase = new UpdateQuestionByUuidUseCase(repository);
     return await useCase.run(props);
 };

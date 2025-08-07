@@ -20,9 +20,10 @@ export class UpdateQuestionPostgresRepository implements UpdateRepository<string
             const fields = Object.keys(entity);
             if (fields.length === 0) return null;
             const setClause = fields.map((field, idx) => `${field} = $${idx + 2}`).join(', ');
-            const query = `UPDATE question SET ${setClause}, updated_at = NOW() WHERE uuid = $1 RETURNING uuid, active, created_at AS "createdAt", updated_at AS "updatedAt", question, answers, answers_type`;
+            const query = `UPDATE question SET ${setClause}, updatedAt = NOW() WHERE uuid = $1 RETURNING uuid, active, createdAt, updatedAt, question, answers, answers_type`;
             const params = [id, ...fields.map(f => (entity as any)[f])];
             await postgresManager.connect();
+            console.log(`[{query, params}] -> `, { query, params })
             const result = await postgresManager.query(query, params);
             if (result.rows.length === 0) return null;
             return result.rows[0] as QuestionToRepository;
