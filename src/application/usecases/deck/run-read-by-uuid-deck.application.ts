@@ -4,6 +4,7 @@ import {
 } from "@/domain/use-case/deck/read-by-uuid-deck.use-case";
 import { ReadByIdCategoryPostgresRepository } from "@/infrastructure/database/postgres/repositories/category";
 import { ReadByIdDeckPostgresRepository } from "@/infrastructure/database/postgres/repositories/deck";
+import { ReadAllQuestionsByDeckUuidPostgresRepository } from "@/infrastructure/database/postgres/repositories/question/read-all-by-deck-uuid-question.postgres";
 
 /**
  * Runs the read-by-uuid-deck application use case.
@@ -18,9 +19,11 @@ export const runReadByUuidDeckApplication = async (
 ) => {
     const readByIdDeckPostgresRepository = new ReadByIdDeckPostgresRepository();
     const readByIdCategoryPostgresRepository = new ReadByIdCategoryPostgresRepository();
+    const readAllQuestionsByDeckUuidPostgresRepository = new ReadAllQuestionsByDeckUuidPostgresRepository();
     const useCase = new ReadByUuidDeckUseCase(
         readByIdDeckPostgresRepository,
-        readByIdCategoryPostgresRepository
+        readByIdCategoryPostgresRepository,
+        readAllQuestionsByDeckUuidPostgresRepository
     );
     return await useCase.run(props);
 };
