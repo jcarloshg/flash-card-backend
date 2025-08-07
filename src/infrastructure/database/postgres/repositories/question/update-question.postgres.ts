@@ -23,7 +23,6 @@ export class UpdateQuestionPostgresRepository implements UpdateRepository<string
             const query = `UPDATE question SET ${setClause}, updatedAt = NOW() WHERE uuid = $1 RETURNING uuid, active, createdAt, updatedAt, question, answers, answers_type`;
             const params = [id, ...fields.map(f => (entity as any)[f])];
             await postgresManager.connect();
-            console.log(`[{query, params}] -> `, { query, params })
             const result = await postgresManager.query(query, params);
             if (result.rows.length === 0) return null;
             return result.rows[0] as QuestionToRepository;

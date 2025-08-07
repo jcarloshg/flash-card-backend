@@ -21,8 +21,6 @@ export class ReadAllCategorySqliteRepository implements ReadAllCategoryRepositor
       const db = await Database.getInstance();
       const rows = await db.all(sql);
 
-      console.log(`[rows] -> `, rows)
-
       return rows.map((row: any) => ({
         uuid: row.uuid,
         name: row.name,
