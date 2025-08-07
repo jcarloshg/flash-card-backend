@@ -1,19 +1,6 @@
 import { z } from 'zod';
 import { CommonSchema } from './common-schema';
 
-
-/**
- * Question Entity Schemas
- *
- * Implements Zod schemas for Question entity following project conventions.
- *
- * - questionSchemaToCreate: for creation (no uuid, active, createdAt, updatedAt)
- * - questionSchemaToCreateToRepository: for repository creation (with uuid, active, createdAt, updatedAt)
- * - questionSchema: full entity (all fields)
- * - questionSchemaToRepository: for repository (with uuid, active, createdAt, updatedAt)
- * - questionSchemaToUpdate: for updates (all fields optional)
- */
-
 export const questionSchema = z.object({
     uuid: CommonSchema.uuid,
     active: CommonSchema.active,
