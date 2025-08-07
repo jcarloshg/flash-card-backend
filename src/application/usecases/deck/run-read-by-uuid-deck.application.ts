@@ -1,14 +1,26 @@
-import { ReadByUuidDeckProps, ReadByUuidDeckUseCase } from "@/domain/use-case/deck/read-by-uuid-deck.use-case";
+import {
+    ReadByUuidDeckProps,
+    ReadByUuidDeckUseCase,
+} from "@/domain/use-case/deck/read-by-uuid-deck.use-case";
+import { ReadByIdCategoryPostgresRepository } from "@/infrastructure/database/postgres/repositories/category";
 import { ReadByIdDeckPostgresRepository } from "@/infrastructure/database/postgres/repositories/deck";
 
 /**
- * Application layer function to run the ReadByUuidDeck use case.
- * Instantiates the required repository and use case, then executes the use case.
- * @param props - ReadByUuidDeckProps
- * @returns Promise<CustomResponse<DeckToRepositoryType | null>>
+ * Runs the read-by-uuid-deck application use case.
+ *
+ * Instantiates the required repositories and use case, then executes the use case logic.
+ *
+ * @param props - The properties required to read a deck by UUID.
+ * @returns A promise resolving to the result of the use case execution.
  */
-export const runReadByUuidDeckApplication = async (props: ReadByUuidDeckProps) => {
-    const deckRepository = new ReadByIdDeckPostgresRepository();
-    const useCase = new ReadByUuidDeckUseCase(deckRepository);
+export const runReadByUuidDeckApplication = async (
+    props: ReadByUuidDeckProps
+) => {
+    const readByIdDeckPostgresRepository = new ReadByIdDeckPostgresRepository();
+    const readByIdCategoryPostgresRepository = new ReadByIdCategoryPostgresRepository();
+    const useCase = new ReadByUuidDeckUseCase(
+        readByIdDeckPostgresRepository,
+        readByIdCategoryPostgresRepository
+    );
     return await useCase.run(props);
 };
