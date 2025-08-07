@@ -4,15 +4,19 @@ import { createQuestionController } from "@/presentation/controllers/question/cr
 import { deleteQuestionController } from "@/presentation/controllers/question/delete-question.controller";
 import { readAllQuestionController } from "@/presentation/controllers/question/read-all-question.controller";
 import { readByIdQuestionController } from "@/presentation/controllers/question/read-by-id-question.controller";
+
+import { readQuestionByDeckUuidController } from "@/presentation/controllers/question/read-question-by-deck-uuid.controller";
 import { updateQuestionController } from "@/presentation/controllers/question/update-question.controller";
 
 export const registerQuestionRoutes = (app: Express) => {
 
     const questionRouter = Router();
 
+
     questionRouter.post("/", createQuestionController);
     questionRouter.get("/", readAllQuestionController);
     questionRouter.get("/:uuid", readByIdQuestionController);
+    questionRouter.get("/by-deck-uuid/:deckUuid", readQuestionByDeckUuidController);
     questionRouter.put("/:uuid", updateQuestionController);
     questionRouter.delete("/:uuid", deleteQuestionController);
 
