@@ -61,6 +61,8 @@ export class UpdateDeckPostgresRepository extends UpdateDeckRepository {
 
             updateParams.push(id);
 
+            console.log(`[data to update] -> `, { updateDeckQuery, updateParams });
+
             await postgresManager.connect();
             const result = await postgresManager.query(updateDeckQuery, updateParams);
 

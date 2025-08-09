@@ -27,7 +27,6 @@ export const DeckSchemaToRepository = DeckSchema.omit({
 export const DeckSchemaToCreate = DeckSchema.pick({
     name: true,
     description: true,
-    questions: true,
 })
     .extend({
         category_uuid: CommonSchema.uuid,
@@ -39,7 +38,6 @@ export const DeckSchemaToCreateToRespository = DeckSchema.pick({
     description: true,
     createdAt: true,
     updatedAt: true,
-    questions: true,
 })
     .extend({
         category_uuid: CommonSchema.uuid,
