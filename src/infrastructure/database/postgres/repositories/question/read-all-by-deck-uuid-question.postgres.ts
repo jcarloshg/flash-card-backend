@@ -22,7 +22,7 @@ export class ReadAllQuestionsByDeckUuidPostgresRepository implements ReadAllQues
                 SELECT q.*
                 FROM question q
                 INNER JOIN deck_question dq ON dq.question_uuid = q.uuid
-                WHERE dq.deck_uuid = $1
+                WHERE dq.deck_uuid = $1 and q.active = true;
             `;
             const params = [deck_uuid];
             await postgresManager.connect();

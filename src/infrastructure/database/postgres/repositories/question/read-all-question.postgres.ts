@@ -15,7 +15,7 @@ export class ReadAllQuestionPostgresRepository implements ReadAllRepository<Ques
      */
     public async run(): Promise<QuestionToRepository[]> {
         try {
-            const query = `SELECT * FROM question`;
+            const query = `SELECT * FROM question WHERE active = true`;
             await postgresManager.connect();
             const result = await postgresManager.query(query);
             return result.rows as QuestionToRepository[];

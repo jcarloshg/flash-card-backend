@@ -16,7 +16,7 @@ export class ReadByIdQuestionPostgresRepository extends ReadByIdRepository<strin
      */
     public async findById(id: string): Promise<QuestionToRepository | null> {
         try {
-            const query = `SELECT * FROM question WHERE uuid = $1`;
+            const query = `SELECT * FROM question WHERE uuid = $1 and active = true`;
             const params = [id];
             await postgresManager.connect();
             const result = await postgresManager.query(query, params);
