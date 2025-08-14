@@ -45,6 +45,7 @@ The architecture should include:
 │   │           ├── create.repository.ts
 │   │           ├── delete.repository.ts
 │   │           ├── read.repository.ts
+│   │           ├── read-by-id.repository.ts
 │   │           └── update.repository.ts
 │   ├── infrastructure
 │   │   ├── database
@@ -79,6 +80,7 @@ The architecture should include:
     - `create.repository.ts`
     - `delete.repository.ts`
     - `read.repository.ts`
+    - `read-by-id.repository.ts`
     - `update.repository.ts`
 
 ### **Application**
@@ -110,84 +112,85 @@ export const CommonSchema = {};
 
 ```typescript
 export type CustomResponseMsgs = {
-    userMessage?: string;
-    developerMessage?: string;
+  userMessage?: string;
+  developerMessage?: string;
 };
 
 export class CustomResponse<T> {
-    public readonly data: T;
-    public readonly statusCode: number;
-    public readonly messageUser: string;
-    public readonly messageDeveloper?: string;
+  public readonly data: T;
+  public readonly statusCode: number;
+  public readonly messageUser: string;
+  public readonly messageDeveloper?: string;
 
-    private constructor(
-        data: T,
-        code: number,
-        messageUser: string,
-        messageDeveloper: string
-    ) {
-        this.data = data;
-        this.statusCode = code;
-        this.messageUser = messageUser;
-        this.messageDeveloper = messageDeveloper;
+  private constructor(
+    data: T,
+    code: number,
+    messageUser: string,
+    messageDeveloper: string
+  ) {
+    this.data = data;
+    this.statusCode = code;
+    this.messageUser = messageUser;
+    this.messageDeveloper = messageDeveloper;
+  }
+
+  // ============================================================
+  // 200
+  // ============================================================
+
+  static ok<T>(data: T, msgs?: CustomResponseMsgs): CustomResponse<T> {
+    const {
+      userMessage = "Request was successful",
+      developerMessage = "The request was processed successfully",
+    } = msgs ?? {};
+    return new CustomResponse<T>(data, 200, userMessage, developerMessage);
+  }
+
+  static created(objectCreated: any): CustomResponse<any> {
+    return new CustomResponse<any>(
+      objectCreated,
+      201,
+      "Resource created successfully",
+      "The resource has been created successfully"
+    );
+  }
+
+  // ============================================================
+  // 400
+  // ============================================================
+
+  static badRequest(
+    userMessage: string,
+    developerMessage: string
+  ): CustomResponse<null> {
+    return new CustomResponse<null>(null, 400, userMessage, developerMessage);
+  }
+
+  static notFound(prop: CustomResponseMsgs): CustomResponse<null> {
+    const {
+      userMessage = "Resource not found",
+      developerMessage = "The requested resource could not be found",
+    } = prop ?? {};
+    return new CustomResponse<null>(null, 404, userMessage, developerMessage);
+  }
+
+  // ============================================================
+  // 500
+  // ============================================================
+
+  static internalServerError(error?: any): CustomResponse<null> {
+    if (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      console.log(`[ErrorRepository] -> `, errorMessage);
     }
-
-    // ============================================================
-    // 200
-    // ============================================================
-
-    static ok<T>(data: T, msgs?: CustomResponseMsgs): CustomResponse<T> {
-        const {
-            userMessage = "Request was successful",
-            developerMessage = "The request was processed successfully",
-        } = msgs ?? {};
-        return new CustomResponse<T>(data, 200, userMessage, developerMessage);
-    }
-
-    static created(objectCreated: any): CustomResponse<any> {
-        return new CustomResponse<any>(
-            objectCreated,
-            201,
-            "Resource created successfully",
-            "The resource has been created successfully"
-        );
-    }
-
-    // ============================================================
-    // 400
-    // ============================================================
-
-    static badRequest(
-        userMessage: string,
-        developerMessage: string
-    ): CustomResponse<null> {
-        return new CustomResponse<null>(null, 400, userMessage, developerMessage);
-    }
-
-    static notFound(prop: CustomResponseMsgs): CustomResponse<null> {
-        const {
-            userMessage = "Resource not found",
-            developerMessage = "The requested resource could not be found",
-        } = prop ?? {};
-        return new CustomResponse<null>(null, 404, userMessage, developerMessage);
-    }
-
-    // ============================================================
-    // 500
-    // ============================================================
-
-    static internalServerError(error?: any): CustomResponse<null> {
-        if (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
-            console.log(`[ErrorRepository] -> `, errorMessage)
-        }
-        return new CustomResponse<null>(
-            null,
-            500,
-            "Internal server error",
-            "An unexpected error occurred"
-        );
-    }
+    return new CustomResponse<null>(
+      null,
+      500,
+      "Internal server error",
+      "An unexpected error occurred"
+    );
+  }
 }
 ```
 
@@ -246,6 +249,16 @@ export class ReadRepository<IdType, Entity> {
 }
 ```
 
+- **read-by-id.repository.ts**
+
+```typescript
+export class ReadByIdRepository<EntityIdType, Entity> {
+  async run(id: EntityIdType): Promise<Entity | null> {
+    throw new Error("Method not implemented.");
+  }
+}
+```
+
 - **update.repository.ts**
 
 ```typescript
@@ -263,17 +276,18 @@ export class UpdateRepository<IdType, DataToUpdate, EntityUpdated> {
 
 ```typescript
 export class ErrorRepository extends Error {
-    constructor(message: string) {
-        super(message);
-        this.name = "ErrorRepository";
-    }
+  constructor(message: string) {
+    super(message);
+    this.name = "ErrorRepository";
+  }
 
-    static getMessage(error: ErrorRepository): string {
-        const completeMessage = `[${this.name}]: ${error.message}`;
-        return completeMessage;
-    }
+  static getMessage(error: ErrorRepository): string {
+    const completeMessage = `[${this.name}]: ${error.message}`;
+    return completeMessage;
+  }
 }
 ```
+
 - **common-schema.ts**
 
 ```typescript
