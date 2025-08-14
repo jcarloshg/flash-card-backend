@@ -36,13 +36,13 @@ mode: agent
 
 ```
 domain
-├── bussines-logic
+├── use-case
 │    └── [entityName]/
-│        ├── create-[entityName].repository.ts
-│        ├── read-by-id-[entityName].repository.ts
-│        ├── read-[entityName].repository.ts
-│        ├── update-[entityName].repository.ts
-│        └── delete-[entityName].repository.ts
+│        ├── create-[entityName].use-case.ts
+│        ├── read-by-id-[entityName].use-case.ts
+│        ├── read-[entityName].use-case.ts
+│        ├── update-[entityName].use-case.ts
+│        └── delete-[entityName].use-case.ts
 ├── entities/
 │   └── models/
 │      └── [entityName].entity.ts
@@ -125,7 +125,7 @@ domain
     export interface [entityName]ToProps extends [entityName]Type {}
     export interface [entityName]ToResp extends [entityName]Type {}
 
-    export class CreateDeckRepository implements CreateRepository<[entityName]ToProps,[entityName]ToResp> {
+    export class Create[entityName]Repository implements CreateRepository<[entityName]ToProps,[entityName]ToResp> {
       async run(entity: [entityName]ToProps): Promise<[entityName]ToResp> {
         throw new Error("Method not implemented.");
       }
@@ -258,19 +258,18 @@ domain
     }
     ```
 
-##### Business Logic Files: create-[entityName].repository.ts
+##### Use-Case Files: create-[entityName].use-case.ts
 
 - **Description**:
 
-  - Create/modify the file: `delete-[entityName].repository.ts`
+  - Create/modify the file: `create-[entityName].use-case.ts`
 
 - **Restrictions**:
 
   - Use TypeScript and the good practices of DDD.
-  - Implement `DeleteRepository` from `src/domain/repositories/crud-repository/delete.repository.ts`
-    - Use the keywords `implements` to implement the abstract class.
-  - Use the next interfaces for the entity:
-    - [entityName]ToResp
+  - Use `Create[entityName]Repository`
+    - as read only property from `./domain/repositories/[entityName]/create-[entityName].repository.ts`
+  - Use
 
 - **Examples**:
 
