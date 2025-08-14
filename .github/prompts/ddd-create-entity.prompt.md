@@ -131,3 +131,129 @@ domain
       }
     }
     ```
+
+##### Repository Files: read-by-id-[entityName].repository.ts
+
+- **Description**:
+
+  - Create/modify the file: `read-by-id-[entityName].repository.ts`
+
+- **Restrictions**:
+
+  - Use TypeScript and the good practices of DDD.
+  - Implement `ReadByIdRepository` from `src/domain/repositories/crud-repository/read-by-id.repository.ts`
+    - Use the keywords `implements` to implement the abstract class.
+  - Use the next interfaces for the entity:
+    - [entityName]ToResp
+
+- **Examples**:
+
+  - Follow the structure below:
+
+    ```typescript
+    import { ReadByIdRepository } from "@/domain/repositories/crud-repository/read-by-id.repository";
+    import { [entityName]Type } from "@/domain/entities/models/[entityName].entity";
+
+    export interface [entityName]ToResp extends [entityName]Type {}
+
+    export class ReadByIdDeckRepository implements ReadByIdRepository<[entityName]ToResp> {
+        async run(uuid: string): Promise<[entityName]ToResp | null> {
+            throw new Error("Method not implemented.");
+        }
+    }
+    ```
+
+##### Repository Files: read-[entityName].repository.ts
+
+- **Description**:
+
+  - Create/modify the file: `read-[entityName].repository.ts`
+
+- **Restrictions**:
+
+  - Use TypeScript and the good practices of DDD.
+  - Implement `ReadRepository` from `src/domain/repositories/crud-repository/read.repository.ts`
+    - Use the keywords `implements` to implement the abstract class.
+  - Use the next interfaces for the entity:
+    - [entityName]ToResp
+
+- **Examples**:
+
+  - Follow the structure below:
+
+    ```typescript
+    import { ReadRepository } from "@/domain/repositories/crud-repository/read.repository";
+    import { [entityName]Type } from "@/domain/entities/models/[entityName].entity";
+
+    export interface [entityName]ToResp extends [entityName]Type {}
+
+    export class ReadDeckRepository implements ReadRepository<[entityName]ToResp> {
+            async run(): Promise<[entityName]ToResp[]> {
+                    throw new Error("Method not implemented.");
+            }
+    }
+    ```
+
+##### Repository Files: update-[entityName].repository.ts
+
+- **Description**:
+
+  - Create/modify the file: `update-[entityName].repository.ts`
+
+- **Restrictions**:
+
+  - Use TypeScript and the good practices of DDD.
+  - Implement `UpdateRepository` from `src/domain/repositories/crud-repository/update.repository.ts`
+    - Use the keywords `implements` to implement the abstract class.
+  - Use the next interfaces for the entity:
+    - [entityName]ToProps
+    - [entityName]ToResp
+
+- **Examples**:
+
+  - Follow the structure below:
+
+    ```typescript
+    import { UpdateRepository } from "@/domain/repositories/crud-repository/update.repository";
+    import { [entityName]Type } from "@/domain/entities/models/[entityName].entity";
+
+    export interface [entityName]ToProps extends [entityName]Type {}
+    export interface [entityName]ToResp extends [entityName]Type {}
+
+    export class UpdateDeckRepository implements UpdateRepository<[entityName]ToProps,[entityName]ToResp> {
+        async run(entity: [entityName]ToProps): Promise<[entityName]ToResp> {
+            throw new Error("Method not implemented.");
+        }
+    }
+    ```
+
+##### Repository Files: delete-[entityName].repository.ts
+
+- **Description**:
+
+  - Create/modify the file: `delete-[entityName].repository.ts`
+
+- **Restrictions**:
+
+  - Use TypeScript and the good practices of DDD.
+  - Implement `DeleteRepository` from `src/domain/repositories/crud-repository/delete.repository.ts`
+    - Use the keywords `implements` to implement the abstract class.
+  - Use the next interfaces for the entity:
+    - [entityName]ToResp
+
+- **Examples**:
+
+  - Follow the structure below:
+
+    ```typescript
+    import { DeleteRepository } from "@/domain/repositories/crud-repository/delete.repository";
+    import { [entityName]Type } from "@/domain/entities/models/[entityName].entity";
+
+    export interface [entityName]ToResp extends [entityName]Type {}
+
+    export class DeleteDeckRepository implements DeleteRepository<[entityName]ToResp> {
+        async run(uuid: string): Promise<[entityName]ToResp | null> {
+            throw new Error("Method not implemented.");
+        }
+    }
+    ```
