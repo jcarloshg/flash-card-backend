@@ -257,3 +257,34 @@ domain
         }
     }
     ```
+
+##### Business Logic Files: create-[entityName].repository.ts
+
+- **Description**:
+
+  - Create/modify the file: `delete-[entityName].repository.ts`
+
+- **Restrictions**:
+
+  - Use TypeScript and the good practices of DDD.
+  - Implement `DeleteRepository` from `src/domain/repositories/crud-repository/delete.repository.ts`
+    - Use the keywords `implements` to implement the abstract class.
+  - Use the next interfaces for the entity:
+    - [entityName]ToResp
+
+- **Examples**:
+
+  - Follow the structure below:
+
+    ```typescript
+    import { DeleteRepository } from "@/domain/repositories/crud-repository/delete.repository";
+    import { [entityName]Type } from "@/domain/entities/models/[entityName].entity";
+
+    export interface [entityName]ToResp extends [entityName]Type {}
+
+    export class DeleteDeckRepository implements DeleteRepository<[entityName]ToResp> {
+        async run(uuid: string): Promise<[entityName]ToResp | null> {
+            throw new Error("Method not implemented.");
+        }
+    }
+    ```
