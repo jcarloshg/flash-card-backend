@@ -1,6 +1,3 @@
-# Purpose: Domain Events
+# Purpose
 
-Domain events capture significant occurrences in the domain. Main goals:
-- Represent business events
-- Enable event-driven workflows
-- Decouple event producers and consumers
+Contains domain events for event-driven logic.

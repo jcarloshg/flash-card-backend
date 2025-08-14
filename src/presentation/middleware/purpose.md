@@ -1,6 +1,3 @@
-# Purpose: Middleware
+# Purpose
 
-Middleware handles cross-cutting concerns for requests. Main goals:
-- Implement authentication, logging, etc.
-- Process requests/responses
-- Enhance security
+Middleware for request/response processing.

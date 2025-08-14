@@ -212,3 +212,8 @@ export class ErrorRepository extends Error {
     }
 }
 ```
+- **common-schema.ts**
+
+```typescript
+export const CommonSchema = {};
+```

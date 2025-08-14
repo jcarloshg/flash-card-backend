@@ -1,6 +1,3 @@
-# Purpose: Use Cases
+# Purpose
 
-Use cases orchestrate application-specific business logic. Main goals:
-- Implement application workflows
-- Coordinate domain objects
-- Enforce business rules
+Contains use case implementations for the application layer.

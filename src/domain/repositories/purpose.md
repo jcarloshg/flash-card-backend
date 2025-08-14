@@ -1,6 +1,3 @@
-# Purpose: Domain Repositories
+# Purpose
 
-Repositories abstract data access for aggregates. Main goals:
-- Provide persistence operations
-- Hide data source details
-- Return aggregate roots
+Contains repository interfaces and implementations for domain persistence.

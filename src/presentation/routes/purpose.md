@@ -1,6 +1,3 @@
-# Purpose: Routes
+# Purpose
 
-Routes define API endpoints and map them to controllers. Main goals:
-- Organize endpoints
-- Delegate to controllers
-- Structure API paths
+Routing logic for API endpoints.

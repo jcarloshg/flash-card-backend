@@ -1,6 +1,0 @@
-# Purpose: Errors
-
-Error handling provides consistent error management. Main goals:
-- Define custom errors
-- Centralize error logic
-- Improve error reporting

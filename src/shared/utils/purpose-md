@@ -1,6 +1,0 @@
-# Purpose: Utils
-
-Utility functions support common tasks across layers. Main goals:
-- Provide reusable helpers
-- Simplify codebase
-- Avoid duplication

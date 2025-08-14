@@ -1,6 +1,3 @@
-# Purpose: Database
+# Purpose
 
-Database layer manages data storage and retrieval. Main goals:
-- Configure data sources
-- Manage connections
-- Support persistence
+Database integration and persistence logic.

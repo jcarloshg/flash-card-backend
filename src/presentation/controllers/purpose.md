@@ -1,6 +1,3 @@
-# Purpose: Controllers
+# Purpose
 
-Controllers handle HTTP requests and responses. Main goals:
-- Map routes to actions
-- Validate input
-- Return responses
+Controllers for handling incoming requests and responses.

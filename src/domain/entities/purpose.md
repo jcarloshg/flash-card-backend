@@ -1,6 +1,3 @@
-# Purpose: Entities
+# Purpose
 
-Entities represent core business objects with unique identity. Main goals:
-- Define domain objects
-- Ensure identity and equality
-- Encapsulate business logic
+Defines domain entities and their schemas.
