@@ -1,13 +1,13 @@
-name: "Hello word"
+name: "Hello world"
 
 on:
-  push: 
+  push:
     branches:
-      - main
-      
+      - v4
+
 jobs:
-  hello_word:
-    runs-on: ubuntu-lates
+  hello_world:
+    runs-on: ubuntu-latest
     steps:
-      - name: Echo currnt time
+      - name: Echo current time
         run: echo "the current service time is $(date)"
