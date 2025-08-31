@@ -266,24 +266,96 @@ domain
 
 - **Restrictions**:
 
-  - Use TypeScript and the good practices of DDD.
-  - Use `Create[entityName]Repository`
-    - as read only property from `./domain/repositories/[entityName]/create-[entityName].repository.ts`
-  - Use
+  - This is a class
+  - This class has a unique method called run
+    - This unique method should be an `async/await` method
+    - This unique method should return `CustomResponse`
+    - This unique method must have `try/catch` block
+    - The block of `catch` must implement `EntityError` and `ErrorRepository`
+  - This class must have a constructor
+    - All the parameters of constructor must be `private readonly`
+  - This file must have two interfaces:
+    - [entityName]ToProps
+    - [entityName]ToResp
 
 - **Examples**:
 
-  - Follow the structure below:
+##### Use-Case Files: read-by-id-[entityName].use-case.ts
 
-    ```typescript
-    import { DeleteRepository } from "@/domain/repositories/crud-repository/delete.repository";
-    import { [entityName]Type } from "@/domain/entities/models/[entityName].entity";
+- **Description**:
+  - Create/modify the file: `read-by-id-[entityName].use-case.ts`
+- **Restrictions**:
 
-    export interface [entityName]ToResp extends [entityName]Type {}
+  - This is a class
+  - This class has a unique method called run
+    - This unique method should be an `async/await` method
+    - This unique method should return `CustomResponse`
+    - This unique method must have `try/catch` block
+    - The block of `catch` must implement `EntityError` and `ErrorRepository`
+  - This class must have a constructor
+    - All the parameters of constructor must be `private readonly`
+  - This file must have two interfaces:
+    - [entityName]ToProps
+    - [entityName]ToResp
 
-    export class DeleteDeckRepository implements DeleteRepository<[entityName]ToResp> {
-        async run(uuid: string): Promise<[entityName]ToResp | null> {
-            throw new Error("Method not implemented.");
-        }
-    }
-    ```
+- **Examples**:
+
+##### Use-Case Files: read-[entityName].use-case.ts
+
+- **Description**:
+  - Create/modify the file: `read-[entityName].use-case.ts`
+- **Restrictions**:
+
+  - This is a class
+  - This class has a unique method called run
+    - This unique method should be an `async/await` method
+    - This unique method should return `CustomResponse`
+    - This unique method must have `try/catch` block
+    - The block of `catch` must implement `EntityError` and `ErrorRepository`
+  - This class must have a constructor
+    - All the parameters of constructor must be `private readonly`
+  - This file must have two interfaces:
+    - [entityName]ToProps
+    - [entityName]ToResp
+
+- **Examples**:
+
+##### Use-Case Files: update-[entityName].use-case.ts
+
+- **Description**:
+  - Create/modify the file: `update-[entityName].use-case.ts`
+- **Restrictions**:
+
+  - This is a class
+  - This class has a unique method called run
+    - This unique method should be an `async/await` method
+    - This unique method should return `CustomResponse`
+    - This unique method must have `try/catch` block
+    - The block of `catch` must implement `EntityError` and `ErrorRepository`
+  - This class must have a constructor
+    - All the parameters of constructor must be `private readonly`
+  - This file must have two interfaces:
+    - [entityName]ToProps
+    - [entityName]ToResp
+
+- **Examples**:
+
+##### Use-Case Files: delete-[entityName].use-case.ts
+
+- **Description**:
+  - Create/modify the file: `delete-[entityName].use-case.ts`
+- **Restrictions**:
+
+  - This is a class
+  - This class has a unique method called run
+    - This unique method should be an `async/await` method
+    - This unique method should return `CustomResponse`
+    - This unique method must have `try/catch` block
+    - The block of `catch` must implement `EntityError` and `ErrorRepository`
+  - This class must have a constructor
+    - All the parameters of constructor must be `private readonly`
+  - This file must have two interfaces:
+    - [entityName]ToProps
+    - [entityName]ToResp
+
+- **Examples**:
