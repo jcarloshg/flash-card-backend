@@ -1,0 +1,13 @@
+name: "Hello word"
+
+on:
+  push: 
+    branches:
+      - main
+      
+jobs:
+  hello_word:
+    runs-on: ubuntu-lates
+    steps:
+      - name: Echo currnt time
+        run: echo "the current service time is $(date)"
